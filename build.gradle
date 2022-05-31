@@ -1,0 +1,51 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.ssu.commerce'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven {
+		name = "GitHubPackages"
+		url = uri("https://maven.pkg.github.com/ssu-commerce/ssu-commerce-core")
+		credentials {
+			username = project.findProperty("gpr.user") == null ? System.getenv("USERNAME") : project.findProperty("gpr.user")
+			password = project.findProperty("gpr.key") == null ? System.getenv("TOKEN") : project.findProperty("gpr.key")
+		}
+	}
+
+}
+
+ext {
+	coreVersion="beta-2022.05.29"
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	//for test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//ssu-commerce core
+	implementation("com.ssu.commerce:ssu-commerce-core:$coreVersion")
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

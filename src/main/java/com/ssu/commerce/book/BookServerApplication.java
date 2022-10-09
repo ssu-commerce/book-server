@@ -6,8 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@EnableSsuCommerceCore
-@EnableSsuCommerceVault
 public class BookServerApplication {
 
 	public static void main(String[] args) {

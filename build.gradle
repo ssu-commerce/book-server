@@ -28,7 +28,7 @@ repositories {
 }
 
 ext {
-	coreVersion="beta-2022.05.29"
+	coreVersion="beta-2022.06.33"
 }
 
 dependencies {

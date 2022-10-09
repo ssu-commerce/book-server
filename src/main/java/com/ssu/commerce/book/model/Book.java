@@ -1,11 +1,9 @@
 package com.ssu.commerce.book.model;
 
-import com.ssu.commerce.book.service.BookService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 
@@ -22,17 +20,27 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "book_info")
-public class BookEntity {
+@Table(name = "book")
+public class Book {
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id")
+    private Long id;
 
-    @NotNull
+    @Column(name = "title", nullable = false)
     private String title;
+
+    @Column(name = "image_url")
     private String imageUrl;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_details_id")
-    private BookDetail bookDetail;
+    @Column(name = "price")
+    private Long price;
+
+    @Column(name = "owner_id")
+    private Long ownerId;
+
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "book_details_id")
+//    private BookDetail bookDetail;
 }

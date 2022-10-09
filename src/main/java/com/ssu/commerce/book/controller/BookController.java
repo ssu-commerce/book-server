@@ -1,14 +1,14 @@
 package com.ssu.commerce.book.controller;
 
 
-import com.ssu.commerce.book.dto.SearchBookDTO;
+import com.ssu.commerce.book.dto.request.GetBookInfoListRequestDto;
+import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 /*
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("books")
+@RequestMapping("/v1/books")
 public class BookController {
     @Autowired
     private BookService bookService;
@@ -29,10 +29,32 @@ public class BookController {
     public String health(){
         return "200 OK";
     }
-    @GetMapping("post")
-    public List<SearchBookDTO> find(Pageable pageable){
-        return bookService.findAll(pageable);
+//    @GetMapping("post")
+//    public List<SearchBookDTO> find(Pageable pageable){
+//        return bookService.findAll(pageable);
+//    }
+
+
+    // 리스트 검색
+    @GetMapping("")
+    public Page<Book> getBookInfoList(
+            GetBookInfoListRequestDto requestDto,
+            Pageable pageable
+    ) {
+
+        log.debug("[getBookInfoList] requestDto={}", requestDto);
+
+        return bookService.getBookInfoList(requestDto, pageable);
     }
 
+
+    // 단건 상세 조회
+    @GetMapping("/{id}")
+    public Book getBookInfo(
+            @PathVariable Long id
+    ) {
+
+        return bookService.getBookInfo(id);
+    }
 
 }

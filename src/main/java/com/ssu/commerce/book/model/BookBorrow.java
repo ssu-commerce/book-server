@@ -1,5 +1,6 @@
 package com.ssu.commerce.book.model;
 
+import com.ssu.commerce.book.constant.code.BookState;
 import com.ssu.commerce.core.jpa.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,8 +26,11 @@ public class BookBorrow extends BaseEntity {
     @Column(name = "book_id")
     private Long bookId;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "borrower_id")
+    private Long borrowerId;
+
+    @Column(name = "book_state")
+    private BookState bookState;
 
     @Column(name = "started_at")
     private LocalDateTime startedAt;

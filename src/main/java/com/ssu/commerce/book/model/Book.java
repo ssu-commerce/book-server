@@ -1,11 +1,13 @@
 package com.ssu.commerce.book.model;
 
+import com.ssu.commerce.core.jpa.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 /*
@@ -21,7 +23,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "book")
-public class Book {
+public class Book extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -31,8 +33,11 @@ public class Book {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(name = "content")
+    private String content;
+
+    @Column(name = "writer")
+    private String writer;
 
     @Column(name = "price")
     private Long price;
@@ -40,7 +45,14 @@ public class Book {
     @Column(name = "owner_id")
     private Long ownerId;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "book_details_id")
-//    private BookDetail bookDetail;
+    @Column(name = "publish_date")
+    private LocalDateTime publishDate;
+
+    @Column(name = "isbn")
+    private String isbn;
+
+    @Column(name = "max_borrow_day")
+    private Long maxBorrowDay;
+
+    private Long categoryId;
 }

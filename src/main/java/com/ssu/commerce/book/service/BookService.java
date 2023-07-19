@@ -1,39 +1,42 @@
 package com.ssu.commerce.book.service;
 
 
-import com.ssu.commerce.book.dto.request.GetBookInfoListRequestDto;
+import com.ssu.commerce.book.dto.BookDto;
+import com.ssu.commerce.book.dto.mapper.BookDtoMapper;
+import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.core.exception.NotFoundException;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Slf4j
 @Service
+@Validated
+@RequiredArgsConstructor
 public class BookService {
+    private final BookRepository bookRepository;
 
-    @Autowired
-    private BookRepository bookRepository;
-
-//    public List<SearchBookDTO> findAll(Pageable pageable){
-//        return bookRepository.findByIdOrderByIdDesc(new Book(), pageable)
-//                .map(SearchBookDTO::new).getContent();
-//
-//    }
-
-    public Page<Book> getBookInfoList(
-            GetBookInfoListRequestDto requestDto,
-            Pageable pageable
+    public Page<BookDto> getBookList(
+            @NonNull final GetBookListParamDto paramDto
     ) {
+        final Page<Book> bookList =
+                bookRepository.findAllByTitleLikeIgnoreCaseOrCategoryId(
+                        paramDto.getTitle(),
+                        paramDto.getCategoryId(),
+                        paramDto.getPageable()
+                );
 
-        Page<Book> bookList = bookRepository.findAll(
-                pageable
+        return new PageImpl<>(
+                BookDtoMapper.INSTANCE.mapToList(bookList.getContent()),
+                bookList.getPageable(),
+                bookList.getTotalElements()
         );
-
-        return bookList;
     }
 
     public Book getBookInfo(

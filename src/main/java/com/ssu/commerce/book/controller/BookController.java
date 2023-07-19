@@ -1,12 +1,16 @@
 package com.ssu.commerce.book.controller;
 
 
-import com.ssu.commerce.book.dto.request.GetBookInfoListRequestDto;
+import com.ssu.commerce.book.dto.BookDto;
+import com.ssu.commerce.book.dto.mapper.GetBookListParamMapper;
+import com.ssu.commerce.book.dto.mapper.GetBookResponseDtoMapper;
+import com.ssu.commerce.book.dto.response.GetBookResponseDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.service.BookService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,31 +24,30 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/v1/books")
 public class BookController {
-    @Autowired
-    private BookService bookService;
-
-    @GetMapping("/health")
-    public String health(){
-        return "200 OK";
-    }
-//    @GetMapping("post")
-//    public List<SearchBookDTO> find(Pageable pageable){
-//        return bookService.findAll(pageable);
-//    }
-
+    private final BookService bookService;
 
     // 리스트 검색
     @GetMapping("")
-    public Page<Book> getBookInfoList(
-            GetBookInfoListRequestDto requestDto,
+    public Page<GetBookResponseDto> getBookList(
+            @RequestParam String title,
+            @RequestParam Long categoryId,
             Pageable pageable
     ) {
 
-        log.debug("[getBookInfoList] requestDto={}", requestDto);
+        log.debug("[getBookList]title={},categoryId={}", title, categoryId);
 
-        return bookService.getBookInfoList(requestDto, pageable);
+        final Page<BookDto> bookList = bookService.getBookList(
+                GetBookListParamMapper.INSTANCE.map(title, categoryId, pageable)
+        );
+
+        return new PageImpl<>(
+                GetBookResponseDtoMapper.INSTANCE.mapToList(bookList.getContent()),
+                bookList.getPageable(),
+                bookList.getTotalElements()
+        );
     }
 
 

@@ -4,7 +4,10 @@ package com.ssu.commerce.book.controller;
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.mapper.GetBookListParamMapper;
 import com.ssu.commerce.book.dto.mapper.GetBookResponseDtoMapper;
+import com.ssu.commerce.book.dto.mapper.RegisterBookParamDtoMapper;
+import com.ssu.commerce.book.dto.request.RegisterBookRequestDto;
 import com.ssu.commerce.book.dto.response.GetBookResponseDto;
+import com.ssu.commerce.book.dto.response.RegisterBookResponseDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 /*
@@ -58,6 +63,22 @@ public class BookController {
     ) {
 
         return bookService.getBookInfo(id);
+    }
+
+    @PostMapping("")
+    public RegisterBookResponseDto registerBook(
+            @Valid @RequestBody final RegisterBookRequestDto requestDto
+    ) {
+
+        log.debug("[registerBook]requestDto={}", requestDto);
+
+        return RegisterBookResponseDto.builder()
+                .id(
+                        bookService.registerBook(
+                                RegisterBookParamDtoMapper.INSTANCE.map(requestDto)
+                        )
+                )
+                .build();
     }
 
 }

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "book")
+@Table(name = "category")
 public class Category {
     // id, name, description
 

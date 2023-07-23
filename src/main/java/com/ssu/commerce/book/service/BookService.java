@@ -1,7 +1,9 @@
 package com.ssu.commerce.book.service;
 
 
+import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
+import com.ssu.commerce.book.dto.mapper.BookDetailDtoMapper;
 import com.ssu.commerce.book.dto.mapper.BookDtoMapper;
 import com.ssu.commerce.book.dto.mapper.BookMapper;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
@@ -47,29 +49,26 @@ public class BookService {
         );
     }
 
-    public Book getBookInfo(
-            Long id
+    public BookDetailDto getBookDetail(
+            @NonNull final Long id
     ) {
-
         Book book = bookRepository.findById(id)
-                .orElseThrow(
-                        () -> new NotFoundException(
-                                String.format("book not found; bookId=%s", id),
-                                "BOOK_001"
-                        ));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("book not found; bookId=%s", id),
+                        "BOOK_001"
+                ));
 
-        return book;
+        return BookDetailDtoMapper.INSTANCE.map(book);
     }
 
     public Long registerBook(
             @NonNull @Valid final RegisterBookParamDto paramDto
     ) {
         categoryRepository.findById(paramDto.getCategoryId())
-                .orElseThrow(() -> new SsuCommerceException(
-                        HttpStatus.BAD_REQUEST,
-                        "BOOK-0001",
-                        "카테고리 번호가 누락되었습니다.")
-                );
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("category not found; categoryId=%s", paramDto.getCategoryId()),
+                        "BOOK_002"
+                ));
 
         return bookRepository.save(
                 BookMapper.INSTANCE.map(paramDto)

@@ -2,13 +2,14 @@ package com.ssu.commerce.book.controller;
 
 
 import com.ssu.commerce.book.dto.BookDto;
+import com.ssu.commerce.book.dto.mapper.GetBookDetailResponseDtoMapper;
 import com.ssu.commerce.book.dto.mapper.GetBookListParamMapper;
 import com.ssu.commerce.book.dto.mapper.GetBookResponseDtoMapper;
 import com.ssu.commerce.book.dto.mapper.RegisterBookParamDtoMapper;
 import com.ssu.commerce.book.dto.request.RegisterBookRequestDto;
+import com.ssu.commerce.book.dto.response.GetBookDetailResponseDto;
 import com.ssu.commerce.book.dto.response.GetBookResponseDto;
 import com.ssu.commerce.book.dto.response.RegisterBookResponseDto;
-import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/books")
+@RequestMapping("/v1/book")
 public class BookController {
     private final BookService bookService;
 
@@ -58,11 +59,15 @@ public class BookController {
 
     // 단건 상세 조회
     @GetMapping("/{id}")
-    public Book getBookInfo(
-            @PathVariable Long id
+    public GetBookDetailResponseDto getBookDetail(
+            @PathVariable final Long id
     ) {
 
-        return bookService.getBookInfo(id);
+        log.debug("[getBook]id={}", id);
+
+        return GetBookDetailResponseDtoMapper.INSTANCE.map(
+                bookService.getBookDetail(id)
+        );
     }
 
     @PostMapping("")

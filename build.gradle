@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.7.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'java'
 }
 
@@ -30,6 +31,7 @@ repositories {
 ext {
 	coreVersion="2023.07.4"
 	mapstructVersion = '1.5.5.Final'
+	queryDSLVersion = '5.0.0'
 }
 
 dependencies {
@@ -40,7 +42,13 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	// JPA Log
 	implementation 'p6spy:p6spy:3.9.1'
+
+	// Querydsl
+	implementation("com.querydsl:querydsl-jpa:${queryDSLVersion}")
+	implementation "com.querydsl:querydsl-apt:${queryDSLVersion}"
+	implementation "com.querydsl:querydsl-core:${queryDSLVersion}"
 
 	// mapstruct
 	implementation group: 'org.mapstruct', name: 'mapstruct', version: "${mapstructVersion}"
@@ -50,7 +58,13 @@ dependencies {
 
 	//for test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testImplementation "com.querydsl:querydsl-jpa:${queryDSLVersion}"
+
+//	testAnnotationProcessor "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa"
 	testAnnotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: "${mapstructVersion}"
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 
 	//ssu-commerce core
 	implementation("com.ssu.commerce:ssu-commerce-core:$coreVersion")
@@ -59,3 +73,24 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+//querydsl 추가
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main.java.srcDir querydslDir
+}
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+//querydsl 추가 끝

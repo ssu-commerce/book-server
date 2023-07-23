@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "book_borrow")
-public class BookBorrow extends BaseEntity {
+public class BookBorrow {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

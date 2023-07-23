@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "book")
-public class Book extends BaseEntity {
+public class Book {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

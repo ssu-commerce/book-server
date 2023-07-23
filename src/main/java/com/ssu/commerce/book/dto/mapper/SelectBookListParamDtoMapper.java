@@ -1,11 +1,11 @@
 package com.ssu.commerce.book.dto.mapper;
 
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
+import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Pageable;
 
 @Mapper(
         componentModel = "spring",
@@ -13,8 +13,8 @@ import org.springframework.data.domain.Pageable;
         typeConversionPolicy = ReportingPolicy.ERROR,
         nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT
 )
-public interface GetBookListParamMapper {
-    GetBookListParamMapper INSTANCE = Mappers.getMapper(GetBookListParamMapper.class);
+public interface SelectBookListParamDtoMapper {
+    SelectBookListParamDtoMapper INSTANCE = Mappers.getMapper(SelectBookListParamDtoMapper.class);
 
-    GetBookListParamDto map(String title, Long categoryId, Pageable pageable);
+    SelectBookListParamDto map(GetBookListParamDto paramDto);
 }

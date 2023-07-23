@@ -1,55 +1,66 @@
 package com.ssu.commerce.book.persistence;
 
+import com.ssu.commerce.book.config.QuerydslConfig;
+import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
 import com.ssu.commerce.book.model.Book;
+import com.ssu.commerce.book.model.Category;
+import com.ssu.commerce.book.supplier.BookTestDataSupplier;
+import com.ssu.commerce.core.jpa.JpaConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 
-//@DataJpaTest
-//@Import({JpaConfig.class})
-@SpringBootTest
-@Transactional
-//@Rollback
-class BookRepositoryTest {
+
+@DataJpaTest
+@Import({JpaConfig.class, QuerydslConfig.class})
+class BookRepositoryTest implements BookTestDataSupplier {
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @BeforeEach
     void setUp() {
-        final Book book = Book.builder()
-                .title("비가 오면 열리는 상점")
-                .content("불행을 파는 대신 원하는 행복을 살 수 있는 가게가 있다면? " +
-                                 "듣기만 해도 방문하고 싶어지는, 비가 오면 열리는 수상한 상점에 초대된 여고생 세린이 안내묘 잇샤, " +
-                                 "사람의 마음을 훔치는 도깨비들과 함께 펼치는 감동 모험 판타지.")
-                .writer("유영광")
-                .price(15120L)
-                .ownerId(1L)
-                .publishDate(LocalDateTime.now())
-                .isbn("9791198173898")
-                .maxBorrowDay(15L)
-                .categoryId(1L)
-                .build();
+        final Category category = categoryRepository.save(BookTestDataSupplier.getCategory());
+
+        final Book book = BookTestDataSupplier.getBook();
+        book.setCategoryId(category.getId());
 
         bookRepository.save(book);
     }
 
     @Test
-    void testFindAllByTitleLikeIgnoreCaseOrCategoryId() {
-        final Page<Book> bookPage = bookRepository.findAllByTitleLikeIgnoreCaseOrCategoryId(
-                "비가",
-                null,
+    void testSelectBookPage() {
+        final Page<Book> bookPage = bookRepository.selectBookPage(
+                SelectBookListParamDto.builder()
+                        .title("비가 오면")
+                        .build(),
                 Pageable.unpaged()
         );
 
-        assertNotNull(bookPage.getContent());
+        assertAll(
+                "메소드 호출 결과를 검증합니다.",
+                () -> assertNotNull(bookPage.getContent()),
+                () -> assertFalse(CollectionUtils.isEmpty(bookPage.getContent())),
+                () -> assertNotNull(bookPage.getContent().get(0).getCategoryId()),
+                () -> assertEquals(TEST_VAL_BOOK_TITLE, bookPage.getContent().get(0).getTitle()),
+                () -> assertEquals(TEST_VAL_BOOK_CONTENT, bookPage.getContent().get(0).getContent()),
+                () -> assertEquals(TEST_VAL_BOOK_WRITER, bookPage.getContent().get(0).getWriter()),
+                () -> assertEquals(TEST_VAL_BOOK_PRICE, bookPage.getContent().get(0).getPrice()),
+                () -> assertEquals(TEST_VAL_BOOK_OWNER_ID, bookPage.getContent().get(0).getOwnerId()),
+                () -> assertEquals(TEST_VAL_BOOK_PUBLISH_DATE, bookPage.getContent().get(0).getPublishDate()),
+                () -> assertEquals(TEST_VAL_BOOK_ISBN, bookPage.getContent().get(0).getIsbn()),
+                () -> assertEquals(TEST_VAL_BOOK_MAX_BORROW_DAY, bookPage.getContent().get(0).getMaxBorrowDay()),
+                () -> assertEquals(TEST_VAL_BOOK_CATEGORY_ID, bookPage.getContent().get(0).getCategoryId())
+        );
     }
 }

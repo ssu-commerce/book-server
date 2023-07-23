@@ -6,19 +6,18 @@ import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.mapper.BookDetailDtoMapper;
 import com.ssu.commerce.book.dto.mapper.BookDtoMapper;
 import com.ssu.commerce.book.dto.mapper.BookMapper;
+import com.ssu.commerce.book.dto.mapper.SelectBookListParamDtoMapper;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.book.persistence.CategoryRepository;
 import com.ssu.commerce.core.exception.NotFoundException;
-import com.ssu.commerce.core.exception.SsuCommerceException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -36,9 +35,8 @@ public class BookService {
             @NonNull final GetBookListParamDto paramDto
     ) {
         final Page<Book> bookList =
-                bookRepository.findAllByTitleLikeIgnoreCaseOrCategoryId(
-                        paramDto.getTitle(),
-                        paramDto.getCategoryId(),
+                bookRepository.selectBookPage(
+                        SelectBookListParamDtoMapper.INSTANCE.map(paramDto),
                         paramDto.getPageable()
                 );
 

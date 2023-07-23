@@ -11,14 +11,13 @@ import com.ssu.commerce.book.dto.response.GetBookDetailResponseDto;
 import com.ssu.commerce.book.dto.response.GetBookResponseDto;
 import com.ssu.commerce.book.dto.response.RegisterBookResponseDto;
 import com.ssu.commerce.book.service.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 
 /*

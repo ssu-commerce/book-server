@@ -20,6 +20,7 @@ import java.util.Objects;
 import static com.ssu.commerce.book.model.QBook.book;
 import static com.ssu.commerce.book.model.QCategory.category;
 
+
 @Validated
 @Repository
 @RequiredArgsConstructor

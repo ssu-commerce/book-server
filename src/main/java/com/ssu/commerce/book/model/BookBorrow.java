@@ -1,13 +1,12 @@
 package com.ssu.commerce.book.model;
 
 import com.ssu.commerce.book.constant.code.BookState;
-import com.ssu.commerce.core.jpa.BaseEntity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data

@@ -1,7 +1,9 @@
 package com.ssu.commerce.book.supplier;
 
+import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.model.Category;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 
@@ -40,6 +42,14 @@ public interface BookTestDataSupplier {
         return Category.builder()
                 .name(TEST_VAL_CATEGORY_NAME)
                 .description(TEST_VAL_CATEGORY_DESCRIPTION)
+                .build();
+    }
+
+    static GetBookListParamDto getGetBookListParamDto() {
+        return GetBookListParamDto.builder()
+                .title(TEST_VAL_BOOK_TITLE)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .pageable(Pageable.unpaged())
                 .build();
     }
 }

@@ -2,14 +2,11 @@ package com.ssu.commerce.book.controller;
 
 
 import com.ssu.commerce.book.dto.BookDto;
-import com.ssu.commerce.book.dto.mapper.GetBookDetailResponseDtoMapper;
-import com.ssu.commerce.book.dto.mapper.GetBookListParamMapper;
-import com.ssu.commerce.book.dto.mapper.GetBookResponseDtoMapper;
-import com.ssu.commerce.book.dto.mapper.RegisterBookParamDtoMapper;
+import com.ssu.commerce.book.dto.mapper.*;
+import com.ssu.commerce.book.dto.request.ChangeBookRequestDto;
+import com.ssu.commerce.book.dto.request.DeleteBookRequestDto;
 import com.ssu.commerce.book.dto.request.RegisterBookRequestDto;
-import com.ssu.commerce.book.dto.response.GetBookDetailResponseDto;
-import com.ssu.commerce.book.dto.response.GetBookResponseDto;
-import com.ssu.commerce.book.dto.response.RegisterBookResponseDto;
+import com.ssu.commerce.book.dto.response.*;
 import com.ssu.commerce.book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -82,6 +79,36 @@ public class BookController {
                         bookService.registerBook(
                                 RegisterBookParamDtoMapper.INSTANCE.map(requestDto)
                         )
+                )
+                .build();
+    }
+
+    @PutMapping("")
+    public ChangeBookResponseDto changeBook(
+            @Valid @RequestBody final ChangeBookRequestDto requestDto
+    ) {
+
+        log.debug("[changeBook]requestDto={}", requestDto);
+
+        return ChangeBookResponseDto.builder()
+                .id(
+                        bookService.changeBook(
+                                ChangeBookParamDtoMapper.INSTANCE.map(requestDto)
+                        )
+                )
+                .build();
+    }
+
+    @DeleteMapping("")
+    public DeleteBookResponseDto deleteBook(
+            @Valid @RequestBody final DeleteBookRequestDto requestDto
+    ) {
+
+        log.debug("[deleteBook]deleteDto={}", requestDto);
+
+        return DeleteBookResponseDto.builder()
+                .id(
+                        bookService.deleteBook(requestDto.getId())
                 )
                 .build();
     }

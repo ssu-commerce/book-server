@@ -92,6 +92,7 @@ public class BookService {
         findBook.setIsbn(paramDto.getIsbn());
         findBook.setMaxBorrowDay(paramDto.getMaxBorrowDay());
         findBook.setCategoryId(paramDto.getCategoryId());
+        bookRepository.save(findBook);
 
         return findBook.getId();
     }

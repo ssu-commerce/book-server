@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -55,6 +56,7 @@ public class BookService {
         return BookDetailDtoMapper.INSTANCE.map(book);
     }
 
+    @Transactional
     public Long registerBook(
             @NonNull @Valid final RegisterBookParamDto paramDto
     ) {
@@ -69,6 +71,7 @@ public class BookService {
         ).getId();
     }
 
+    @Transactional
     public Long changeBook(
             @NonNull @Valid final ChangeBookParamDto paramDto
     ) {
@@ -97,6 +100,7 @@ public class BookService {
         return findBook.getId();
     }
 
+    @Transactional
     public Long deleteBook(
             @NonNull @Valid final Long id
     ) {

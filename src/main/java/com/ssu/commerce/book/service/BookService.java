@@ -3,10 +3,8 @@ package com.ssu.commerce.book.service;
 
 import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
-import com.ssu.commerce.book.dto.mapper.BookDetailDtoMapper;
-import com.ssu.commerce.book.dto.mapper.BookDtoMapper;
-import com.ssu.commerce.book.dto.mapper.BookMapper;
-import com.ssu.commerce.book.dto.mapper.SelectBookListParamDtoMapper;
+import com.ssu.commerce.book.dto.mapper.*;
+import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.model.Book;
@@ -15,15 +13,14 @@ import com.ssu.commerce.book.persistence.CategoryRepository;
 import com.ssu.commerce.core.exception.NotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 
-@Slf4j
 @Service
 @Validated
 @RequiredArgsConstructor
@@ -59,6 +56,7 @@ public class BookService {
         return BookDetailDtoMapper.INSTANCE.map(book);
     }
 
+    @Transactional
     public Long registerBook(
             @NonNull @Valid final RegisterBookParamDto paramDto
     ) {
@@ -73,4 +71,45 @@ public class BookService {
         ).getId();
     }
 
+    @Transactional
+    public Long changeBook(
+            @NonNull @Valid final ChangeBookParamDto paramDto
+    ) {
+        categoryRepository.findById(paramDto.getCategoryId())
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("category not found; categoryId=%s", paramDto.getCategoryId()),
+                        "BOOK_002"
+        ));
+
+        Book findBook = bookRepository.findById(paramDto.getId())
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("book not found; bookId=%s", paramDto.getId()),
+                        "BOOK_001"
+                ));
+
+        findBook.setTitle(paramDto.getTitle());
+        findBook.setContent(paramDto.getContent());
+        findBook.setWriter(paramDto.getWriter());
+        findBook.setPrice(paramDto.getPrice());
+        findBook.setPublishDate(paramDto.getPublishDate());
+        findBook.setIsbn(paramDto.getIsbn());
+        findBook.setMaxBorrowDay(paramDto.getMaxBorrowDay());
+        findBook.setCategoryId(paramDto.getCategoryId());
+        bookRepository.save(findBook);
+
+        return findBook.getId();
+    }
+
+    @Transactional
+    public Long deleteBook(
+            @NonNull @Valid final Long id
+    ) {
+        Book findBook = bookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("book not found; bookId=%s", id),
+                        "BOOK_001"
+                ));
+        bookRepository.delete(findBook);
+        return id;
+    }
 }

@@ -7,7 +7,7 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:tc:mysql:///ssu-commerce-book-test
+    url: jdbc:tc:mysql:///
     username:
     password:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver

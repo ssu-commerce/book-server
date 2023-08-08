@@ -1,5 +1,6 @@
 package com.ssu.commerce.book.service;
 
+import com.ssu.commerce.book.config.QuerydslConfig;
 import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
@@ -8,12 +9,19 @@ import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.persistence.CategoryRepository;
 import com.ssu.commerce.book.supplier.BookTestDataSupplier;
 import com.ssu.commerce.core.exception.NotFoundException;
+import com.ssu.commerce.core.jpa.JpaConfig;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,6 +29,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class BookServiceTest implements BookTestDataSupplier {
     @Autowired
     private CategoryRepository categoryRepository;

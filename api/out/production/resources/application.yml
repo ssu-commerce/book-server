@@ -1,3 +1,7 @@
+grpc:
+  server:
+    port: 9091
+
 spring:
   jpa:
     hibernate:
@@ -6,6 +10,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  application:
+    name: user-service
+    main:
+      allow-circular-references: true
 
 springdoc:
   swagger-ui:
@@ -17,10 +25,3 @@ logging:
   level:
     p6spy: info
 
-server:
-  port: 8081
-grpc:
-  client:
-    test:
-      address: 'static://127.0.0.1:9090'
-      negotiationtype: plaintext

@@ -3,7 +3,7 @@ buildscript {
         coreVersion="2023.07.4"
         mapstructVersion = '1.5.5.Final'
         queryDSLVersion = '5.0.0'
-        grpcVersion="0.0.2"
+        grpcVersion="0.0.5"
     }
 }
 
@@ -86,8 +86,11 @@ dependencies {
     testImplementation 'org.testcontainers:jdbc:1.17.6'
 
     // for grpc
+    implementation ("com.ssu.commerce.order:grpc:$grpcVersion")
+    implementation 'link.jfire:simplerpc:1.0'
+    implementation 'io.github.HuChen-dot:simplerpc-spring-boot-starter:1.6'
+    implementation 'net.devh:grpc-server-spring-boot-starter:2.13.1.RELEASE'
     implementation 'net.devh:grpc-client-spring-boot-starter:2.13.1.RELEASE'
-    implementation ("com.ssu.commerce:grpc:$grpcVersion")
 }
 
 

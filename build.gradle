@@ -129,7 +129,7 @@ jacocoTestReport {
 
 sonar {
 	properties {
-		property "sonar.host.url", "ing-sonarqubedce-sonarqu-183cf-19211729-23788634d0d0.kr.lb.naverncp.com"
+		property "sonar.host.url", "http://ing-sonarqubedce-sonarqu-183cf-19211729-23788634d0d0.kr.lb.naverncp.com"
 		property "sonar.login", "squ_28152e0d4a8fb515025c6754c1208d376d9fb4f6"
 		property "sonar.projectKey", "book-server"
 		property "sonar.projectName" , "book-server"

@@ -108,6 +108,7 @@ sonar {
 	properties {
 		property "sonar.projectKey", "book-server"
 		property "sonar.projectName", "book-server"
+		property "sonar.exclusions", "**/*Generated.java"
 	}
 }
 

@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - ['*']
+      - feature/#11-sonar-b
   pull_request:
     types: [opened, synchronize, reopened]
 

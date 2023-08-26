@@ -120,8 +120,10 @@ jacoco {
 jacocoTestReport {
 	reports {
 		xml.enabled true // sonarqube 분석에 필요한 xml파일만 생성
+		xml.outputLocation = layout.buildDirectory.file("reports/jacoco.xml")
+
 		csv.enabled false
-		html.enabled false
+		html.enabled true
 	}
 
 }

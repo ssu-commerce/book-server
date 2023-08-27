@@ -7,6 +7,8 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Pageable;
 
+import java.util.UUID;
+
 @Mapper(
         componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.ERROR,
@@ -16,5 +18,5 @@ import org.springframework.data.domain.Pageable;
 public interface GetBookListParamMapper {
     GetBookListParamMapper INSTANCE = Mappers.getMapper(GetBookListParamMapper.class);
 
-    GetBookListParamDto map(String title, Long categoryId, Pageable pageable);
+    GetBookListParamDto map(String title, UUID categoryId, Pageable pageable);
 }

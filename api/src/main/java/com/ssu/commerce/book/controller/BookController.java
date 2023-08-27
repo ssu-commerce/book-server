@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 
 /*
@@ -36,7 +37,7 @@ public class BookController {
     @GetMapping("")
     public Page<GetBookResponseDto> getBookList(
             @RequestParam String title,
-            @RequestParam Long categoryId,
+            @RequestParam UUID categoryId,
             Pageable pageable
     ) {
 
@@ -57,7 +58,7 @@ public class BookController {
     // 단건 상세 조회
     @GetMapping("/{id}")
     public GetBookDetailResponseDto getBookDetail(
-            @PathVariable final Long id
+            @PathVariable final UUID id
     ) {
 
         log.debug("[getBook]id={}", id);

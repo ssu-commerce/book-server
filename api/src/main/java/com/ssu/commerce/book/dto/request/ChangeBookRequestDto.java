@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ChangeBookRequestDto {
     @NotEmpty
-    private Long id;
+    private UUID id;
 
     @NotEmpty
     private String title;
@@ -37,5 +38,5 @@ public class ChangeBookRequestDto {
     private Long maxBorrowDay;
 
     @NotNull
-    private Long categoryId;
+    private UUID categoryId;
 }

@@ -38,14 +38,14 @@ public class GrpcServerService extends GetBookListGrpc.GetBookListImplBase {
         for (BookDto list : dto.getContent()) {
             grpcDtoList.add(
                     com.ssu.commerce.order.grpc.BookDto.newBuilder()
-                            .setId(list.getId())
+         //                   .setId(list.getId())
                             .setTitle(list.getTitle())
                             .setContent(list.getContent())
                             .setWriter(list.getWriter())
                             .setPrice(list.getPrice())
                             .setIsbn(list.getIsbn())
                             .setMaxBorrowDay(list.getMaxBorrowDay())
-                            .setCategoryId(list.getCategoryId())
+       //                     .setCategoryId(list.getCategoryId())
                             .build()
             );
         }

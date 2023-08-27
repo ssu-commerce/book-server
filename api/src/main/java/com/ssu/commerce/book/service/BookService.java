@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @Service
 @Validated
@@ -45,7 +46,7 @@ public class BookService {
     }
 
     public BookDetailDto getBookDetail(
-            @NonNull final Long id
+            @NonNull final UUID id
     ) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
@@ -57,7 +58,7 @@ public class BookService {
     }
 
     @Transactional
-    public Long registerBook(
+    public UUID registerBook(
             @NonNull @Valid final RegisterBookParamDto paramDto
     ) {
         categoryRepository.findById(paramDto.getCategoryId())
@@ -72,7 +73,7 @@ public class BookService {
     }
 
     @Transactional
-    public Long changeBook(
+    public UUID changeBook(
             @NonNull @Valid final ChangeBookParamDto paramDto
     ) {
         categoryRepository.findById(paramDto.getCategoryId())
@@ -101,8 +102,8 @@ public class BookService {
     }
 
     @Transactional
-    public Long deleteBook(
-            @NonNull @Valid final Long id
+    public UUID deleteBook(
+            @NonNull @Valid final UUID id
     ) {
         Book findBook = bookRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(

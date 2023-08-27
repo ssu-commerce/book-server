@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import static com.ssu.commerce.book.model.QBook.book;
 import static com.ssu.commerce.book.model.QCategory.category;
@@ -66,7 +67,7 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
     }
 
     private BooleanExpression eqCategoryId(
-            final Long categoryId
+            final UUID categoryId
     ) {
         return Objects.nonNull(categoryId)
                 ? book.categoryId.eq(categoryId)

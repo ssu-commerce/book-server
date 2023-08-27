@@ -1,13 +1,14 @@
 package com.ssu.commerce.book.model;
 
-import com.ssu.commerce.core.jpa.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 /*
@@ -26,9 +27,10 @@ import java.time.LocalDateTime;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "id", columnDefinition = "BINARY(16)")
+    private UUID id;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -42,8 +44,8 @@ public class Book {
     @Column(name = "price")
     private Long price;
 
-    @Column(name = "owner_id")
-    private Long ownerId;
+    @Column(name = "owner_id", columnDefinition = "BINARY(16)")
+    private UUID ownerId;
 
     @Column(name = "publish_date")
     private LocalDateTime publishDate;
@@ -54,5 +56,6 @@ public class Book {
     @Column(name = "max_borrow_day")
     private Long maxBorrowDay;
 
-    private Long categoryId;
+    @Column(name = "category_id", columnDefinition = "BINARY(16)")
+    private UUID categoryId;
 }

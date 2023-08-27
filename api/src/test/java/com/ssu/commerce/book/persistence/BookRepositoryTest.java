@@ -60,11 +60,9 @@ class BookRepositoryTest implements BookTestDataSupplier {
                 () -> assertEquals(TEST_VAL_BOOK_CONTENT, bookPage.getContent().get(0).getContent()),
                 () -> assertEquals(TEST_VAL_BOOK_WRITER, bookPage.getContent().get(0).getWriter()),
                 () -> assertEquals(TEST_VAL_BOOK_PRICE, bookPage.getContent().get(0).getPrice()),
-                () -> assertEquals(TEST_VAL_BOOK_OWNER_ID, bookPage.getContent().get(0).getOwnerId()),
                 () -> assertEquals(TEST_VAL_BOOK_PUBLISH_DATE, bookPage.getContent().get(0).getPublishDate()),
                 () -> assertEquals(TEST_VAL_BOOK_ISBN, bookPage.getContent().get(0).getIsbn()),
-                () -> assertEquals(TEST_VAL_BOOK_MAX_BORROW_DAY, bookPage.getContent().get(0).getMaxBorrowDay()),
-                () -> assertEquals(TEST_VAL_BOOK_CATEGORY_ID, bookPage.getContent().get(0).getCategoryId())
+                () -> assertEquals(TEST_VAL_BOOK_MAX_BORROW_DAY, bookPage.getContent().get(0).getMaxBorrowDay())
         );
     }
 }

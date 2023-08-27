@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -30,5 +31,5 @@ public class RegisterBookParamDto {
     private Long maxBorrowDay;
 
     @NotNull
-    private Long categoryId;
+    private UUID categoryId;
 }

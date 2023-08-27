@@ -1,1 +1,3 @@
 rootProject.name = 'book-server'
+include('api')
+include('grpc')

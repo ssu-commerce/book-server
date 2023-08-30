@@ -3,3 +3,8 @@ gradle.properties
 build/**
 out/**
 spy.log
+grpc/src/generated/**
+grpc/build/**
+**.class
+api/build/**
+api/out/**

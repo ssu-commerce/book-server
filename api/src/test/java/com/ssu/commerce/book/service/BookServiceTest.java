@@ -1,11 +1,8 @@
 package com.ssu.commerce.book.service;
 
 import com.ssu.commerce.book.dto.BookDetailDto;
-import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
-import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
-import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.model.Category;
 import com.ssu.commerce.book.persistence.CategoryRepository;
 import com.ssu.commerce.book.supplier.BookTestDataSupplier;
@@ -15,16 +12,15 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@DirtiesContext
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")

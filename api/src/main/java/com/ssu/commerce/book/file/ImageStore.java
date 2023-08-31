@@ -5,8 +5,10 @@ import com.ssu.commerce.core.exception.SsuCommerceException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,8 +25,8 @@ public class ImageStore {
         return fileDir + fileName;
     }
 
-    public List<Image> storeFiles(UUID bookId, List<MultipartFile> multipartFileList) throws IOException {
-        if (multipartFileList == null) {
+    public List<Image> storeFiles(@NotNull final UUID bookId, @NotNull final List<MultipartFile> multipartFileList) throws IOException {
+        if (CollectionUtils.isEmpty(multipartFileList)) {
             throw new SsuCommerceException(HttpStatus.BAD_REQUEST, "IMAGE_001", "FILE IS NULL");
         }
         List<Image> storeFileList = new ArrayList<>();

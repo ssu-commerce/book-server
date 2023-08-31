@@ -27,8 +27,7 @@ import java.util.UUID;
 @RequestMapping("/v1/image")
 public class ImageController {
 
-    @Autowired
-    private ImageStore imageStore;
+    private final ImageStore imageStore;
 
     private final ImageService imageService;
 

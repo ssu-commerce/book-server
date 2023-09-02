@@ -63,7 +63,7 @@ jobs:
           paths: |
             ${{ github.workspace }}/api/build/reports/**/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 17.46
+          min-coverage-overall: 18.46
           min-coverage-changed-files: 100
 
       - name: Publish Test Report

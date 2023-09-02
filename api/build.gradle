@@ -152,6 +152,21 @@ jacocoTestReport {
 
 }
 
+jacocoTestCoverageVerification {
+    // 이 커버리지 기준은 이 글의 맨 아래에서 다시 설명하겠습니다.
+    violationRules {
+        rule {
+            element = 'CLASS'
+
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.90
+            }
+        }
+    }
+}
+
 def sonarToken = project.findProperty("sonar.token") == null ? System.getenv("SONAR_TOKEN") : project.findProperty("sonar.token")
 
 sonar {

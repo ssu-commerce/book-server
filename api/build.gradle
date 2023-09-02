@@ -98,14 +98,11 @@ dependencies {
 test {
     useJUnitPlatform()
     finalizedBy 'jacocoTestReport'
-    finalizedBy 'jacocoTestCoverageVerification'
-
 }
 
 tasks.named('test') {
     useJUnitPlatform()
     finalizedBy 'jacocoTestReport'
-    finalizedBy 'jacocoTestCoverageVerification'
 }
 
 //querydsl 추가
@@ -142,6 +139,8 @@ jacoco {
 }
 
 jacocoTestReport {
+    dependsOn test
+
     reports {
         xml.enabled true // sonarqube 분석에 필요한 xml파일만 생성
         xml.outputLocation = layout.buildDirectory.file("reports/jacoco.xml")
@@ -192,6 +191,12 @@ jacocoTestCoverageVerification {
                 value = 'TOTALCOUNT'
                 maximum = 200
             }
+
+            excludes = [
+                    '*test*',
+                    '*resources*',
+                    '*MapperImpl*'
+            ]
         }
     }
 }

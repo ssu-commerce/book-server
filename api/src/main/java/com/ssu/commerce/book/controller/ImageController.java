@@ -27,8 +27,6 @@ import java.util.UUID;
 @RequestMapping("/v1/image")
 public class ImageController {
 
-    private final ImageStore imageStore;
-
     private final ImageService imageService;
 
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -52,7 +50,9 @@ public class ImageController {
 
     @ResponseBody
     @GetMapping(value = "/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public Resource downloadRepresentImage(@PathVariable UUID imageId) throws MalformedURLException {
-        return new UrlResource("file:" + imageStore.getFullPath(imageId.toString()));
+    public Resource downloadImage(
+            @NotNull @PathVariable final UUID imageId
+    ) throws IOException {
+        return imageService.downloadImage(imageId.toString());
     }
 }

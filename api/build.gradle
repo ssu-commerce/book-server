@@ -98,6 +98,7 @@ dependencies {
 
     // LocalDateTime serialize for test
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.5'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
 
 }

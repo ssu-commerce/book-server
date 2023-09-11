@@ -2,12 +2,21 @@ package com.ssu.commerce.book.supplier;
 
 import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
+import com.ssu.commerce.book.dto.mapper.BookDtoMapper;
+import com.ssu.commerce.book.dto.mapper.GetBookListParamMapper;
+import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
+import com.ssu.commerce.book.dto.param.GetBookListParamDto;
+import com.ssu.commerce.book.dto.request.ChangeBookRequestDto;
 import com.ssu.commerce.book.dto.request.DeleteBookRequestDto;
 import com.ssu.commerce.book.dto.request.RegisterBookRequestDto;
 import com.ssu.commerce.book.dto.response.ChangeBookResponseDto;
-import com.ssu.commerce.book.dto.response.DeleteBookResponseDto;
+import com.ssu.commerce.book.dto.response.GetBookResponseDto;
+import com.ssu.commerce.book.model.Book;
+import org.springframework.data.domain.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public interface BookControllerTestDataSupplier {
@@ -32,8 +41,8 @@ public interface BookControllerTestDataSupplier {
     UUID TEST_VAL_ANOTHER_BOOK_DTO_ID = UUID.fromString("e92a4553-9e43-401f-9d14-cfce1d90164b");
     UUID TEST_VAL_ANOTHER_OWNER_ID = UUID.fromString("6fa9bc31-591b-40b9-b498-48fb6392c75a");
 
-    static BookDto getBookDto() {
-        return BookDto.builder()
+    static Book getBook() {
+        return Book.builder()
                 .id(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_BOOK_TITLE)
                 .content(TEST_VAL_BOOK_CONTENT)
@@ -47,8 +56,8 @@ public interface BookControllerTestDataSupplier {
                 .build();
     }
 
-    static BookDto getAnotherBookDto() {
-        return BookDto.builder()
+    static Book getAnotherBook() {
+        return Book.builder()
                 .id(TEST_VAL_ANOTHER_BOOK_DTO_ID)
                 .title(TEST_VAL_BOOK_TITLE)
                 .content(TEST_VAL_BOOK_CONTENT)
@@ -99,6 +108,62 @@ public interface BookControllerTestDataSupplier {
     static DeleteBookRequestDto getDeleteBookRequestDto() {
         return DeleteBookRequestDto.builder()
                 .id(UUID.randomUUID())
+                .build();
+    }
+
+    static List<GetBookResponseDto> getGetBookResponseDto() {
+        return Arrays.asList(
+                GetBookResponseDto.builder()
+                        .id(TEST_VAL_BOOK_ID)
+                        .title(TEST_VAL_BOOK_TITLE)
+                        .content(TEST_VAL_BOOK_CONTENT)
+                        .writer(TEST_VAL_BOOK_WRITER)
+                        .price(TEST_VAL_BOOK_PRICE)
+                        .ownerId(TEST_VAL_OWNER_ID)
+                        .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                        .isbn(TEST_VAL_BOOK_ISBN)
+                        .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                        .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                        .build(),
+                GetBookResponseDto.builder()
+                        .id(TEST_VAL_ANOTHER_BOOK_DTO_ID)
+                        .title(TEST_VAL_BOOK_TITLE)
+                        .content(TEST_VAL_BOOK_CONTENT)
+                        .writer(TEST_VAL_BOOK_WRITER)
+                        .price(TEST_VAL_BOOK_PRICE)
+                        .ownerId(TEST_VAL_ANOTHER_OWNER_ID)
+                        .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                        .isbn(TEST_VAL_BOOK_ISBN)
+                        .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                        .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                        .build()
+        );
+    }
+
+    static GetBookListParamDto getGetBookListParamDto() {
+
+        return GetBookListParamMapper.INSTANCE.map(null, null, PageRequest.of(0, 20, Sort.by("id")));
+    }
+
+    static Page<BookDto> getBookDtoPage(List<Book> bookDtoList) {
+        return new PageImpl<>(
+                BookDtoMapper.INSTANCE.mapToList(bookDtoList),
+                PageRequest.of(0, 20, Sort.unsorted()),
+                bookDtoList.size()
+        );
+    }
+
+    static ChangeBookRequestDto getChangeBookRequestDto() {
+        return ChangeBookRequestDto.builder()
+                .id(TEST_VAL_BOOK_ID)
+                .title(TEST_VAL_BOOK_TITLE)
+                .content(TEST_VAL_BOOK_CONTENT)
+                .writer(TEST_VAL_BOOK_WRITER)
+                .price(TEST_VAL_BOOK_PRICE)
+                .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                .isbn(TEST_VAL_BOOK_ISBN)
+                .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
                 .build();
     }
 }

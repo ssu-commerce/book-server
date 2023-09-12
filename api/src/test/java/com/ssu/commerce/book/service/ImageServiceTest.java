@@ -17,6 +17,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -36,12 +37,6 @@ public class ImageServiceTest {
 
     @Mock
     private ImageStore imageStore;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
 
     @Test
     void registerImage() {
@@ -71,15 +66,15 @@ public class ImageServiceTest {
     }
 
     @Test
-    public void downloadImage() {
+    public void downloadImage() throws IOException {
         String id = UUID.randomUUID().toString();
         String path = UUID.randomUUID().toString();
         Resource fakeImageResource = mock(UrlResource.class);
 
-        assertDoesNotThrow(() -> {
-            when(imageStore.getFullPath(id)).thenReturn(path);
-            when(imageService.getImageFromPath(path)).thenReturn(fakeImageResource);
+        doReturn(path).when(imageStore).getFullPath(id);
+        doReturn(fakeImageResource).when(imageService).getImageFromPath(path);
 
+        assertDoesNotThrow(() -> {
             Resource imageResource = imageService.downloadImage(id);
             assertEquals(fakeImageResource, imageResource);
         });

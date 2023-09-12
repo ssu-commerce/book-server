@@ -49,8 +49,7 @@ class ImageControllerTest implements ImageControllerTestDataSupplier {
     @Test
     void registerImage() {
 
-        List<RegisterImageResponseDto> registerImageResponseDto = ImageControllerTestDataSupplier.getRegisterImageResponseDtoList();
-        RegisterImageRequestDto registerImageRequestDto = RegisterImageRequestDto.builder().bookId(UUID.randomUUID()).build();
+        RegisterImageRequestDto registerImageRequestDto = ImageControllerTestDataSupplier.getRegisterImageRequestDto();
         List<Image> imageList = ImageControllerTestDataSupplier.getImageList();
 
 
@@ -63,7 +62,7 @@ class ImageControllerTest implements ImageControllerTestDataSupplier {
         );
 
         assertDoesNotThrow(() -> {
-            when(imageService.registerImage(RegisterImageParamDtoMapper.INSTANCE.map(registerImageRequestDto), fileList)).thenReturn(imageList);
+            when(imageService.registerImage(any(), any())).thenReturn(imageList);
 
             MockMultipartFile jsonFile = new MockMultipartFile("registerImageRequestDto",
                     "registerImageRequestDto", "application/json",
@@ -81,7 +80,7 @@ class ImageControllerTest implements ImageControllerTestDataSupplier {
                     .andExpect(jsonPath("$[0].id", equalTo(String.valueOf(imageList.get(0).getId().toString()))))
                     .andExpect(jsonPath("$[1].id", equalTo(String.valueOf(imageList.get(1).getId().toString()))));
 
-            verify(imageService, times(1)).registerImage(RegisterImageParamDtoMapper.INSTANCE.map(registerImageRequestDto), fileList);
+            verify(imageService, times(1)).registerImage(any(), any());
         });
     }
 

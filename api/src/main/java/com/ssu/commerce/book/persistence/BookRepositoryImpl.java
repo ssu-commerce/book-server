@@ -4,6 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
+import com.ssu.commerce.book.dto.param.query.UpdateBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,26 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
                 );
 
         return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
+    }
+
+    @Override
+    public Book changeBook(@NonNull UpdateBookParamDto paramDto) {
+        jpaQueryFactory.update(book)
+                .where(
+                        book.id.eq(paramDto.getId()),
+                        eqCategoryId(paramDto.getCategoryId())
+                )
+                .set(book.title, paramDto.getTitle())
+                .set(book.content, paramDto.getContent())
+                .set(book.price, paramDto.getPrice())
+                .set(book.publishDate, paramDto.getPublishDate())
+                .set(book.isbn, paramDto.getIsbn())
+                .set(book.maxBorrowDay, paramDto.getMaxBorrowDay())
+                .execute();
+
+        return jpaQueryFactory.select(book)
+                .where(book.id.eq(paramDto.getId()))
+                .fetchOne();
     }
 
     private BooleanExpression likeTitle(

@@ -1,6 +1,7 @@
 package com.ssu.commerce.book.persistence;
 
 import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
+import com.ssu.commerce.book.dto.param.query.UpdateBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import lombok.NonNull;
 import org.springframework.data.domain.Page;
@@ -13,4 +14,6 @@ public interface BookRepositoryCustom {
             @NonNull @Valid final SelectBookListParamDto paramDto,
             @NonNull final Pageable pageable
     );
+
+    Book changeBook(@NonNull @Valid final UpdateBookParamDto paramDto);
 }

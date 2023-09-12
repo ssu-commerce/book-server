@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.util.List;
 
 @Service
@@ -31,26 +30,17 @@ public class ImageService {
     public List<Image> registerImage(RegisterImageParamDto dto, List<MultipartFile> fileList) throws IOException {
         List<Image> imageList = imageStore.storeFiles(dto.getBookId(), fileList);
 
-        imageRepository.saveAll(imageList);
-
-        return imageList;
+        return imageRepository.saveAll(imageList);
     }
-
-    public String getFullPath(String fileName) {
-        return imageStore.getFullPath(fileName);
-    }
-
 
     public Resource downloadImage(String imageId) throws IOException {
-        InputStream inputStream = getImageInputStream(imageId); // 이미지 파일의 InputStream 가져오기
-        return new InputStreamResource(inputStream);
+        String imagePath = imageStore.getFullPath(imageId);
+        return getImageFromPath(imagePath);
     }
 
-    public InputStream getImageInputStream(String imageId) throws IOException {
-        String imagePath = getFullPath(imageId);
+    public Resource getImageFromPath(String imagePath) throws IOException {
         Resource imageResource = new UrlResource("file:" + imagePath);
-
         InputStream inputStream = imageResource.getInputStream();
-        return inputStream;
+        return new InputStreamResource(inputStream);
     }
 }

@@ -92,6 +92,15 @@ dependencies {
     implementation 'io.github.HuChen-dot:simplerpc-spring-boot-starter:1.6'
     implementation 'net.devh:grpc-server-spring-boot-starter:2.13.1.RELEASE'
     implementation 'net.devh:grpc-client-spring-boot-starter:2.13.1.RELEASE'
+
+    // Spring Security Test
+    testImplementation 'org.springframework.security:spring-security-test:5.6.2'
+
+    // LocalDateTime serialize for test
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.5'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+
 }
 
 

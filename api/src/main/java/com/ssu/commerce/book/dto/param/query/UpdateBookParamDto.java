@@ -1,24 +1,18 @@
-package com.ssu.commerce.book.dto.response;
+package com.ssu.commerce.book.dto.param.query;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class GetBookResponseDto {
+@Builder
+public class UpdateBookParamDto {
     private UUID id;
     private String title;
     private String content;
-    private String writer;
     private Long price;
-    private UUID ownerId;
     private LocalDateTime publishDate;
     private String isbn;
     private Long maxBorrowDay;

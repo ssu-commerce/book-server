@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,8 +37,8 @@ public class BookController {
     // 리스트 검색
     @GetMapping("")
     public Page<GetBookResponseDto> getBookList(
-            @RequestParam String title,
-            @RequestParam UUID categoryId,
+            @Nullable @RequestParam String title,
+            @Nullable @RequestParam UUID categoryId,
             Pageable pageable
     ) {
 

@@ -1,16 +1,24 @@
 package com.ssu.commerce.book.supplier;
 
+import com.ssu.commerce.book.dto.BookDetailDto;
+import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
+import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
+import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.model.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public interface BookTestDataSupplier {
-    Long TEST_VAL_BOOK_ID = 10L;
+    UUID TEST_VAL_BOOK_ID = UUID.fromString("60180817-de61-4bac-a777-16219ffb92c0");
     String TEST_VAL_BOOK_TITLE = "비가 오면 열리는 상점";
     String TEST_VAL_BOOK_CONTENT = "불행을 파는 대신 원하는 행복을 살 수 있는 가게가 있다면? " +
             "듣기만 해도 방문하고 싶어지는, 비가 오면 열리는 수상한 상점에 초대된 여고생 세린이 안내묘 잇샤, " +
@@ -55,6 +63,45 @@ public interface BookTestDataSupplier {
                 .build();
     }
 
+    static Book getBookWithId() {
+        return Book.builder()
+                .id(TEST_VAL_BOOK_ID)
+                .title(TEST_VAL_BOOK_TITLE)
+                .content(TEST_VAL_BOOK_CONTENT)
+                .writer(TEST_VAL_BOOK_WRITER)
+                .price(TEST_VAL_BOOK_PRICE)
+                .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                .isbn(TEST_VAL_BOOK_ISBN)
+                .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .build();
+    }
+
+    static List<Book> getBookList() {
+        return Arrays.asList(
+                Book.builder()
+                        .title(TEST_VAL_BOOK_TITLE)
+                        .content(TEST_VAL_BOOK_CONTENT)
+                        .writer(TEST_VAL_BOOK_WRITER)
+                        .price(TEST_VAL_BOOK_PRICE)
+                        .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                        .isbn(TEST_VAL_BOOK_ISBN)
+                        .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                        .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                        .build(),
+                Book.builder()
+                        .title(TEST_VAL_CHANGE_BOOK_TITLE)
+                        .content(TEST_VAL_CHANGE_BOOK_CONTENT)
+                        .writer(TEST_VAL_CHANGE_BOOK_WRITER)
+                        .price(TEST_VAL_CHANGE_BOOK_PRICE)
+                        .publishDate(TEST_VAL_CHANGE_BOOK_PUBLISH_DATE)
+                        .isbn(TEST_VAL_CHANGE_BOOK_ISBN)
+                        .maxBorrowDay(TEST_VAL_CHANGE_BOOK_MAX_BORROW_DAY)
+                        .categoryId(TEST_VAL_CHANGE_BOOK_CATEGORY_ID)
+                        .build()
+        );
+    }
+
     static Category getCategory() {
         return Category.builder()
                 .name(TEST_VAL_CATEGORY_NAME)
@@ -70,9 +117,8 @@ public interface BookTestDataSupplier {
                 .build();
     }
 
-    static ChangeBookParamDto updateBook(UUID id, UUID categoryId) {
-        return ChangeBookParamDto.builder()
-                .id(id)
+    static RegisterBookParamDto getRegisterBookParamDto() {
+        return RegisterBookParamDto.builder()
                 .title(TEST_VAL_CHANGE_BOOK_TITLE)
                 .content(TEST_VAL_CHANGE_BOOK_CONTENT)
                 .writer(TEST_VAL_CHANGE_BOOK_WRITER)
@@ -80,7 +126,61 @@ public interface BookTestDataSupplier {
                 .publishDate(TEST_VAL_CHANGE_BOOK_PUBLISH_DATE)
                 .isbn(TEST_VAL_CHANGE_BOOK_ISBN)
                 .maxBorrowDay(TEST_VAL_CHANGE_BOOK_MAX_BORROW_DAY)
-                .categoryId(categoryId)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .build();
+    }
+
+    static ChangeBookParamDto getChangeBookParamDto() {
+        return ChangeBookParamDto.builder()
+                .id(TEST_VAL_BOOK_ID)
+                .title(TEST_VAL_CHANGE_BOOK_TITLE)
+                .content(TEST_VAL_CHANGE_BOOK_CONTENT)
+                .writer(TEST_VAL_CHANGE_BOOK_WRITER)
+                .price(TEST_VAL_CHANGE_BOOK_PRICE)
+                .publishDate(TEST_VAL_CHANGE_BOOK_PUBLISH_DATE)
+                .isbn(TEST_VAL_CHANGE_BOOK_ISBN)
+                .maxBorrowDay(TEST_VAL_CHANGE_BOOK_MAX_BORROW_DAY)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .build();
+    }
+
+    static Page<BookDto> getBookDtoList() {
+        return new PageImpl<>(
+                Arrays.asList(
+                        BookDto.builder()
+                                .title(TEST_VAL_BOOK_TITLE)
+                                .content(TEST_VAL_BOOK_CONTENT)
+                                .writer(TEST_VAL_BOOK_WRITER)
+                                .price(TEST_VAL_BOOK_PRICE)
+                                .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                                .isbn(TEST_VAL_BOOK_ISBN)
+                                .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                                .build(),
+                        BookDto.builder()
+                                .title(TEST_VAL_CHANGE_BOOK_TITLE)
+                                .content(TEST_VAL_CHANGE_BOOK_CONTENT)
+                                .writer(TEST_VAL_CHANGE_BOOK_WRITER)
+                                .price(TEST_VAL_CHANGE_BOOK_PRICE)
+                                .publishDate(TEST_VAL_CHANGE_BOOK_PUBLISH_DATE)
+                                .isbn(TEST_VAL_CHANGE_BOOK_ISBN)
+                                .maxBorrowDay(TEST_VAL_CHANGE_BOOK_MAX_BORROW_DAY)
+                                .categoryId(TEST_VAL_CHANGE_BOOK_CATEGORY_ID)
+                                .build()
+                )
+        );
+    }
+
+    static BookDetailDto getBookDetailDto() {
+        return BookDetailDto.builder()
+                .title(TEST_VAL_BOOK_TITLE)
+                .content(TEST_VAL_BOOK_CONTENT)
+                .writer(TEST_VAL_BOOK_WRITER)
+                .price(TEST_VAL_BOOK_PRICE)
+                .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                .isbn(TEST_VAL_BOOK_ISBN)
+                .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
                 .build();
     }
 }

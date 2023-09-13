@@ -8,3 +8,4 @@ grpc/build/**
 **.class
 api/build/**
 api/out/**
+data/**

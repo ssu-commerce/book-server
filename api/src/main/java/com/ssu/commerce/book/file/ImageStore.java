@@ -27,7 +27,7 @@ public class ImageStore {
 
     public List<Image> storeFiles(@NotNull final UUID bookId, @NotNull final List<MultipartFile> multipartFileList) throws IOException {
         if (CollectionUtils.isEmpty(multipartFileList)) {
-            throw new SsuCommerceException(HttpStatus.BAD_REQUEST, "IMAGE_001", "FILE IS NULL");
+            throw new SsuCommerceException(HttpStatus.BAD_REQUEST, "IMAGE_001", "INVALID FILE");
         }
         List<Image> storeFileList = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFileList) {

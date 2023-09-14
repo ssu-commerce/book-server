@@ -143,23 +143,38 @@ class BookServiceTest implements BookTestDataSupplier {
         ChangeBookParamDto changeBookParamDto = BookTestDataSupplier.getChangeBookParamDto();
 
         when(categoryRepository.findById(categoryId)).thenReturn(category);
+        when(bookRepository.findById(bookId)).thenReturn(Optional.ofNullable(book));
         when(bookRepository.changeBook(UpdateBookParamDtoMapper.INSTANCE.map(changeBookParamDto))).thenReturn(book);
 
         UUID changeId = bookService.changeBook(changeBookParamDto);
         assertEquals(changeId, bookId);
 
         verify(categoryRepository, times(1)).findById(categoryId);
-        verify(bookRepository, times(1)).changeBook(UpdateBookParamDtoMapper.INSTANCE.map(changeBookParamDto));
+        verify(bookRepository, times(1)).findById(bookId);
     }
 
     @Test
     void changeBookCategoryError() {
         UUID categoryId = TEST_VAL_BOOK_CATEGORY_ID;
         String expectedErrorMessage = "category not found; categoryId=" + categoryId;
-        Book book = BookTestDataSupplier.getBookWithId();
         ChangeBookParamDto changeBookParamDto = BookTestDataSupplier.getChangeBookParamDto();
 
-        when(bookRepository.save(any())).thenReturn(book);
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> {
+            bookService.changeBook(changeBookParamDto);
+        });
+
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    void changeBook_BookError() {
+        UUID bookId = TEST_VAL_BOOK_ID;
+        String expectedErrorMessage = "book not found; bookId=" + bookId;
+        ChangeBookParamDto changeBookParamDto = BookTestDataSupplier.getChangeBookParamDto();
+        UUID categoryId = TEST_VAL_BOOK_CATEGORY_ID;
+        Optional<Category> category = Optional.ofNullable(BookTestDataSupplier.getCategory());
+
+        when(categoryRepository.findById(categoryId)).thenReturn(category);
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> {
             bookService.changeBook(changeBookParamDto);

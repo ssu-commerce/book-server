@@ -17,10 +17,6 @@ spring:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
     hikari:
       maximum-pool-size: 5
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:sql/schema-test.sql
 
 springdoc:
   swagger-ui:

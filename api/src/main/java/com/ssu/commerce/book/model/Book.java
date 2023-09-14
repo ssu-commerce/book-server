@@ -1,12 +1,13 @@
 package com.ssu.commerce.book.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
+import com.ssu.commerce.core.exception.NotFoundException;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -58,4 +59,16 @@ public class Book {
 
     @Column(name = "category_id", columnDefinition = "BINARY(16)")
     private UUID categoryId;
+
+    public Book changeBook(ChangeBookParamDto paramDto) {
+        this.title = paramDto.getTitle();
+        this.content = paramDto.getContent();
+        this.writer = paramDto.getWriter();
+        this.price = paramDto.getPrice();
+        this.publishDate = paramDto.getPublishDate();
+        this.isbn = paramDto.getIsbn();
+        this.maxBorrowDay = paramDto.getMaxBorrowDay();
+        this.categoryId = paramDto.getCategoryId();
+        return this;
+    }
 }

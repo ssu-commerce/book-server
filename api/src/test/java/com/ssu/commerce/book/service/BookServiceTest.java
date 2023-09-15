@@ -141,6 +141,7 @@ class BookServiceTest implements BookTestDataSupplier {
         UUID bookId = TEST_VAL_BOOK_ID;
         UUID categoryId = TEST_VAL_BOOK_CATEGORY_ID;
         ChangeBookParamDto changeBookParamDto = BookTestDataSupplier.getChangeBookParamDto();
+        Book changedBook = BookTestDataSupplier.getChangedBook();
 
         when(categoryRepository.findById(categoryId)).thenReturn(category);
         when(bookRepository.findById(bookId)).thenReturn(Optional.ofNullable(book));
@@ -148,6 +149,7 @@ class BookServiceTest implements BookTestDataSupplier {
 
         UUID changeId = bookService.changeBook(changeBookParamDto);
         assertEquals(changeId, bookId);
+        assertEquals(changedBook, book);
 
         verify(categoryRepository, times(1)).findById(categoryId);
         verify(bookRepository, times(1)).findById(bookId);

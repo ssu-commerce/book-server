@@ -1,13 +1,10 @@
 package com.ssu.commerce.book.model;
 
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
-import com.ssu.commerce.core.exception.NotFoundException;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -60,7 +57,7 @@ public class Book {
     @Column(name = "category_id", columnDefinition = "BINARY(16)")
     private UUID categoryId;
 
-    public Book changeBook(ChangeBookParamDto paramDto) {
+    public Book update(ChangeBookParamDto paramDto) {
         this.title = paramDto.getTitle();
         this.content = paramDto.getContent();
         this.writer = paramDto.getWriter();

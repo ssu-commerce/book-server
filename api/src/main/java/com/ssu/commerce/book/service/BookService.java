@@ -88,7 +88,7 @@ public class BookService {
                         "BOOK_001"
                 ));
 
-        return findBook.changeBook(paramDto).getId();
+        return findBook.update(paramDto).getId();
     }
 
     @Transactional

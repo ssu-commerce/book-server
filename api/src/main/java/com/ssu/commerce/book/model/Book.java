@@ -1,9 +1,7 @@
 package com.ssu.commerce.book.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -58,4 +56,16 @@ public class Book {
 
     @Column(name = "category_id", columnDefinition = "BINARY(16)")
     private UUID categoryId;
+
+    public Book update(ChangeBookParamDto paramDto) {
+        this.title = paramDto.getTitle();
+        this.content = paramDto.getContent();
+        this.writer = paramDto.getWriter();
+        this.price = paramDto.getPrice();
+        this.publishDate = paramDto.getPublishDate();
+        this.isbn = paramDto.getIsbn();
+        this.maxBorrowDay = paramDto.getMaxBorrowDay();
+        this.categoryId = paramDto.getCategoryId();
+        return this;
+    }
 }

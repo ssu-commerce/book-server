@@ -77,15 +77,18 @@ public class BookService {
             @NonNull @Valid final ChangeBookParamDto paramDto
     ) {
         categoryRepository.findById(paramDto.getCategoryId())
-                        .orElseThrow(() -> new NotFoundException(
+                .orElseThrow(() -> new NotFoundException(
                         String.format("category not found; categoryId=%s", paramDto.getCategoryId()),
                         "BOOK_002"
-        ));
+                ));
 
-        return bookRepository.changeBook(
-                UpdateBookParamDtoMapper.INSTANCE.map(
-                        paramDto)
-                ).getId();
+        Book findBook = bookRepository.findById(paramDto.getId())
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("book not found; bookId=%s", paramDto.getId()),
+                        "BOOK_001"
+                ));
+
+        return findBook.update(paramDto).getId();
     }
 
     @Transactional

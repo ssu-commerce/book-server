@@ -1,5 +1,6 @@
 package com.ssu.commerce.book.model;
 
+import com.ssu.commerce.book.constant.code.BookState;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -56,6 +57,9 @@ public class Book {
 
     @Column(name = "category_id", columnDefinition = "BINARY(16)")
     private UUID categoryId;
+
+    @Column(name = "book_state")
+    private BookState bookState;
 
     public Book update(ChangeBookParamDto paramDto) {
         this.title = paramDto.getTitle();

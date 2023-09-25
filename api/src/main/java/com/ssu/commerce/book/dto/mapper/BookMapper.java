@@ -1,11 +1,9 @@
 package com.ssu.commerce.book.dto.mapper;
 
+import com.ssu.commerce.book.constant.code.BookState;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.model.Book;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.NullValueMappingStrategy;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(
@@ -19,5 +17,11 @@ public interface BookMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "ownerId", ignore = true)
+    @Mapping(target = "bookState", ignore = true)
     Book map(RegisterBookParamDto paramDto);
+
+    @AfterMapping
+    default void setDefaultValues(@MappingTarget Book book) {
+        book.setBookState(BookState.REGISTERED);
+    }
 }

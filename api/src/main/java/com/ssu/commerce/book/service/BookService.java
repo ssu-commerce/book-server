@@ -1,6 +1,7 @@
 package com.ssu.commerce.book.service;
 
 
+import com.ssu.commerce.book.annotation.DistributedLock;
 import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.mapper.*;
@@ -13,6 +14,7 @@ import com.ssu.commerce.book.persistence.CategoryRepository;
 import com.ssu.commerce.core.exception.NotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -72,8 +74,9 @@ public class BookService {
         ).getId();
     }
 
+    @DistributedLock
     @Transactional
-    public UUID changeBook(
+    public Book changeBook(
             @NonNull @Valid final ChangeBookParamDto paramDto
     ) {
         categoryRepository.findById(paramDto.getCategoryId())
@@ -88,7 +91,7 @@ public class BookService {
                         "BOOK_001"
                 ));
 
-        return findBook.update(paramDto).getId();
+        return findBook.update(paramDto);
     }
 
     @Transactional

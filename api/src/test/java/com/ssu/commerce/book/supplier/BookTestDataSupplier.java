@@ -144,6 +144,20 @@ public interface BookTestDataSupplier {
                 .build();
     }
 
+    static ChangeBookParamDto getChangeBookParamDtoRandom(long n) {
+        return ChangeBookParamDto.builder()
+                .id(TEST_VAL_BOOK_ID)
+                .title(TEST_VAL_CHANGE_BOOK_TITLE)
+                .content(TEST_VAL_CHANGE_BOOK_CONTENT)
+                .writer(TEST_VAL_CHANGE_BOOK_WRITER)
+                .price(TEST_VAL_CHANGE_BOOK_PRICE)
+                .publishDate(TEST_VAL_CHANGE_BOOK_PUBLISH_DATE.plusSeconds(n))
+                .isbn(TEST_VAL_CHANGE_BOOK_ISBN)
+                .maxBorrowDay(TEST_VAL_CHANGE_BOOK_MAX_BORROW_DAY)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .build();
+    }
+
     static Book getChangedBook() {
         return Book.builder()
                 .id(TEST_VAL_BOOK_ID)

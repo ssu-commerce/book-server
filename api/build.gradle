@@ -85,6 +85,7 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter:1.17.6'
     testImplementation 'org.testcontainers:mysql:1.17.6'
     testImplementation 'org.testcontainers:jdbc:1.17.6'
+    implementation "org.testcontainers:testcontainers:1.17.6"
 
     // for grpc
     implementation ("com.ssu.commerce.order:grpc:$grpcVersion")
@@ -100,7 +101,11 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.5'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
+    // Redisson
+    implementation 'org.redisson:redisson-spring-boot-starter:3.21.1'
 
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 

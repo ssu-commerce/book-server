@@ -1,6 +1,7 @@
 package com.ssu.commerce.book.service;
 
 
+import com.ssu.commerce.book.annotation.DistributedLock;
 import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.mapper.*;
@@ -72,8 +73,9 @@ public class BookService {
         ).getId();
     }
 
+    @DistributedLock
     @Transactional
-    public UUID changeBook(
+    public Book changeBook(
             @NonNull @Valid final ChangeBookParamDto paramDto
     ) {
         categoryRepository.findById(paramDto.getCategoryId())
@@ -88,7 +90,7 @@ public class BookService {
                         "BOOK_001"
                 ));
 
-        return findBook.update(paramDto).getId();
+        return findBook.update(paramDto);
     }
 
     @Transactional

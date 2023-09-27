@@ -144,7 +144,7 @@ class BookControllerTest implements BookControllerTestDataSupplier {
 
         ChangeBookResponseDto changeBookResponseDto = BookControllerTestDataSupplier.getChangeBookResponseDto();
         ChangeBookRequestDto changeBookRequestDto = BookControllerTestDataSupplier.getChangeBookRequestDto();
-        when(bookService.changeBook(ChangeBookParamDtoMapper.INSTANCE.map(changeBookRequestDto))).thenReturn(changeBookResponseDto.getId());
+        when(bookService.changeBook(ChangeBookParamDtoMapper.INSTANCE.map(changeBookRequestDto))).thenReturn(BookControllerTestDataSupplier.getBook());
 
         assertDoesNotThrow(() -> {
             mockMvc.perform(put("/v1/book")

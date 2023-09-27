@@ -101,7 +101,7 @@ public interface BookControllerTestDataSupplier {
 
     static ChangeBookResponseDto getChangeBookResponseDto() {
         return ChangeBookResponseDto.builder()
-                .id(UUID.randomUUID())
+                .id(TEST_VAL_BOOK_ID)
                 .build();
     }
 

@@ -96,7 +96,7 @@ public class BookController {
                 .id(
                         bookService.changeBook(
                                 ChangeBookParamDtoMapper.INSTANCE.map(requestDto)
-                        )
+                        ).getId()
                 )
                 .build();
     }

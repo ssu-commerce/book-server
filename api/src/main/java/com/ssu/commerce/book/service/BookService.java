@@ -14,7 +14,6 @@ import com.ssu.commerce.book.persistence.CategoryRepository;
 import com.ssu.commerce.core.exception.NotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.redisson.api.RedissonClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;

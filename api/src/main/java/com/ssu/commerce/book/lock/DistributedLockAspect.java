@@ -23,9 +23,9 @@ public class DistributedLockAspect {
         if (StringUtils.isEmpty(lockName)) {
             Object[] args = joinPoint.getArgs();
             for (Object arg : args) {
-                if (arg instanceof ChangeBookParamDto) {
-                    ChangeBookParamDto paramDto = (ChangeBookParamDto) arg;
-                    lockName = paramDto.getId().toString();
+                if (arg instanceof AbstractLockableObject) {
+                    AbstractLockableObject lockableObject = (AbstractLockableObject) arg;
+                    lockName = lockableObject.getId().toString();
                     break;
                 }
             }

@@ -1,5 +1,6 @@
 package com.ssu.commerce.book.dto.param;
 
+import com.ssu.commerce.book.lock.AbstractLockableObject;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +11,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class ChangeBookParamDto {
+public class ChangeBookParamDto extends AbstractLockableObject {
 
     @NotEmpty
     private UUID id;

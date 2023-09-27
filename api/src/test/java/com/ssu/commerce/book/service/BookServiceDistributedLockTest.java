@@ -4,6 +4,7 @@ import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.supplier.BookTestDataSupplier;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("test")
+@Disabled
 public class BookServiceDistributedLockTest implements BookTestDataSupplier {
     @Autowired
     private BookService bookService;

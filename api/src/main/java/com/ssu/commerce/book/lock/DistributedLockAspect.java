@@ -1,7 +1,6 @@
 package com.ssu.commerce.book.lock;
 
 import com.ssu.commerce.book.annotation.DistributedLock;
-import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import io.micrometer.core.instrument.util.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

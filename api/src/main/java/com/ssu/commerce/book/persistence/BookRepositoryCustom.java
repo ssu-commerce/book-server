@@ -15,5 +15,4 @@ public interface BookRepositoryCustom {
             @NonNull final Pageable pageable
     );
 
-    Book changeBook(@NonNull @Valid final UpdateBookParamDto paramDto);
 }

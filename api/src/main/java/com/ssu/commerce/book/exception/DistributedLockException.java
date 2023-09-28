@@ -7,6 +7,6 @@ import org.springframework.http.HttpStatus;
 
 public class DistributedLockException extends SsuCommerceException {
     public DistributedLockException(@Nullable String errorCode, @NotNull String message) {
-        super(HttpStatus.BAD_REQUEST, errorCode, message);
+        super(HttpStatus.CONFLICT, errorCode, message);
     }
 }

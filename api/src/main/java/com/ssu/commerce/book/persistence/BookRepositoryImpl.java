@@ -59,26 +59,6 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
         return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
     }
 
-    @Override
-    public Book changeBook(@NonNull UpdateBookParamDto paramDto) {
-        jpaQueryFactory.update(book)
-                .where(
-                        book.id.eq(paramDto.getId()),
-                        eqCategoryId(paramDto.getCategoryId())
-                )
-                .set(book.title, paramDto.getTitle())
-                .set(book.content, paramDto.getContent())
-                .set(book.price, paramDto.getPrice())
-                .set(book.publishDate, paramDto.getPublishDate())
-                .set(book.isbn, paramDto.getIsbn())
-                .set(book.maxBorrowDay, paramDto.getMaxBorrowDay())
-                .execute();
-
-        return jpaQueryFactory.select(book)
-                .where(book.id.eq(paramDto.getId()))
-                .fetchOne();
-    }
-
     private BooleanExpression likeTitle(
             final String title
     ) {

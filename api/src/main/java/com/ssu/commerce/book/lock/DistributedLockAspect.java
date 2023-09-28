@@ -1,6 +1,7 @@
 package com.ssu.commerce.book.lock;
 
 import com.ssu.commerce.book.annotation.DistributedLock;
+import com.ssu.commerce.book.exception.DistributedLockException;
 import io.micrometer.core.instrument.util.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -31,12 +32,12 @@ public class DistributedLockAspect {
         }
 
         if (StringUtils.isEmpty(lockName)) {
-            throw new IllegalArgumentException("Lock name is empty");
+            throw new DistributedLockException("BOOK_003", "Lock name is empty");
         }
 
-        boolean isLocked = distributedLockUtil.tryLock(lockName, 10);
+        boolean isLocked = distributedLockUtil.tryLock(lockName, 0);
         if (!isLocked) {
-            throw new RuntimeException("Failed to acquire lock");
+            throw new DistributedLockException("BOOK_004", "Failed to acquire lock");
         }
 
         try {

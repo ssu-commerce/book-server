@@ -1,6 +1,9 @@
 package com.ssu.commerce.book.grpc;
 
+import com.ssu.commerce.book.annotation.DistributedLock;
 import com.ssu.commerce.book.constant.code.BookState;
+import com.ssu.commerce.book.dto.mapper.CompleteRentalBookRequestDtoMapper;
+import com.ssu.commerce.book.dto.param.CompleteRentalBookRequestDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.core.exception.NotFoundException;
@@ -22,7 +25,10 @@ public class GrpcCompleteRentalBookServerService extends CompleteRentalBookGrpc.
 
     @Override
     public void completeRentalBook(CompleteRentalBookRequest request, StreamObserver<CompleteRentalBookResponse> responseObserver) {
-        UUID bookId = UUID.fromString(request.getId());
+
+        @DistributedLock
+        CompleteRentalBookRequestDto completeRentalBookRequestDto = CompleteRentalBookRequestDtoMapper.INSTANCE.map(request);
+        UUID bookId = completeRentalBookRequestDto.getId();
         Book findBook = bookRepository.findById(bookId)
                 .orElseThrow(() -> new NotFoundException(
                         String.format("book not found; bookId=%s", bookId),

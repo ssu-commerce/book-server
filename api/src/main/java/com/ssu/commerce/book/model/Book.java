@@ -89,4 +89,12 @@ public class Book {
     boolean isPossibleRentalState() {
         return this.getBookState() == BookState.REGISTERED || this.getBookState() == BookState.RETURN;
     }
+
+    public boolean rollBack() {
+        if (this.getBookState() == BookState.REGISTERED) {
+            this.updateBookState(BookState.REGISTERED);
+            return true;
+        }
+        return false;
+    }
 }

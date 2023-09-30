@@ -3,7 +3,7 @@ buildscript {
         coreVersion="2023.07.4"
         mapstructVersion = '1.5.5.Final'
         queryDSLVersion = '5.0.0'
-        grpcVersion="0.0.10"
+        grpcVersion="0.0.11"
     }
 }
 

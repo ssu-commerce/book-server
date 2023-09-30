@@ -29,7 +29,7 @@ public class GrpcRentalBookServerService extends RentalBookGrpc.RentalBookImplBa
     @Transactional
     public void rentalBook(RentalBookRequest request, StreamObserver<RentalBookResponse> responseObserver) {
         /*
-            TODO RentalBookRequest 의 token 검증
+         *   TODO RentalBookRequest 의 token 검증
          */
 
         @DistributedLock
@@ -42,17 +42,10 @@ public class GrpcRentalBookServerService extends RentalBookGrpc.RentalBookImplBa
                         String.format("book not found; bookId=%s", bookId),
                         "BOOK_001"
                 ));
-        boolean LOAN_FINISHED;
 
-        if (findBook.getBookState() == BookState.REGISTERED || findBook.getBookState() == BookState.RETURN) {
-            findBook.updateBookState(BookState.LOAN_PROCESSING);
-            LOAN_FINISHED = true;
-        } else {
-            LOAN_FINISHED = false;
-        }
         responseObserver.onNext(
                 RentalBookResponse.newBuilder()
-                        .setRentalAvailabilityResponse(LOAN_FINISHED)
+                        .setRentalAvailabilityResponse(findBook.rental())
                         .build()
         );
         responseObserver.onCompleted();

@@ -59,6 +59,7 @@ public class Book {
     private UUID categoryId;
 
     @Column(name = "book_state")
+    @Enumerated(EnumType.STRING)
     private BookState bookState;
 
     public Book update(ChangeBookParamDto paramDto) {
@@ -71,5 +72,21 @@ public class Book {
         this.maxBorrowDay = paramDto.getMaxBorrowDay();
         this.categoryId = paramDto.getCategoryId();
         return this;
+    }
+    public void updateBookState(BookState bookState) {
+        this.bookState = bookState;
+    }
+
+    public boolean rental() {
+        if(isPossibleRentalState()) {
+            this.updateBookState(BookState.LOAN_PROCESSING);
+            return true;
+        }
+
+        return false;
+    }
+
+    boolean isPossibleRentalState() {
+        return this.getBookState() == BookState.REGISTERED || this.getBookState() == BookState.RETURN;
     }
 }

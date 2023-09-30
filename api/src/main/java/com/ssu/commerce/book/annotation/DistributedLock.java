@@ -3,7 +3,7 @@ package com.ssu.commerce.book.annotation;
 
 import java.lang.annotation.*;
 
-@Target(ElementType.METHOD)
+@Target({ElementType.LOCAL_VARIABLE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DistributedLock {

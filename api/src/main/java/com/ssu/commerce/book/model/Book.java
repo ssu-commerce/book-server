@@ -79,7 +79,7 @@ public class Book {
 
     public boolean rental() {
         if(isPossibleRentalState()) {
-            this.updateBookState(BookState.LOAN_PROCESSING);
+            updateBookState(BookState.LOAN_PROCESSING);
             return true;
         }
 
@@ -87,6 +87,14 @@ public class Book {
     }
 
     boolean isPossibleRentalState() {
-        return this.getBookState() == BookState.REGISTERED || this.getBookState() == BookState.RETURN;
+        return bookState == BookState.REGISTERED || bookState == BookState.RETURN;
+    }
+
+    public boolean rollBack() {
+        if (bookState == BookState.REGISTERED) {
+            updateBookState(BookState.REGISTERED);
+            return true;
+        }
+        return false;
     }
 }

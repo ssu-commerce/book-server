@@ -4,7 +4,7 @@ import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.mapper.BookDtoMapper;
 import com.ssu.commerce.book.dto.mapper.GetBookListParamMapper;
-import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
+import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.request.ChangeBookRequestDto;
 import com.ssu.commerce.book.dto.request.DeleteBookRequestDto;
@@ -105,9 +105,9 @@ public interface BookControllerTestDataSupplier {
                 .build();
     }
 
-    static DeleteBookRequestDto getDeleteBookRequestDto() {
-        return DeleteBookRequestDto.builder()
-                .id(UUID.randomUUID())
+    static DeleteBookParamDto getDeleteBookParamDto(UUID bookId) {
+        return DeleteBookParamDto.builder()
+                .id(bookId)
                 .build();
     }
 

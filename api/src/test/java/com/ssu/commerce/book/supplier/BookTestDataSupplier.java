@@ -3,6 +3,7 @@ package com.ssu.commerce.book.supplier;
 import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
+import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
@@ -209,6 +210,12 @@ public interface BookTestDataSupplier {
                 .isbn(TEST_VAL_BOOK_ISBN)
                 .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
                 .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .build();
+    }
+
+    static DeleteBookParamDto getDeleteBookParamDto(UUID bookId) {
+        return DeleteBookParamDto.builder()
+                .id(bookId)
                 .build();
     }
 }

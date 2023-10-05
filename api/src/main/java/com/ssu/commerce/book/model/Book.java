@@ -63,14 +63,14 @@ public class Book {
     private BookState bookState;
 
     public Book update(ChangeBookParamDto paramDto) {
-        this.title = paramDto.getTitle();
-        this.content = paramDto.getContent();
-        this.writer = paramDto.getWriter();
-        this.price = paramDto.getPrice();
-        this.publishDate = paramDto.getPublishDate();
-        this.isbn = paramDto.getIsbn();
-        this.maxBorrowDay = paramDto.getMaxBorrowDay();
-        this.categoryId = paramDto.getCategoryId();
+        title = paramDto.getTitle();
+        content = paramDto.getContent();
+        writer = paramDto.getWriter();
+        price = paramDto.getPrice();
+        publishDate = paramDto.getPublishDate();
+        isbn = paramDto.getIsbn();
+        maxBorrowDay = paramDto.getMaxBorrowDay();
+        categoryId = paramDto.getCategoryId();
         return this;
     }
     public void updateBookState(BookState bookState) {

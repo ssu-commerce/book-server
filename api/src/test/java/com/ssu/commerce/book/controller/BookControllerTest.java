@@ -7,11 +7,13 @@ import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.mapper.ChangeBookParamDtoMapper;
 import com.ssu.commerce.book.dto.mapper.RegisterBookParamDtoMapper;
+import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.request.ChangeBookRequestDto;
 import com.ssu.commerce.book.dto.request.DeleteBookRequestDto;
 import com.ssu.commerce.book.dto.request.RegisterBookRequestDto;
 import com.ssu.commerce.book.dto.response.ChangeBookResponseDto;
+import com.ssu.commerce.book.dto.response.DeleteBookResponseDto;
 import com.ssu.commerce.book.dto.response.GetBookResponseDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.service.BookService;
@@ -36,7 +38,6 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -101,7 +102,6 @@ class BookControllerTest implements BookControllerTestDataSupplier {
         assertDoesNotThrow(() -> {
             String jsonResponse = mockMvc.perform(get("/v1/book/" + TEST_VAL_BOOK_ID)
                             .accept(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isOk())
                     .andExpect(status().isOk())
                     .andReturn()
                     .getResponse()
@@ -165,21 +165,21 @@ class BookControllerTest implements BookControllerTestDataSupplier {
     @Test
     void deleteBook() {
 
-        DeleteBookRequestDto deleteBookRequestDto = BookControllerTestDataSupplier.getDeleteBookRequestDto();
+        UUID bookId = TEST_VAL_BOOK_ID;
+        DeleteBookParamDto deleteBookParamDto = BookControllerTestDataSupplier.getDeleteBookParamDto(bookId);
 
-        when(bookService.deleteBook(deleteBookRequestDto.getId())).thenReturn(deleteBookRequestDto.getId());
+        when(bookService.deleteBook(deleteBookParamDto)).thenReturn(bookId);
+
+        log.info("TEST : {}", deleteBookParamDto.getId());
 
         assertDoesNotThrow(() -> {
-            mockMvc.perform(delete("/v1/book")
-                            .content(new ObjectMapper().registerModule(
-                                    new JavaTimeModule()).writeValueAsString(deleteBookRequestDto))
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .with(csrf())
-                            .accept(MediaType.APPLICATION_JSON))
+            mockMvc.perform(delete("/v1/book/" + bookId)
+                            .accept(MediaType.APPLICATION_JSON)
+                            .with(csrf()))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id", equalTo(String.valueOf(deleteBookRequestDto.getId()))));
+                    .andExpect(jsonPath("$.id", equalTo(String.valueOf(bookId))));
 
-            verify(bookService, times(1)).deleteBook(deleteBookRequestDto.getId());
+            verify(bookService, times(1)).deleteBook(deleteBookParamDto);
         });
     }
 }

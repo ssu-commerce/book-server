@@ -6,6 +6,7 @@ import com.ssu.commerce.book.dto.mapper.BookMapper;
 import com.ssu.commerce.book.dto.mapper.SelectBookListParamDtoMapper;
 import com.ssu.commerce.book.dto.mapper.UpdateBookParamDtoMapper;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
+import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.model.Book;
@@ -188,9 +189,10 @@ class BookServiceTest implements BookTestDataSupplier {
     void deleteBook() {
         Book book = BookTestDataSupplier.getBookWithId();
         UUID bookId = TEST_VAL_BOOK_ID;
+        DeleteBookParamDto deleteBookParamDto = BookTestDataSupplier.getDeleteBookParamDto(bookId);
         when(bookRepository.findById(bookId)).thenReturn(Optional.ofNullable(book));
 
-        UUID deleteId = bookService.deleteBook(bookId);
+        UUID deleteId = bookService.deleteBook(deleteBookParamDto);
         assertEquals(deleteId, bookId);
         verify(bookRepository, times(1)).findById(bookId);
     }
@@ -199,9 +201,10 @@ class BookServiceTest implements BookTestDataSupplier {
     void deleteBookError() {
         UUID bookId = TEST_VAL_BOOK_ID;
         String expectedErrorMessage = "book not found; bookId=" + bookId;
+        DeleteBookParamDto deleteBookParamDto = BookTestDataSupplier.getDeleteBookParamDto(bookId);
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> {
-            bookService.deleteBook(bookId);
+            bookService.deleteBook(deleteBookParamDto);
         });
 
         assertEquals(expectedErrorMessage, exception.getMessage());

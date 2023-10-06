@@ -2,7 +2,6 @@ package com.ssu.commerce.book.grpc;
 
 import com.ssu.commerce.book.annotation.DistributedLock;
 import com.ssu.commerce.book.constant.code.BookState;
-import com.ssu.commerce.book.dto.mapper.CompleteRentalBookRequestDtoMapper;
 import com.ssu.commerce.book.dto.param.CompleteRentalBookRequestDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
@@ -29,7 +28,10 @@ public class GrpcCompleteRentalBookServerService extends CompleteRentalBookGrpc.
     public void completeRentalBook(CompleteRentalBookRequest request, StreamObserver<CompleteRentalBookResponse> responseObserver) {
 
         @DistributedLock
-        CompleteRentalBookRequestDto completeRentalBookRequestDto = CompleteRentalBookRequestDtoMapper.INSTANCE.map(request);
+        CompleteRentalBookRequestDto completeRentalBookRequestDto = CompleteRentalBookRequestDto.builder()
+                .id(UUID.fromString(request.getId()))
+                .build();
+
         UUID bookId = completeRentalBookRequestDto.getId();
         Book findBook = bookRepository.findById(bookId)
                 .orElseThrow(() -> new NotFoundException(

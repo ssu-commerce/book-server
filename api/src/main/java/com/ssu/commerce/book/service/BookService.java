@@ -6,6 +6,7 @@ import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.mapper.*;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
+import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.model.Book;
@@ -93,16 +94,17 @@ public class BookService {
         return findBook.update(paramDto);
     }
 
+    @DistributedLock
     @Transactional
     public UUID deleteBook(
-            @NonNull @Valid final UUID id
+            @NonNull @Valid final DeleteBookParamDto paramDto
     ) {
-        Book findBook = bookRepository.findById(id)
+        Book findBook = bookRepository.findById(paramDto.getId())
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("book not found; bookId=%s", id),
+                        String.format("book not found; bookId=%s", paramDto.getId()),
                         "BOOK_001"
                 ));
         bookRepository.delete(findBook);
-        return id;
+        return findBook.getId();
     }
 }

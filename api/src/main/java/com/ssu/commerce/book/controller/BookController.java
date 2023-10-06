@@ -3,6 +3,7 @@ package com.ssu.commerce.book.controller;
 
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.mapper.*;
+import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.request.ChangeBookRequestDto;
 import com.ssu.commerce.book.dto.request.DeleteBookRequestDto;
 import com.ssu.commerce.book.dto.request.RegisterBookRequestDto;
@@ -101,16 +102,20 @@ public class BookController {
                 .build();
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("/{id}")
     public DeleteBookResponseDto deleteBook(
-            @Valid @RequestBody final DeleteBookRequestDto requestDto
+            @Valid @PathVariable final UUID id
     ) {
 
-        log.debug("[deleteBook]deleteDto={}", requestDto);
+        log.debug("[deleteBook]deleteDto={}", id);
 
         return DeleteBookResponseDto.builder()
                 .id(
-                        bookService.deleteBook(requestDto.getId())
+                        bookService.deleteBook(
+                                DeleteBookParamDto.builder()
+                                        .id(id)
+                                        .build()
+                        )
                 )
                 .build();
     }

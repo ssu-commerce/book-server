@@ -1,13 +1,14 @@
 package com.ssu.commerce.book.dto.param;
 
 import com.ssu.commerce.book.lock.AbstractLockableObject;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.UUID;
 
-@Getter
+@Data
 @Builder
-public class CompleteRentalBookRequestDto extends AbstractLockableObject {
+@NoArgsConstructor
+@AllArgsConstructor
+public class DeleteBookParamDto extends AbstractLockableObject {
     private UUID id;
 }

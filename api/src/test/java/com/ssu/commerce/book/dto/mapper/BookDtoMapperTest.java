@@ -2,6 +2,7 @@ package com.ssu.commerce.book.dto.mapper;
 
 import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
+import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import org.junit.jupiter.api.Test;
 import java.util.UUID;
@@ -25,17 +26,21 @@ class BookDtoMapperTest {
 
     @Test
     void map_GivenValidBook_ShouldReturnDtoWithSameValues() {
-        Book book = new Book();
-        book.setId(UUID.randomUUID());
-        book.setTitle("Test Book");
-        book.setContent("This is a test book.");
-        book.setWriter("Author Name");
-        book.setPrice(15l);
-        book.setOwnerId(UUID.randomUUID());
-        book.setPublishDate(LocalDate.now().atStartOfDay());
-        book.setIsbn("123-456-789");
-        book.setMaxBorrowDay(10l);
-        book.setCategoryId(UUID.randomUUID());
+        Book.BookBuilder builder = Book.builder();
+        Book book;
+
+        builder.id(UUID.randomUUID());
+        builder.title("Test Book");
+        builder.content("This is a test book.");
+        builder.writer("Author Name");
+        builder.price(15l);
+        builder.ownerId(UUID.randomUUID());
+        builder.publishDate(LocalDate.now().atStartOfDay());
+        builder.isbn("123-456-789");
+        builder.maxBorrowDay(10l);
+        builder.categoryId(UUID.randomUUID());
+
+        book = builder.build();
 
         BookDto dto = mapper.map(book);
 

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,12 +27,15 @@ class GetBookResponseDtoMapperTest {
         builder.id(UUID.randomUUID());
         builder.title("Test Book");
         builder.content("This is a test book.");
+        builder.comment("destroyed book");
         builder.writer("Author Name");
         builder.price(15l);
+        builder.sharePrice(150l);
         builder.ownerId(UUID.randomUUID());
         builder.publishDate(LocalDate.now().atStartOfDay());
         builder.isbn("123-456-789");
-        builder.maxBorrowDay(10l);
+        builder.startBorrowDay(LocalDateTime.parse("2024-05-13T15:30:00"));
+        builder.endBorrowDay(LocalDateTime.parse("2025-05-13T15:30:00"));
         builder.categoryId(UUID.randomUUID());
 
         BookDto bookDto = builder.build();
@@ -42,12 +46,15 @@ class GetBookResponseDtoMapperTest {
         assertEquals(getBookResponseDto.getId(), bookDto.getId());
         assertEquals(getBookResponseDto.getTitle(), bookDto.getTitle());
         assertEquals(getBookResponseDto.getContent(), bookDto.getContent());
+        assertEquals(getBookResponseDto.getComment(), bookDto.getComment());
         assertEquals(getBookResponseDto.getWriter(), bookDto.getWriter());
         assertEquals(getBookResponseDto.getPrice(), bookDto.getPrice());
+        assertEquals(getBookResponseDto.getSharePrice(), bookDto.getSharePrice());
         assertEquals(getBookResponseDto.getOwnerId(), bookDto.getOwnerId());
         assertEquals(getBookResponseDto.getPublishDate(), bookDto.getPublishDate());
         assertEquals(getBookResponseDto.getIsbn(), bookDto.getIsbn());
-        assertEquals(getBookResponseDto.getMaxBorrowDay(), bookDto.getMaxBorrowDay());
+        assertEquals(getBookResponseDto.getStartBorrowDay(), bookDto.getStartBorrowDay());
+        assertEquals(getBookResponseDto.getEndBorrowDay(), bookDto.getEndBorrowDay());
         assertEquals(getBookResponseDto.getCategoryId(), bookDto.getCategoryId());
     }
 
@@ -59,12 +66,15 @@ class GetBookResponseDtoMapperTest {
         assertNull(dto.getId());
         assertNull(dto.getTitle());
         assertNull(dto.getContent());
+        assertNull(dto.getComment());
         assertNull(dto.getWriter());
         assertNull(dto.getPrice());
+        assertNull(dto.getSharePrice());
         assertNull(dto.getOwnerId());
         assertNull(dto.getPublishDate());
         assertNull(dto.getIsbn());
-        assertNull(dto.getMaxBorrowDay());
+        assertNull(dto.getStartBorrowDay());
+        assertNull(dto.getEndBorrowDay());
         assertNull(dto.getCategoryId());
     }
 }

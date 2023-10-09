@@ -3,6 +3,8 @@ package com.ssu.commerce.book.dto.mapper;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import com.ssu.commerce.book.dto.request.ChangeBookRequestDto;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -28,11 +30,14 @@ class ChangeBookParamDtoMapperTest {
         requestDtoBuilder.id(UUID.randomUUID());
         requestDtoBuilder.title("Test Book");
         requestDtoBuilder.content("This is a test book.");
+        requestDtoBuilder.comment("Destroyed Book");
         requestDtoBuilder.writer("Author Name");
         requestDtoBuilder.price(15l);
+        requestDtoBuilder.price(150l);
         requestDtoBuilder.publishDate(LocalDate.now().atStartOfDay());
         requestDtoBuilder.isbn("123-456-789");
-        requestDtoBuilder.maxBorrowDay(10l);
+        requestDtoBuilder.startBorrowDay(LocalDateTime.parse("2024-05-13T15:30:00"));
+        requestDtoBuilder.endBorrowDay(LocalDateTime.parse("2025-05-13T15:30:00"));
         requestDtoBuilder.categoryId(UUID.randomUUID());
 
         ChangeBookRequestDto requestDto = requestDtoBuilder.build();
@@ -43,11 +48,14 @@ class ChangeBookParamDtoMapperTest {
         assertEquals(changeBookParamDto.getId(), requestDto.getId());
         assertEquals(changeBookParamDto.getTitle(), requestDto.getTitle());
         assertEquals(changeBookParamDto.getContent(), requestDto.getContent());
+        assertEquals(changeBookParamDto.getComment(), requestDto.getComment());
         assertEquals(changeBookParamDto.getWriter(), requestDto.getWriter());
         assertEquals(changeBookParamDto.getPrice(), requestDto.getPrice());
+        assertEquals(changeBookParamDto.getSharePrice(), requestDto.getSharePrice());
         assertEquals(changeBookParamDto.getPublishDate(), requestDto.getPublishDate());
         assertEquals(changeBookParamDto.getIsbn(), requestDto.getIsbn());
-        assertEquals(changeBookParamDto.getMaxBorrowDay(), requestDto.getMaxBorrowDay());
+        assertEquals(changeBookParamDto.getStartBorrowDay(), requestDto.getStartBorrowDay());
+        assertEquals(changeBookParamDto.getEndBorrowDay(), requestDto.getEndBorrowDay());
         assertEquals(changeBookParamDto.getCategoryId(), requestDto.getCategoryId());
     }
 
@@ -59,11 +67,14 @@ class ChangeBookParamDtoMapperTest {
         assertNull(changeBookParamDto.getId());
         assertNull(changeBookParamDto.getTitle());
         assertNull(changeBookParamDto.getContent());
+        assertNull(changeBookParamDto.getComment());
         assertNull(changeBookParamDto.getWriter());
         assertNull(changeBookParamDto.getPrice());
+        assertNull(changeBookParamDto.getSharePrice());
         assertNull(changeBookParamDto.getPublishDate());
         assertNull(changeBookParamDto.getIsbn());
-        assertNull(changeBookParamDto.getMaxBorrowDay());
+        assertNull(changeBookParamDto.getStartBorrowDay());
+        assertNull(changeBookParamDto.getEndBorrowDay());
         assertNull(changeBookParamDto.getCategoryId());
     }
 }

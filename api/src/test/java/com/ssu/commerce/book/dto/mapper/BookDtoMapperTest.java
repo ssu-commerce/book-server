@@ -5,6 +5,8 @@ import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -32,12 +34,15 @@ class BookDtoMapperTest {
         builder.id(UUID.randomUUID());
         builder.title("Test Book");
         builder.content("This is a test book.");
+        builder.content("Desytroyed Book");
         builder.writer("Author Name");
         builder.price(15l);
+        builder.sharePrice(150l);
         builder.ownerId(UUID.randomUUID());
         builder.publishDate(LocalDate.now().atStartOfDay());
         builder.isbn("123-456-789");
-        builder.maxBorrowDay(10l);
+        builder.startBorrowDay(LocalDateTime.parse("2024-05-13T15:30:00"));
+        builder.endBorrowDay(LocalDateTime.parse("2025-05-13T15:30:00"));
         builder.categoryId(UUID.randomUUID());
 
         book = builder.build();
@@ -48,12 +53,15 @@ class BookDtoMapperTest {
         assertEquals(book.getId(), dto.getId());
         assertEquals(book.getTitle(), dto.getTitle());
         assertEquals(book.getContent(), dto.getContent());
+        assertEquals(book.getComment(), dto.getComment());
         assertEquals(book.getWriter(), dto.getWriter());
+        assertEquals(book.getSharePrice(), dto.getSharePrice());
         assertEquals(book.getPrice(), dto.getPrice());
         assertEquals(book.getOwnerId(), dto.getOwnerId());
         assertEquals(book.getPublishDate(), dto.getPublishDate());
         assertEquals(book.getIsbn(), dto.getIsbn());
-        assertEquals(book.getMaxBorrowDay(), dto.getMaxBorrowDay());
+        assertEquals(book.getStartBorrowDay(), dto.getStartBorrowDay());
+        assertEquals(book.getEndBorrowDay(), dto.getEndBorrowDay());
         assertEquals(book.getCategoryId(), dto.getCategoryId());
     }
 
@@ -65,12 +73,15 @@ class BookDtoMapperTest {
         assertNull(dto.getId());
         assertNull(dto.getTitle());
         assertNull(dto.getContent());
+        assertNull(dto.getComment());
         assertNull(dto.getWriter());
         assertNull(dto.getPrice());
+        assertNull(dto.getSharePrice());
         assertNull(dto.getOwnerId());
         assertNull(dto.getPublishDate());
         assertNull(dto.getIsbn());
-        assertNull(dto.getMaxBorrowDay());
+        assertNull(dto.getStartBorrowDay());
+        assertNull(dto.getEndBorrowDay());
         assertNull(dto.getCategoryId());
     }
 }

@@ -5,6 +5,8 @@ import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -32,10 +34,13 @@ class BookMapperTest {
         builder.title("Test Book");
         builder.content("This is a test book.");
         builder.writer("Author Name");
+        builder.comment("Destroyed Book");
         builder.price(15l);
+        builder.sharePrice(150l);
         builder.publishDate(LocalDate.now().atStartOfDay());
         builder.isbn("123-456-789");
-        builder.maxBorrowDay(10l);
+        builder.startBorrowDay(LocalDateTime.parse("2024-05-13T15:30:00"));
+        builder.endBorrowDay(LocalDateTime.parse("2025-05-13T15:30:00"));
         builder.categoryId(UUID.randomUUID());
 
         dto = builder.build();
@@ -44,11 +49,14 @@ class BookMapperTest {
         assertNotNull(dto);
         assertEquals(book.getTitle(), dto.getTitle());
         assertEquals(book.getContent(), dto.getContent());
+        assertEquals(book.getComment(), dto.getComment());
         assertEquals(book.getWriter(), dto.getWriter());
         assertEquals(book.getPrice(), dto.getPrice());
+        assertEquals(book.getSharePrice(), dto.getSharePrice());
         assertEquals(book.getPublishDate(), dto.getPublishDate());
         assertEquals(book.getIsbn(), dto.getIsbn());
-        assertEquals(book.getMaxBorrowDay(), dto.getMaxBorrowDay());
+        assertEquals(book.getStartBorrowDay(), dto.getStartBorrowDay());
+        assertEquals(book.getEndBorrowDay(), dto.getEndBorrowDay());
         assertEquals(book.getCategoryId(), dto.getCategoryId());
     }
 
@@ -60,12 +68,15 @@ class BookMapperTest {
         assertNull(book.getId());
         assertNull(book.getTitle());
         assertNull(book.getContent());
+        assertNull(book.getComment());
         assertNull(book.getWriter());
         assertNull(book.getPrice());
+        assertNull(book.getSharePrice());
         assertNull(book.getOwnerId());
         assertNull(book.getPublishDate());
         assertNull(book.getIsbn());
-        assertNull(book.getMaxBorrowDay());
+        assertNull(book.getStartBorrowDay());
+        assertNull(book.getEndBorrowDay());
         assertNull(book.getCategoryId());
     }
 }

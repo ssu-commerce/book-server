@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,12 +26,15 @@ class GetBookDetailResponseDtoMapperTest {
         bookDetailDtoBuilder.id(UUID.randomUUID());
         bookDetailDtoBuilder.title("Test Book");
         bookDetailDtoBuilder.content("This is a test book.");
+        bookDetailDtoBuilder.comment("Destroyed Book");
         bookDetailDtoBuilder.writer("Author Name");
         bookDetailDtoBuilder.price(15l);
+        bookDetailDtoBuilder.sharePrice(150l);
         bookDetailDtoBuilder.ownerId(UUID.randomUUID());
         bookDetailDtoBuilder.publishDate(LocalDate.now().atStartOfDay());
         bookDetailDtoBuilder.isbn("123-456-789");
-        bookDetailDtoBuilder.maxBorrowDay(10l);
+        bookDetailDtoBuilder.startBorrowDay(LocalDateTime.parse("2024-05-13T15:30:00"));
+        bookDetailDtoBuilder.endBorrowDay(LocalDateTime.parse("2025-05-13T15:30:00"));
         bookDetailDtoBuilder.categoryId(UUID.randomUUID());
 
         BookDetailDto bookDetailDto = bookDetailDtoBuilder.build();
@@ -41,12 +45,15 @@ class GetBookDetailResponseDtoMapperTest {
         assertEquals(getBookDetailResponseDto.getId(), bookDetailDto.getId());
         assertEquals(getBookDetailResponseDto.getTitle(), bookDetailDto.getTitle());
         assertEquals(getBookDetailResponseDto.getContent(), bookDetailDto.getContent());
+        assertEquals(getBookDetailResponseDto.getComment(), bookDetailDto.getComment());
         assertEquals(getBookDetailResponseDto.getWriter(), bookDetailDto.getWriter());
         assertEquals(getBookDetailResponseDto.getPrice(), bookDetailDto.getPrice());
+        assertEquals(getBookDetailResponseDto.getSharePrice(), bookDetailDto.getSharePrice());
         assertEquals(getBookDetailResponseDto.getOwnerId(), bookDetailDto.getOwnerId());
         assertEquals(getBookDetailResponseDto.getPublishDate(), bookDetailDto.getPublishDate());
         assertEquals(getBookDetailResponseDto.getIsbn(), bookDetailDto.getIsbn());
-        assertEquals(getBookDetailResponseDto.getMaxBorrowDay(), bookDetailDto.getMaxBorrowDay());
+        assertEquals(getBookDetailResponseDto.getStartBorrowDay(), bookDetailDto.getStartBorrowDay());
+        assertEquals(getBookDetailResponseDto.getEndBorrowDay(), bookDetailDto.getEndBorrowDay());
         assertEquals(getBookDetailResponseDto.getCategoryId(), bookDetailDto.getCategoryId());
     }
 
@@ -58,12 +65,15 @@ class GetBookDetailResponseDtoMapperTest {
         assertNull(getBookDetailResponseDto.getId());
         assertNull(getBookDetailResponseDto.getTitle());
         assertNull(getBookDetailResponseDto.getContent());
+        assertNull(getBookDetailResponseDto.getComment());
         assertNull(getBookDetailResponseDto.getWriter());
         assertNull(getBookDetailResponseDto.getPrice());
+        assertNull(getBookDetailResponseDto.getSharePrice());
         assertNull(getBookDetailResponseDto.getPublishDate());
         assertNull(getBookDetailResponseDto.getOwnerId());
         assertNull(getBookDetailResponseDto.getIsbn());
-        assertNull(getBookDetailResponseDto.getMaxBorrowDay());
+        assertNull(getBookDetailResponseDto.getStartBorrowDay());
+        assertNull(getBookDetailResponseDto.getEndBorrowDay());
         assertNull(getBookDetailResponseDto.getCategoryId());
     }
 }

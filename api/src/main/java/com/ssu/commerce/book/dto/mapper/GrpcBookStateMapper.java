@@ -14,7 +14,8 @@ public interface GrpcBookStateMapper {
     @ValueMappings({
             @ValueMapping(source = "DISSHAREABLE", target = "DISSHAREABLE"),
             @ValueMapping(source = "SHARABLE", target = "SHARABLE"),
-            @ValueMapping(source = "SHARING", target = "SHARING")
+            @ValueMapping(source = "SHARING", target = "SHARING"),
+            @ValueMapping(source = "UNRECOGNIZED", target = "DISSHAREABLE") // ccxz84 | 2024-05-13 grpc에서 enum 값에 "UNRECOGNIZED"가 기본으로 있는데 어디에 매핑해야 될지?
     })
     BookState map(final com.ssu.commerce.grpc.BookState bookState);
 }

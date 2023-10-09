@@ -63,7 +63,7 @@ class RegisterImageResponseDtoMapperTest {
 
     @Test
     void mapList_GivenValidListImage_ShouldBeReturnListRegisterImageResponseDto() {
-        List<RegisterImageResponseDto> registerImageResponseDtoList = mapper.mapList(this.images);
+        List<RegisterImageResponseDto> registerImageResponseDtoList = mapper.mapToList(this.images);
 
         Iterator registerImageResponseIterator = registerImageResponseDtoList.iterator();
         Iterator imageIterator = this.images.iterator();
@@ -80,7 +80,7 @@ class RegisterImageResponseDtoMapperTest {
 
     @Test
     void mapList_GivenNull_ShouldReturnDtoWithNullValues() {
-        List<RegisterImageResponseDto> dto = mapper.mapList(null);
+        List<RegisterImageResponseDto> dto = mapper.mapToList(null);
 
         assertNotNull(dto);
         assertEquals(dto.size(), 0);

@@ -5,7 +5,7 @@ grpc:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create # test
+      ddl-auto: update # test
     show-sql: true
     properties:
       hibernate:
@@ -29,4 +29,8 @@ springdoc:
 logging:
   level:
     p6spy: info
+    org:
+      springframework:
+        orm:
+          jpa: debug
 

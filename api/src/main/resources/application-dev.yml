@@ -4,8 +4,6 @@ grpc:
 
 spring:
   jpa:
-    hibernate:
-      ddl-auto: update # test
     show-sql: true
     properties:
       hibernate:
@@ -19,6 +17,9 @@ spring:
       max-file-size: 10MB
   image:
     path: /home/
+  redis:
+    host: localhost
+    port: 6379
 
 springdoc:
   swagger-ui:

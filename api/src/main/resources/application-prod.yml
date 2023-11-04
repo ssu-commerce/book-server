@@ -1,0 +1,38 @@
+grpc:
+  server:
+    port: 9091
+
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  application:
+    name: user-service
+    main:
+      allow-circular-references: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  image:
+    path: /home/
+  redis:
+    host: redis-master
+    port: 6379
+    password: RoLe9vKqDE
+
+springdoc:
+  swagger-ui:
+    base-package: com.ssu.commerce.book
+    title: book api
+    version: 1.0
+
+logging:
+  level:
+    p6spy: info
+    org:
+      springframework:
+        orm:
+          jpa: debug
+

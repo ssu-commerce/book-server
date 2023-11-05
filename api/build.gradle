@@ -212,25 +212,4 @@ jacocoTestCoverageVerification {
             ] + Qdomains
         }
     }
-
-    def sonarToken = project.findProperty("sonar.token") == null ? System.getenv("SONAR_TOKEN") : project.findProperty("sonar.token")
-
-    sonar {
-        properties {
-            property "sonar.host.url", "http://sonarqube-sonarqube-sona-6470c-20402122-fa08e95986a2.kr.lb.naverncp.com:9000"
-            property "sonar.token", "${sonarToken}"
-            property "sonar.projectKey", "book-server"
-            property "sonar.projectName", "book-server"
-            property "sonar.sources", "src"
-            property "sonar.language", "java"
-            property "sonar.sourceEncoding", "UTF-8"
-            property "sonar.profile", "Sonar way"
-            property "sonar.java.binaries", "${buildDir}/classes"
-            property "sonar.test.inclusions", "**/*Test.java"
-            property "sonar.exclusions", "**/resources/static/**, **/Q*.class, **/test/**"
-            property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-            property "sonar.web.javaOpts", "-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.14.0.jar=web"
-            property "sonar.ce.javaOpts", "-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.14.0.jar=ce"
-        }
-    }
 }

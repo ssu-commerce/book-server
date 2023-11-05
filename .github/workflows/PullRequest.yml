@@ -25,6 +25,10 @@ jobs:
           overwrite-settings: true
           job-status: success
 
+      # Setup sonar-scanner
+      - name: Setup SonarQube
+        uses: warchant/setup-sonar-scanner@v7
+
       - name: Cache SonarQube packages
         uses: actions/cache@v1
         with:
@@ -73,6 +77,8 @@ jobs:
           -Dsonar.sources=api/src \
           -Dsonar.java.binaries=api/build/classes \
           -Dsonar.log.level=INFO \
+          -Dsonar.web.javaOpts=-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.14.0.jar=web \
+          -Dsonar.ce.javaOpts=-javaagent:/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-1.14.0.jar=ce \
 
       - name: Test Coverage
         env:

@@ -30,15 +30,12 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: Build and analyze
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: ./gradlew build sonar --info
       - name: Docker Login
         run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u ${{ secrets.USERNAME }} --password-stdin
       - name: Build with Gradle and Jib
         env:
            USERNAME: ${{secrets.USERNAME}}
            TOKEN: ${{secrets.TOKEN}}
-        run: ./gradlew jib --image=ghcr.io/${{ github.repository }}:${{ github.sha }}
+           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: ./gradlew jib --image=ghcr.io/${{ github.repository }}:${{ github.sha }} sonar --info

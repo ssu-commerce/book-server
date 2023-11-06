@@ -92,10 +92,11 @@ jobs:
         id: jacoco
         uses: madrapps/jacoco-report@v1.6.1
         with:
+          title: 📝 테스트 커버리지 리포트입니다
           paths: |
             ${{ github.workspace }}/api/build/reports/**/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 18.46
+          min-coverage-overall: 50
           min-coverage-changed-files: 100
 
       - name: Publish Test Report

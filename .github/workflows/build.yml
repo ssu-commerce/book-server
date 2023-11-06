@@ -38,4 +38,5 @@ jobs:
            TOKEN: ${{secrets.TOKEN}}
            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
            SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+           GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
         run: ./gradlew jib --image=ghcr.io/${{ github.repository }}:${{ github.sha }} sonar --info

@@ -27,9 +27,7 @@ jobs:
 
       # Setup sonar-scanner
       - name: Setup SonarQube
-        uses: warchant/setup-sonar-scanner@v7
-        with:
-          version: 4.8.1.3023
+        uses: warchant/setup-sonar-scanner@v5
 
       - name: Cache SonarQube packages
         uses: actions/cache@v1

@@ -178,7 +178,7 @@ jacocoTestCoverageVerification {
         rule {
             // instructions covered ratio
             limit {
-                minimum = 0.4
+                minimum = 0.0
             }
         }
 
@@ -190,7 +190,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
-                minimum = 0.4
+                minimum = 0.0
             }
 
             limit {

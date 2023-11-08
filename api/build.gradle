@@ -174,7 +174,7 @@ jacocoTestCoverageVerification {
         rule {
             // instructions covered ratio
             limit {
-                minimum = 0.0
+                minimum = 0.5
             }
         }
 

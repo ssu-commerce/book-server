@@ -161,11 +161,7 @@ jacocoTestReport {
         xml.outputLocation = layout.buildDirectory.file("reports/jacoco.xml")
 
         html.required = true
-        //html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
     }
-
-    // sonarlint 활용을 위한 주석 처리.
-    //finalizedBy "jacocoTestCoverageVerification"
 }
 
 jacocoTestCoverageVerification {
@@ -208,7 +204,8 @@ jacocoTestCoverageVerification {
             excludes = [
                     '*test*',
                     '*resources*',
-                    '*MapperImpl*'
+                    '*MapperImpl*',
+                    '*Config*'
             ] + Qdomains
         }
     }

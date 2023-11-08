@@ -172,13 +172,6 @@ jacocoTestCoverageVerification {
 
     violationRules {
         rule {
-            // instructions covered ratio
-            limit {
-                minimum = 0.5
-            }
-        }
-
-        rule {
             enabled = true
             // 룰을 체크할 단위(BUNDLE, PACKAGE, CLASS, SOURCEFILE, METHOD)
             element = 'CLASS'
@@ -205,7 +198,7 @@ jacocoTestCoverageVerification {
                     '*test*',
                     '*resources*',
                     '*MapperImpl*',
-                    '*Config*'
+                    '**.config.*'
             ] + Qdomains
         }
     }

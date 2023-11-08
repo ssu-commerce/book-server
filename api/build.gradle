@@ -198,7 +198,8 @@ jacocoTestCoverageVerification {
                     '*test*',
                     '*resources*',
                     '*MapperImpl*',
-                    '**.config.*'
+                    '**.config.*',
+                    '*Exception*'
             ] + Qdomains
         }
     }

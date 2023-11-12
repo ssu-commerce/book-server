@@ -151,7 +151,7 @@ class BookServiceTest implements BookTestDataSupplier {
         assertEquals(changeId, bookId);
         assertEquals(changedBook, book);
 
-        verify(categoryRepository, times(1)).findById(categoryId);
+        verify(categoryRepository, times(2)).findById(categoryId);
         verify(bookRepository, times(1)).findById(bookId);
     }
 

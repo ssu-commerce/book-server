@@ -146,6 +146,10 @@ sonar {
     }
 }
 
+tasks.named('sonarqube').configure {
+    dependsOn test
+}
+
 jacoco {
     toolVersion = "0.8.10"
     reportsDirectory = layout.buildDirectory.dir("$buildDir/reports/jacoco")

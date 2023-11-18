@@ -54,9 +54,7 @@ jobs:
           USERNAME: ${{secrets.USERNAME}}
           TOKEN: ${{secrets.TOKEN}}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: ./gradlew clean test jacocoTestReport sonarqube --stacktrace --profile
+        run: ./gradlew clean test jacocoTestReport --stacktrace --profile
 
       - name: SonarQube Scan
         run: |

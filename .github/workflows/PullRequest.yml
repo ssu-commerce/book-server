@@ -57,12 +57,6 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          projectBaseDir: api/src
-          args: >
-            -Dsonar.projectKey=book-server
-            -Dsonar.tests=api/src/tests/
-            -Dsonar.verbose=true
 
       - name: Test Coverage
         env:

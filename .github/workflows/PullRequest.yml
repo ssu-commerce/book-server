@@ -61,7 +61,7 @@ jobs:
           projectBaseDir: api/src
           args: >
             -Dsonar.projectKey=book-server
-            -Dsonar.tests=tests/
+            -Dsonar.tests=api/src/tests/
             -Dsonar.verbose=true
 
       - name: Test Coverage

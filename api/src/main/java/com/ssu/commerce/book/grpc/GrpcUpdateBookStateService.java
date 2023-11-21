@@ -6,6 +6,7 @@ import com.ssu.commerce.book.exception.BookStateConflictException;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.core.error.NotFoundException;
+import com.ssu.commerce.order.grpc.UpdateBookStateGrpc;
 import com.ssu.commerce.order.grpc.UpdateBookStateRequest;
 import com.ssu.commerce.order.grpc.UpdateBookStateResponse;
 import io.grpc.stub.StreamObserver;
@@ -21,9 +22,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @GrpcService
 @RequiredArgsConstructor
-public class GrpcUpdateBookStateService {
+public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookStateImplBase {
     private final BookRepository bookRepository;
 
+    @Override
     @Transactional
     public void updateBookState(
             UpdateBookStateRequest request,

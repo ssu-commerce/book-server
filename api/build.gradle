@@ -1,6 +1,5 @@
 buildscript {
     ext {
-        coreVersion="beta-2023.11.51"
         mapstructVersion = '1.5.5.Final'
         queryDSLVersion = '5.0.0'
         grpcVersion="0.0.24"
@@ -13,7 +12,9 @@ plugins {
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     id "org.sonarqube" version "4.2.1.3168"
     id 'java'
-    id "com.ssu.commerce.plugin.docker-publish" version "testest" // ccxz84 2023-09-03 임시 버전 연결
+    id "com.ssu.commerce.plugin.github-registry" version "$corePluginVersion"
+    id "com.ssu.commerce.plugin.docker-publish" version "$corePluginVersion"
+    id "com.ssu.commerce.plugin.maven-publish" version "$corePluginVersion"
 }
 
 group = 'com.ssu.commerce'
@@ -78,7 +79,9 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
 
     //ssu-commerce core
-    implementation("com.ssu.commerce:ssu-commerce-core:$coreVersion")
+    implementation("com.ssu.commerce:ssu-commerce-core-web:$coreVersion")
+    implementation("com.ssu.commerce:ssu-commerce-core-security:$coreVersion")
+    implementation("com.ssu.commerce:ssu-commerce-core-jpa:$coreVersion")
 
     // testContainers
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'

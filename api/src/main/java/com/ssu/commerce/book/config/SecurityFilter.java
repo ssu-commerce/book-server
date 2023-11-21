@@ -1,7 +1,7 @@
 package com.ssu.commerce.book.config;
 
 
-import com.ssu.commerce.core.configs.UrlPermissionFilter;
+import com.ssu.commerce.core.security.config.UrlPermissionFilter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;

@@ -5,7 +5,7 @@ import com.ssu.commerce.book.constant.code.BookState;
 import com.ssu.commerce.book.dto.param.RollBackBookRequestDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
-import com.ssu.commerce.core.exception.NotFoundException;
+import com.ssu.commerce.core.error.NotFoundException;
 import com.ssu.commerce.order.grpc.RollBackBookRequest;
 import com.ssu.commerce.order.grpc.RollBackBookResponse;
 import com.ssu.commerce.order.grpc.RollBackRentalGrpc;

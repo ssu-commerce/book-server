@@ -5,7 +5,7 @@ import com.ssu.commerce.book.dto.param.RentalBookRequestDto;
 import com.ssu.commerce.book.exception.BookStateConflictException;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
-import com.ssu.commerce.core.exception.NotFoundException;
+import com.ssu.commerce.core.error.NotFoundException;
 import com.ssu.commerce.order.grpc.RentalBookGrpc;
 import com.ssu.commerce.order.grpc.RentalBookRequest;
 import com.ssu.commerce.order.grpc.RentalBookResponse;

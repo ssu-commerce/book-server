@@ -18,6 +18,11 @@ dependencies {
 
     implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
     compileOnly 'jakarta.annotation:jakarta.annotation-api:2.1.1' // Java 9+ compatibility - Do NOT update to 2.0.0
+
+    api "io.grpc:grpc-protobuf:$buildGrpcVersion"
+    api "io.grpc:grpc-stub:$buildGrpcVersion"
+    api "io.grpc:grpc-core:$buildGrpcVersion"
+    api "com.google.protobuf:protobuf-java:3.11.0"
 }
 
 protobuf {

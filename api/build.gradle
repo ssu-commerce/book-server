@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        coreVersion="2023.07.4"
+        coreVersion="beta-2023.11.51"
         mapstructVersion = '1.5.5.Final'
         queryDSLVersion = '5.0.0'
         grpcVersion="0.0.24"

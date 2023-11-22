@@ -22,6 +22,12 @@ spring:
     port: 6379
     password: RoLe9vKqDE
 
+springdoc:
+  swagger-ui:
+    base-package: com.ssu.commerce.book
+    title: book api
+    version: 1.0
+
 logging:
   level:
     p6spy: info

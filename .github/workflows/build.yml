@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/#20-redis-config
 
 
 jobs:
@@ -19,6 +18,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache Gradle packages
         uses: actions/cache@v1
         with:
@@ -31,4 +36,5 @@ jobs:
         env:
            USERNAME: ${{secrets.USERNAME}}
            TOKEN: ${{secrets.TOKEN}}
+           GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
         run: ./gradlew :api:jib --image=ghcr.io/${{ github.repository }}:${{ github.sha }}

@@ -21,12 +21,6 @@ spring:
     host: localhost
     port: 6379
 
-springdoc:
-  swagger-ui:
-    base-package: com.ssu.commerce.book
-    title: book api
-    version: 1.0
-
 logging:
   level:
     p6spy: info
@@ -34,4 +28,3 @@ logging:
       springframework:
         orm:
           jpa: debug
-

@@ -95,13 +95,6 @@ configurations {
 }
 //querydsl 추가 끝
 
-sonar {
-    properties {
-        property "sonar.projectKey", "book-server"
-        property "sonar.projectName", "book-server"
-    }
-}
-
 bootJar {
     duplicatesStrategy(DuplicatesStrategy.INCLUDE)
 }

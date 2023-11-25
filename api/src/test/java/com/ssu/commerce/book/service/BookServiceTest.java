@@ -14,7 +14,7 @@ import com.ssu.commerce.book.model.Category;
 import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.book.persistence.CategoryRepository;
 import com.ssu.commerce.book.supplier.BookTestDataSupplier;
-import com.ssu.commerce.core.exception.NotFoundException;
+import com.ssu.commerce.core.error.NotFoundException;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

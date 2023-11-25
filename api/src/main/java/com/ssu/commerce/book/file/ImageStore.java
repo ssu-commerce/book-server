@@ -1,7 +1,7 @@
 package com.ssu.commerce.book.file;
 
 import com.ssu.commerce.book.model.Image;
-import com.ssu.commerce.core.exception.SsuCommerceException;
+import com.ssu.commerce.core.error.SsuCommerceException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public class ImageStore {
 
     public List<Image> storeFiles(@NotNull final UUID bookId, @NotNull final List<MultipartFile> multipartFileList) throws IOException {
         if (CollectionUtils.isEmpty(multipartFileList)) {
-            throw new SsuCommerceException(HttpStatus.BAD_REQUEST, "IMAGE_001", "INVALID FILE");
+            throw new SsuCommerceException(HttpStatus.BAD_REQUEST.value(), "IMAGE_001", "INVALID FILE");
         }
         List<Image> storeFileList = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFileList) {

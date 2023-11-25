@@ -5,7 +5,7 @@ import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.model.Category;
 import com.ssu.commerce.book.supplier.BookTestDataSupplier;
-import com.ssu.commerce.core.jpa.JpaConfig;
+import com.ssu.commerce.core.jpa.config.JpaConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

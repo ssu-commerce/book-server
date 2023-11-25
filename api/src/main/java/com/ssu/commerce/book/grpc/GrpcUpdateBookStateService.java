@@ -5,29 +5,32 @@ import com.ssu.commerce.book.dto.param.RentalBookRequestDto;
 import com.ssu.commerce.book.exception.BookStateConflictException;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
-import com.ssu.commerce.core.exception.NotFoundException;
-import com.ssu.commerce.order.grpc.RentalBookGrpc;
-import com.ssu.commerce.order.grpc.RentalBookRequest;
-import com.ssu.commerce.order.grpc.RentalBookResponse;
+import com.ssu.commerce.core.error.NotFoundException;
+import com.ssu.commerce.order.grpc.UpdateBookStateGrpc;
+import com.ssu.commerce.order.grpc.UpdateBookStateRequest;
+import com.ssu.commerce.order.grpc.UpdateBookStateResponse;
 import io.grpc.stub.StreamObserver;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@GrpcService
 @Slf4j
-public class GrpcRentalBookServerService extends RentalBookGrpc.RentalBookImplBase {
-    @Autowired
-    private BookRepository bookRepository;
+@GrpcService
+@RequiredArgsConstructor
+public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookStateImplBase {
+    private final BookRepository bookRepository;
 
     @Override
     @Transactional
-    public void rentalBook(RentalBookRequest request, StreamObserver<RentalBookResponse> responseObserver) {
+    public void updateBookState(
+            UpdateBookStateRequest request,
+            StreamObserver<UpdateBookStateResponse> responseObserver
+    ) {
         /*
          *   TODO RentalBookRequest 의 token 검증
          */
@@ -44,7 +47,10 @@ public class GrpcRentalBookServerService extends RentalBookGrpc.RentalBookImplBa
 
     }
 
-    public void updateBookState(@DistributedLock List<RentalBookRequestDto> requestDto,StreamObserver<RentalBookResponse> responseObserver) {
+    public void updateBookState(
+            @DistributedLock List<RentalBookRequestDto> requestDto,
+            StreamObserver<UpdateBookStateResponse> responseObserver
+    ) {
         List<UUID> bookId = requestDto.stream().map(RentalBookRequestDto::getId).collect(Collectors.toList());
 
         List<Book> findBook = bookRepository.findAllById(bookId);
@@ -63,7 +69,7 @@ public class GrpcRentalBookServerService extends RentalBookGrpc.RentalBookImplBa
         }
 
         responseObserver.onNext(
-                RentalBookResponse.newBuilder()
+                UpdateBookStateResponse.newBuilder()
                         .build()
         );
         responseObserver.onCompleted();

@@ -12,7 +12,7 @@ import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.book.persistence.CategoryRepository;
-import com.ssu.commerce.core.exception.NotFoundException;
+import com.ssu.commerce.core.error.NotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -18,8 +18,9 @@ spring:
   image:
     path: /home/
   redis:
-    host: localhost
+    host: redis-master
     port: 6379
+    password: RoLe9vKqDE
 
 springdoc:
   swagger-ui:

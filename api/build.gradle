@@ -139,13 +139,6 @@ configurations {
 }
 //querydsl 추가 끝
 
-sonar {
-    properties {
-        property "sonar.projectKey", "book-server"
-        property "sonar.projectName", "book-server"
-    }
-}
-
 jacoco {
     toolVersion = "0.8.10"
     reportsDirectory = layout.buildDirectory.dir("$buildDir/reports/jacoco")

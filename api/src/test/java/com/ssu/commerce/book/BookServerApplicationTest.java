@@ -9,7 +9,7 @@ import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class BookServerApplicationTests {
+class BookServerApplicationTest {
 	private static final GenericContainer<?> redisContainer = new GenericContainer<>(DockerImageName.parse("redis:6.2.5"))
 			.withExposedPorts(6379);
 

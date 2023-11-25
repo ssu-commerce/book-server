@@ -25,10 +25,6 @@ jobs:
           overwrite-settings: true
           job-status: success
 
-      # Setup sonar-scanner
-      - name: Setup SonarQube
-        uses: warchant/setup-sonar-scanner@v5
-
       - name: Cache SonarQube packages
         uses: actions/cache@v1
         with:
@@ -54,38 +50,19 @@ jobs:
           USERNAME: ${{secrets.USERNAME}}
           TOKEN: ${{secrets.TOKEN}}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: ./gradlew clean test jacocoTestReport --stacktrace --profile
 
       - name: SonarQube Scan
-        run: |
-          sonar-scanner \
-          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}  \
-          -Dsonar.login=${{ secrets.SONAR_LOGIN }} \
-          -Dsonar.password=${{ secrets.SONAR_PASSWORD }} \
-          -Dsonar.projectKey=book-server \
-          -Dsonar.sourceEncoding=UTF-8 \
-          -Dsonar.language=java \
-          -Dsonar.java.source=11 \
-          -Dsonar.verbose=true \
-          -Dsonar.scm.revision=${{ github.event.pull_request.head.sha }} \
-          -Dsonar.scm.provider=git \
-          -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
-          -Dsonar.pullrequest.branch=${{ github.event.pull_request.head.ref }} \
-          -Dsonar.pullrequest.base=${{ github.base_ref }} \
-          -Dsonar.pullrequest.github.repository=${{ github.repository }} \
-          -Dsonar.sources=api/src \
-          -Dsonar.java.binaries=api/build/classes \
-          -Dsonar.log.level=INFO \
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: Test Coverage
         env:
           USERNAME: ${{ secrets.USERNAME }}
           TOKEN: ${{ secrets.TOKEN }}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: ./gradlew jacocoTestCoverageVerification --stacktrace --profile
 
       - name: Add coverage to PR

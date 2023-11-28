@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-      - '#11-jib'
-
 
 jobs:
   build:

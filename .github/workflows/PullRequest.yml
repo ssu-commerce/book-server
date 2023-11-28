@@ -75,6 +75,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 57.65
           min-coverage-changed-files: 100
+          update-comment: true
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3

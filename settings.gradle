@@ -7,7 +7,7 @@ pluginManagement {
             url = uri("https://maven.pkg.github.com/ssu-commerce/ssu-commerce-core")
             credentials {
                 username = settings.ext["gpr.user"] ?: System.getenv("USERNAME")
-                password = settings.ext["gpr.user"] ?: System.getenv("TOKEN")
+                password = settings.ext["gpr.key"] ?: System.getenv("TOKEN")
             }
         }
     }

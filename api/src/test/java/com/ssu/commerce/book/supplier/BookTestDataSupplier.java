@@ -1,12 +1,12 @@
 package com.ssu.commerce.book.supplier;
 
+import com.ssu.commerce.book.constant.code.BookState;
 import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
-import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.model.Category;
 import org.springframework.data.domain.Page;
@@ -51,6 +51,8 @@ public interface BookTestDataSupplier {
             "그런데...... 뭐? 화산이 망해? 이게 뭔 개소리야!? " +
             "망했으면 살려야 하는 게 인지상정.";
 
+    BookState TEST_VAL_BOOK_STATE = BookState.SHARABLE;
+
     static Book getBook() {
         return Book.builder()
                 .title(TEST_VAL_BOOK_TITLE)
@@ -61,6 +63,7 @@ public interface BookTestDataSupplier {
                 .isbn(TEST_VAL_BOOK_ISBN)
                 .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
                 .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .bookState(TEST_VAL_BOOK_STATE)
                 .build();
     }
 

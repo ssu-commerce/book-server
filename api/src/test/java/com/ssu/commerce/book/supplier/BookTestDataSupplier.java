@@ -7,6 +7,7 @@ import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
+import com.ssu.commerce.book.dto.param.query.UpdateBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.model.Category;
 import org.springframework.data.domain.Page;
@@ -219,6 +220,19 @@ public interface BookTestDataSupplier {
     static DeleteBookParamDto getDeleteBookParamDto(UUID bookId) {
         return DeleteBookParamDto.builder()
                 .id(bookId)
+                .build();
+    }
+
+    static UpdateBookParamDto getUpdateBookParamDto() {
+        return UpdateBookParamDto.builder()
+                .id(TEST_VAL_BOOK_ID)
+                .title(TEST_VAL_CHANGE_BOOK_TITLE)
+                .content(TEST_VAL_CHANGE_BOOK_CONTENT)
+                .price(TEST_VAL_CHANGE_BOOK_PRICE)
+                .publishDate(TEST_VAL_CHANGE_BOOK_PUBLISH_DATE)
+                .isbn(TEST_VAL_CHANGE_BOOK_ISBN)
+                .maxBorrowDay(TEST_VAL_CHANGE_BOOK_MAX_BORROW_DAY)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
                 .build();
     }
 }

@@ -16,8 +16,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "category")
 public class Category {
-    // id, name, description
-
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")

@@ -44,7 +44,7 @@ public class GrpcServerService extends GetBookListGrpc.GetBookListImplBase {
                             .setWriter(list.getWriter())
                             .setPrice(list.getPrice())
                             .setIsbn(list.getIsbn())
-                            .setMaxBorrowDay(list.getMaxBorrowDay())
+//                            .setMaxBorrowDay(list.getMaxBorrowDay()) // 수정 예정
        //                     .setCategoryId(list.getCategoryId())
                             .build()
             );

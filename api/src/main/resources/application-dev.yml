@@ -9,7 +9,7 @@ spring:
       hibernate:
         format_sql: true
   application:
-    name: user-service
+    name: book
     main:
       allow-circular-references: true
   servlet:

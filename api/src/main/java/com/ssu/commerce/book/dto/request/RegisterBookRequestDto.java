@@ -36,4 +36,9 @@ public class RegisterBookRequestDto {
 
     @NotNull
     private UUID categoryId;
+
+    // 일별 대여료
+    // maxBorrowDay 를 없앤다. 대여자의 자유도를 위해 최대 대여기간을 정하지 말고, 1일 대여비를 정하고 대여자의 결정에 따라 대여기간을 정한다. comment 로 이를 대채한다.
+    // 소유자는 몇일부터 몇일까지 이 책을 대여해 줄 것인지 정한다.
+    // 가격은 책 가격, 1일 대여 가격이 필요하다.
 }

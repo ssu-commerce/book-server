@@ -250,6 +250,7 @@ public interface BookTestDataSupplier {
                 .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
                 .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
                 .comment(TEST_VAL_BOOK_COMMENT)
+                .bookState("SHARABLE") // ccxz84 | 2024-05-13 DTO 클래스에 bookState가 String 으로 되어있음
                 .build();
     }
 

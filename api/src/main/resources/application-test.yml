@@ -5,6 +5,10 @@ grpc:
 spring:
   jpa:
     hibernate:
+      connection:
+        charSet: UTF-8
+        characterEncoding: utf8
+        useUnicode: true
       ddl-auto: create # test
     show-sql: true
     properties:
@@ -29,4 +33,8 @@ springdoc:
 
 logging:
   level:
-    p6spy: info
+    org:
+      hibernate:
+        SQL: DEBUG # Hibernate SQL 로그를 DEBUG 레벨로 설정
+      com:
+        p6spy: DEBUG # p6spy 로그를 DEBUG 레벨로 설정하여 SQL 로그를 더욱 상세하게 추적

@@ -43,7 +43,7 @@ public class Book {
     @Column(name = "price", nullable = false)
     private Long price;
 
-    @Column(name = "share_price, nullable = false")
+    @Column(name = "share_price", nullable = false)
     private Long sharePrice;
 
     @Column(name = "comment", columnDefinition = "TEXT")

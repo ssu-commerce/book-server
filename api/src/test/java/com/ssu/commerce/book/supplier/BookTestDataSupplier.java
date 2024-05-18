@@ -56,6 +56,8 @@ public interface BookTestDataSupplier {
             "망했으면 살려야 하는 게 인지상정.";
 
     BookState TEST_VAL_BOOK_STATE = BookState.SHARABLE;
+    BookState TEST_VAL_BOOK_STATE_SHARERABLE = BookState.SHARABLE;
+    BookState TEST_VAL_BOOK_STATE_DISSHARERABLE = BookState.SHARABLE;
 
     static Book getBook() {
         return Book.builder()
@@ -71,6 +73,60 @@ public interface BookTestDataSupplier {
                 .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
                 .bookState(TEST_VAL_BOOK_STATE)
                 .comment(TEST_VAL_BOOK_COMMENT)
+                .build();
+    }
+
+    static Book getBookWithState() {
+        return Book.builder()
+                .title(TEST_VAL_BOOK_TITLE)
+                .content(TEST_VAL_BOOK_CONTENT)
+                .writer(TEST_VAL_BOOK_WRITER)
+                .price(TEST_VAL_BOOK_PRICE)
+                .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
+                .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                .isbn(TEST_VAL_BOOK_ISBN)
+                .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .bookState(TEST_VAL_BOOK_STATE)
+                .comment(TEST_VAL_BOOK_COMMENT)
+                .bookState(TEST_VAL_BOOK_STATE)
+                .build();
+    }
+
+    static Book getBookWithSharableState() {
+        return Book.builder()
+                .title(TEST_VAL_BOOK_TITLE)
+                .content(TEST_VAL_BOOK_CONTENT)
+                .writer(TEST_VAL_BOOK_WRITER)
+                .price(TEST_VAL_BOOK_PRICE)
+                .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
+                .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                .isbn(TEST_VAL_BOOK_ISBN)
+                .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .bookState(TEST_VAL_BOOK_STATE)
+                .comment(TEST_VAL_BOOK_COMMENT)
+                .bookState(TEST_VAL_BOOK_STATE_SHARERABLE)
+                .build();
+    }
+
+    static Book getBookWithDisSharableState() {
+        return Book.builder()
+                .title(TEST_VAL_BOOK_TITLE)
+                .content(TEST_VAL_BOOK_CONTENT)
+                .writer(TEST_VAL_BOOK_WRITER)
+                .price(TEST_VAL_BOOK_PRICE)
+                .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
+                .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                .isbn(TEST_VAL_BOOK_ISBN)
+                .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .bookState(TEST_VAL_BOOK_STATE)
+                .comment(TEST_VAL_BOOK_COMMENT)
+                .bookState(TEST_VAL_BOOK_STATE_DISSHARERABLE)
                 .build();
     }
 

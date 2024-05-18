@@ -59,7 +59,11 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
     ) {
         List<UUID> bookIds = requestDto.stream().map(RentalBookRequestDto::getId).collect(Collectors.toList());
 
+        System.out.println("Requested book IDs: " + bookIds);
+
         List<Book> booksToCheck = bookRepository.findAllById(bookIds);
+
+        System.out.println("Found books: " + booksToCheck);
 
         if (booksToCheck.isEmpty()) {
             throw new NotFoundException(

@@ -1,66 +1,25 @@
 package com.ssu.commerce.book.config;
 
 import com.ssu.commerce.core.jpa.config.AbstractDataSourceProperties;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Profile("!test")
+@Getter
+@Setter
 @Configuration
 @ConfigurationProperties("ssu-commerce-book")
 public class DataSourceProperties implements AbstractDataSourceProperties {
 
-    public String dataSource;
+    private String dataSource;
 
-    public String userId;
+    private String userId;
 
-    public String password;
+    private String password;
 
-    public String driverClassName;
-
-
-    @NotNull
-    @Override
-    public String getDataSource() {
-        return dataSource;
-    }
-
-    @Override
-    public void setDataSource(@NotNull String s) {
-        this.dataSource = s;
-    }
-
-    @NotNull
-    @Override
-    public String getDriverClassName() {
-        return driverClassName;
-    }
-
-    @Override
-    public void setDriverClassName(@NotNull String s) {
-        this.driverClassName = s;
-    }
-
-    @NotNull
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public void setPassword(@NotNull String s) {
-        this.password = s;
-    }
-
-    @NotNull
-    @Override
-    public String getUserId() {
-        return userId;
-    }
-
-    @Override
-    public void setUserId(@NotNull String s) {
-        this.userId = s;
-    }
+    private String driverClassName;
 }

@@ -1,11 +1,13 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 option java_multiple_files = true;
 option java_package = "com.ssu.commerce.grpc";
 
 
 service UpdateBookState {
-  rpc UpdateBookState (UpdateBookStateRequest) returns (UpdateBookStateResponse) {
+  rpc UpdateBookState (UpdateBookStateRequest) returns (google.protobuf.Empty) {
 
   }
 }
@@ -14,10 +16,6 @@ message UpdateBookStateRequest {
   string token = 1;
   BookState bookState = 2;
   repeated string id = 3;
-}
-
-message UpdateBookStateResponse {
-  bool updateBookStateResponse = 1;
 }
 
 enum BookState {

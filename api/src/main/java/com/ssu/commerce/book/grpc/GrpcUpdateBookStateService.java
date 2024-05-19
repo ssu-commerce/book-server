@@ -40,30 +40,20 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
         com.ssu.commerce.grpc.BookState updateState = request.getBookState();
 
         List<RentalBookRequestDto> rentalBookRequestDto = request.getIdList()
-                .stream().map(id ->
-                        UUID.fromString(id)
-                ).collect(Collectors.toList())
-                .stream().map(id ->
-                        RentalBookRequestDto.builder().id(id).build()
-                ).collect(Collectors.toList());
-
+                .stream().map(UUID::fromString).collect(Collectors.toList())
+                .stream().map(id -> RentalBookRequestDto.builder().id(id).build())
+                .collect(Collectors.toList());
         updateBookState(rentalBookRequestDto, updateState, responseObserver);
 
     }
 
-    @Transactional
-    public void updateBookState(
+    private void updateBookState(
             @DistributedLock List<RentalBookRequestDto> requestDto,
             com.ssu.commerce.grpc.BookState grpcUpdateState,
             StreamObserver<UpdateBookStateResponse> responseObserver
     ) {
         List<UUID> bookIds = requestDto.stream().map(RentalBookRequestDto::getId).collect(Collectors.toList());
-
-        System.out.println("Requested book IDs: " + bookIds);
-
         List<Book> booksToCheck = bookRepository.findAllById(bookIds);
-
-        System.out.println("Found books: " + booksToCheck);
 
         if (booksToCheck.isEmpty()) {
             throw new NotFoundException(
@@ -86,10 +76,6 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
             bookRepository.save(book);  // 변경된 상태를 저장
         });
 
-        responseObserver.onNext(
-                UpdateBookStateResponse.newBuilder()
-                        .build()
-        );
         responseObserver.onCompleted();
     }
 

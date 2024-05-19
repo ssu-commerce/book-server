@@ -31,6 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,8 @@ import static org.mockito.Mockito.*;
 @Slf4j
 class BookControllerTest implements BookControllerTestDataSupplier {
 
+    @Autowired
+    private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
 
@@ -79,7 +82,7 @@ class BookControllerTest implements BookControllerTestDataSupplier {
                     .andExpect(status().isOk())
                     .andReturn()
                     .getResponse()
-                    .getContentAsString(Charset.forName("UTF-8"));
+                    .getContentAsString(StandardCharsets.UTF_8);
 
             ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
             Map<String, Object> jsonMap = objectMapper.readValue(jsonResponse, new TypeReference<>() {});
@@ -105,7 +108,7 @@ class BookControllerTest implements BookControllerTestDataSupplier {
                     .andExpect(status().isOk())
                     .andReturn()
                     .getResponse()
-                    .getContentAsString(Charset.forName("UTF-8"));
+                    .getContentAsString(StandardCharsets.UTF_8);
 
             ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
             Map<String, Object> jsonMap = objectMapper.readValue(jsonResponse, new TypeReference<>() {});
@@ -125,10 +128,7 @@ class BookControllerTest implements BookControllerTestDataSupplier {
 
         assertDoesNotThrow(() -> {
             mockMvc.perform(post("/v1/book")
-                            .content(new ObjectMapper().registerModule(
-                                    new JavaTimeModule()).writeValueAsString(
-                                            BookControllerTestDataSupplier.getRegisterBookRequestDto()
-                                    ))
+                            .content(objectMapper.writeValueAsString(BookControllerTestDataSupplier.getRegisterBookRequestDto()))
                             .contentType(MediaType.APPLICATION_JSON)
                             .with(csrf())
                         .accept(MediaType.APPLICATION_JSON))
@@ -148,10 +148,7 @@ class BookControllerTest implements BookControllerTestDataSupplier {
 
         assertDoesNotThrow(() -> {
             mockMvc.perform(put("/v1/book")
-                            .content(new ObjectMapper().registerModule(
-                                    new JavaTimeModule()).writeValueAsString(
-                                    BookControllerTestDataSupplier.getChangeBookRequestDto()
-                            ))
+                            .content(objectMapper.writeValueAsString(BookControllerTestDataSupplier.getChangeBookRequestDto()))
                             .contentType(MediaType.APPLICATION_JSON)
                             .with(csrf())
                             .accept(MediaType.APPLICATION_JSON))

@@ -10,6 +10,8 @@ import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.dto.param.query.UpdateBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.model.Category;
+import com.ssu.commerce.grpc.UpdateBookStateRequest;
+import org.hibernate.sql.Update;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ import java.util.UUID;
 
 public interface BookTestDataSupplier {
     UUID TEST_VAL_BOOK_ID = UUID.fromString("60180817-de61-4bac-a777-16219ffb92c0");
+    UUID TEST_VAL_ANOTHER_BOOK_ID = UUID.fromString("4de76436-a242-4664-9334-7bef0b6428bf");
     String TEST_VAL_BOOK_TITLE = "비가 오면 열리는 상점";
     String TEST_VAL_BOOK_CONTENT = "불행을 파는 대신 원하는 행복을 살 수 있는 가게가 있다면? " +
             "듣기만 해도 방문하고 싶어지는, 비가 오면 열리는 수상한 상점에 초대된 여고생 세린이 안내묘 잇샤, " +
@@ -58,6 +61,8 @@ public interface BookTestDataSupplier {
     BookState TEST_VAL_BOOK_STATE = BookState.SHARABLE;
     BookState TEST_VAL_BOOK_STATE_SHARERABLE = BookState.SHARABLE;
     BookState TEST_VAL_BOOK_STATE_DISSHARERABLE = BookState.SHARABLE;
+
+    String TEST_VAL_ACCESS_TOKE = "test access token";
 
     static Book getBook() {
         return Book.builder()
@@ -316,19 +321,35 @@ public interface BookTestDataSupplier {
                 .build();
     }
 
-    static UpdateBookParamDto getUpdateBookParamDto() {
-        return UpdateBookParamDto.builder()
-                .id(TEST_VAL_BOOK_ID)
-                .title(TEST_VAL_CHANGE_BOOK_TITLE)
-                .content(TEST_VAL_CHANGE_BOOK_CONTENT)
-                .price(TEST_VAL_CHANGE_BOOK_PRICE)
-                .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
-                .publishDate(TEST_VAL_CHANGE_BOOK_PUBLISH_DATE)
-                .isbn(TEST_VAL_CHANGE_BOOK_ISBN)
-                .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
-                .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
-                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
-                .comment(TEST_VAL_BOOK_COMMENT)
+    static UpdateBookStateRequest getUpdateBookStateRequest() {
+        return UpdateBookStateRequest.newBuilder()
+                .setToken(TEST_VAL_ACCESS_TOKE)
+                .setBookState(com.ssu.commerce.grpc.BookState.SHARING)
+                .addId(TEST_VAL_BOOK_ID.toString())
+                .addId(TEST_VAL_ANOTHER_BOOK_ID.toString())
                 .build();
+    }
+
+    static List<Book> getBookListForGrpc() {
+        return List.of(
+                Book.builder()
+                        .id(TEST_VAL_BOOK_ID)
+                        .build(),
+                Book.builder()
+                        .id(TEST_VAL_ANOTHER_BOOK_ID)
+                        .build()
+        );
+    }
+
+    static List<Book> getBookListForGrpcConflict() {
+        return List.of(
+                Book.builder()
+                        .id(TEST_VAL_BOOK_ID)
+                        .build(),
+                Book.builder()
+                        .id(TEST_VAL_ANOTHER_BOOK_ID)
+                        .bookState(BookState.DISSHAREABLE)
+                        .build()
+        );
     }
 }

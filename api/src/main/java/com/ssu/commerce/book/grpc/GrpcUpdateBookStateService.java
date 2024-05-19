@@ -1,5 +1,6 @@
 package com.ssu.commerce.book.grpc;
 
+import com.google.protobuf.Empty;
 import com.ssu.commerce.book.annotation.DistributedLock;
 import com.ssu.commerce.book.constant.code.BookState;
 import com.ssu.commerce.book.dto.mapper.GrpcBookStateMapper;
@@ -10,7 +11,6 @@ import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.core.error.NotFoundException;
 import com.ssu.commerce.grpc.UpdateBookStateGrpc;
 import com.ssu.commerce.grpc.UpdateBookStateRequest;
-import com.ssu.commerce.grpc.UpdateBookStateResponse;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
     @Transactional
     public void updateBookState(
             UpdateBookStateRequest request,
-            StreamObserver<UpdateBookStateResponse> responseObserver
+            StreamObserver<Empty> responseObserver
     ) {
         /*
          *   TODO RentalBookRequest 의 token 검증
@@ -50,7 +50,7 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
     private void updateBookState(
             @DistributedLock List<RentalBookRequestDto> requestDto,
             com.ssu.commerce.grpc.BookState grpcUpdateState,
-            StreamObserver<UpdateBookStateResponse> responseObserver
+            StreamObserver<Empty> responseObserver
     ) {
         List<UUID> bookIds = requestDto.stream().map(RentalBookRequestDto::getId).collect(Collectors.toList());
         List<Book> booksToCheck = bookRepository.findAllById(bookIds);

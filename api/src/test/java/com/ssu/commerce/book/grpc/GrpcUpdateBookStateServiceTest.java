@@ -1,5 +1,6 @@
 package com.ssu.commerce.book.grpc;
 
+import com.google.protobuf.Empty;
 import com.ssu.commerce.book.constant.code.BookState;
 import com.ssu.commerce.book.exception.BookStateConflictException;
 import com.ssu.commerce.book.model.Book;
@@ -7,7 +8,6 @@ import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.book.supplier.BookTestDataSupplier;
 import com.ssu.commerce.core.error.NotFoundException;
 import com.ssu.commerce.grpc.UpdateBookStateRequest;
-import com.ssu.commerce.grpc.UpdateBookStateResponse;
 import io.grpc.stub.StreamObserver;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ public class GrpcUpdateBookStateServiceTest implements BookTestDataSupplier {
     private BookRepository bookRepository;
 
     @Mock
-    private StreamObserver<UpdateBookStateResponse> response;
+    private StreamObserver<Empty> response;
 
     @InjectMocks
     private GrpcUpdateBookStateService grpcUpdateBookStateService;

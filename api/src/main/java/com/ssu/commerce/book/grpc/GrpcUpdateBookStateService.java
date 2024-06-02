@@ -40,8 +40,7 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
         com.ssu.commerce.grpc.BookState updateState = request.getBookState();
 
         List<RentalBookRequestDto> rentalBookRequestDto = request.getIdList()
-                .stream().map(UUID::fromString).collect(Collectors.toList())
-                .stream().map(id -> RentalBookRequestDto.builder().id(id).build())
+                .stream().map(id -> RentalBookRequestDto.builder().id(UUID.fromString(id)).build())
                 .collect(Collectors.toList());
         updateBookState(rentalBookRequestDto, updateState, responseObserver);
 

@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+// ccxz84 | 2024-04-24 GRPC 테스트 용 코드 였기 때문에 사용하지 않습니다.
 @GrpcService
 @Slf4j
 public class GrpcServerService extends GetBookListGrpc.GetBookListImplBase {
@@ -44,7 +45,7 @@ public class GrpcServerService extends GetBookListGrpc.GetBookListImplBase {
                             .setWriter(list.getWriter())
                             .setPrice(list.getPrice())
                             .setIsbn(list.getIsbn())
-                            .setMaxBorrowDay(list.getMaxBorrowDay())
+//                            .setMaxBorrowDay(list.getMaxBorrowDay()) // 수정 예정
        //                     .setCategoryId(list.getCategoryId())
                             .build()
             );

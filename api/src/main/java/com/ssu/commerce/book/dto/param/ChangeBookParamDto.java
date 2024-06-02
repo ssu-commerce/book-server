@@ -27,13 +27,24 @@ public class ChangeBookParamDto extends AbstractLockableObject {
     @NotNull
     private Long price;
 
+    @NotNull
+    private Long sharePrice;
+
+    private String comment;
+
+    @NotNull
+    private LocalDateTime startBorrowDay;
+
+    @NotNull
+    private LocalDateTime endBorrowDay;
+
+    @NotEmpty
+    private UUID ownerId;
+
     private LocalDateTime publishDate;
 
     @NotEmpty
     private String isbn;
-
-    @NotNull
-    private Long maxBorrowDay;
 
     @NotNull
     private UUID categoryId;

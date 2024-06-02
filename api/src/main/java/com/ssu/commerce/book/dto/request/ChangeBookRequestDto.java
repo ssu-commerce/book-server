@@ -21,6 +21,7 @@ public class ChangeBookRequestDto {
     @NotEmpty
     private String title;
 
+    @NotNull
     private String content;
 
     @NotEmpty
@@ -29,13 +30,25 @@ public class ChangeBookRequestDto {
     @NotNull
     private Long price;
 
+    @NotNull
+    private Long sharePrice;
+
+    private String comment;
+
+    @NotNull
+    private LocalDateTime startBorrowDay;
+
+    @NotNull
+    private LocalDateTime endBorrowDay;
+
+    @NotNull
+    private UUID ownerId;
+
+    @NotNull
     private LocalDateTime publishDate;
 
     @NotEmpty
     private String isbn;
-
-    @NotNull
-    private Long maxBorrowDay;
 
     @NotNull
     private UUID categoryId;

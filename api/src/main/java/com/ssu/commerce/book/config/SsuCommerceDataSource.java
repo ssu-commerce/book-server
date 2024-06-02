@@ -1,5 +1,6 @@
 package com.ssu.commerce.book.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -10,18 +11,17 @@ import javax.sql.DataSource;
 
 @Profile("!test")
 @Configuration
+@RequiredArgsConstructor
 public class SsuCommerceDataSource {
-
-    @Autowired
-    DataSourceProperties dataSourceProperties;
+    private final DataSourceProperties dataSourceProperties;
 
     @Bean
     public DataSource dataSource(){
         return DataSourceBuilder.create()
-                .driverClassName(dataSourceProperties.driverClassName)
-                .url(dataSourceProperties.dataSource)
-                .username(dataSourceProperties.userId)
-                .password(dataSourceProperties.password)
+                .driverClassName(dataSourceProperties.getDriverClassName())
+                .url(dataSourceProperties.getDataSource())
+                .username(dataSourceProperties.getUserId())
+                .password(dataSourceProperties.getPassword())
                 .build();
     }
 

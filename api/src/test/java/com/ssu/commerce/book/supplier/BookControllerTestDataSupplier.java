@@ -27,10 +27,13 @@ public interface BookControllerTestDataSupplier {
             "망했으면 살려야 하는 게 인지상정.";
     String TEST_VAL_BOOK_WRITER = "비가";
     Long TEST_VAL_BOOK_PRICE = 15120L;
+    Long TEST_VAL_SHARED_BOOK_PRICE = 15120L;
+    String TEST_VAL_BOOK_COMMENT = "이 책은 13페이지가 살짝 찢어져 있습니다.";
     UUID TEST_VAL_BOOK_OWNER_ID = UUID.fromString("b794d677-aa71-432f-8016-dbbf4cfe09c7");
     LocalDateTime TEST_VAL_BOOK_PUBLISH_DATE = LocalDateTime.of(2023,7,23,0,0,0);
     String TEST_VAL_BOOK_ISBN = "9791198173898";
-    Long TEST_VAL_BOOK_MAX_BORROW_DAY = 15L;
+    LocalDateTime TEST_VAL_BOOK_START_BORROW_DAY = LocalDateTime.of(2024, 5, 13, 15, 30);
+    LocalDateTime TEST_VAL_BOOK_END_BORROW_DAY =  LocalDateTime.of(2025, 5, 13, 15, 30);
 
     UUID TEST_VAL_BOOK_ID = UUID.fromString("1755e96b-bc66-47a8-981d-92e03c861b3c");
     UUID TEST_VAL_OWNER_ID = UUID.fromString("8ad8c2eb-ee9a-43f1-be82-0e0d8ddf70b1");
@@ -48,11 +51,14 @@ public interface BookControllerTestDataSupplier {
                 .content(TEST_VAL_BOOK_CONTENT)
                 .writer(TEST_VAL_BOOK_WRITER)
                 .price(TEST_VAL_BOOK_PRICE)
+                .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
                 .ownerId(TEST_VAL_OWNER_ID)
                 .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
                 .isbn(TEST_VAL_BOOK_ISBN)
-                .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
                 .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .comment(TEST_VAL_BOOK_COMMENT)
                 .build();
     }
 
@@ -63,11 +69,14 @@ public interface BookControllerTestDataSupplier {
                 .content(TEST_VAL_BOOK_CONTENT)
                 .writer(TEST_VAL_BOOK_WRITER)
                 .price(TEST_VAL_BOOK_PRICE)
+                .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
                 .ownerId(TEST_VAL_ANOTHER_OWNER_ID)
                 .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
                 .isbn(TEST_VAL_BOOK_ISBN)
-                .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
                 .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .comment(TEST_VAL_BOOK_COMMENT)
                 .build();
     }
 
@@ -79,10 +88,13 @@ public interface BookControllerTestDataSupplier {
                 .writer(TEST_VAL_BOOK_WRITER)
                 .price(TEST_VAL_BOOK_PRICE)
                 .ownerId(TEST_VAL_OWNER_ID)
+                .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
                 .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
                 .isbn(TEST_VAL_BOOK_ISBN)
-                .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
                 .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .comment(TEST_VAL_BOOK_COMMENT)
                 .build();
     }
 
@@ -92,10 +104,13 @@ public interface BookControllerTestDataSupplier {
                 .content(TEST_VAL_BOOK_CONTENT)
                 .writer(TEST_VAL_BOOK_WRITER)
                 .price(TEST_VAL_BOOK_PRICE)
+                .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
                 .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
                 .isbn(TEST_VAL_BOOK_ISBN)
-                .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
                 .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .comment(TEST_VAL_BOOK_COMMENT)
                 .build();
     }
 
@@ -119,11 +134,14 @@ public interface BookControllerTestDataSupplier {
                         .content(TEST_VAL_BOOK_CONTENT)
                         .writer(TEST_VAL_BOOK_WRITER)
                         .price(TEST_VAL_BOOK_PRICE)
+                        .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
                         .ownerId(TEST_VAL_OWNER_ID)
                         .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
                         .isbn(TEST_VAL_BOOK_ISBN)
-                        .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                        .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                        .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
                         .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                        .comment(TEST_VAL_BOOK_COMMENT)
                         .build(),
                 GetBookResponseDto.builder()
                         .id(TEST_VAL_ANOTHER_BOOK_DTO_ID)
@@ -131,11 +149,14 @@ public interface BookControllerTestDataSupplier {
                         .content(TEST_VAL_BOOK_CONTENT)
                         .writer(TEST_VAL_BOOK_WRITER)
                         .price(TEST_VAL_BOOK_PRICE)
+                        .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
                         .ownerId(TEST_VAL_ANOTHER_OWNER_ID)
                         .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
                         .isbn(TEST_VAL_BOOK_ISBN)
-                        .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                        .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                        .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
                         .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                        .comment(TEST_VAL_BOOK_COMMENT)
                         .build()
         );
     }
@@ -160,10 +181,13 @@ public interface BookControllerTestDataSupplier {
                 .content(TEST_VAL_BOOK_CONTENT)
                 .writer(TEST_VAL_BOOK_WRITER)
                 .price(TEST_VAL_BOOK_PRICE)
+                .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
                 .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
                 .isbn(TEST_VAL_BOOK_ISBN)
-                .maxBorrowDay(TEST_VAL_BOOK_MAX_BORROW_DAY)
+                .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
                 .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
+                .comment(TEST_VAL_BOOK_COMMENT)
                 .build();
     }
 }

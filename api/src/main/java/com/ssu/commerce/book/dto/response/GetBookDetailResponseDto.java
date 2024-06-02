@@ -14,9 +14,12 @@ public class GetBookDetailResponseDto {
     private String content;
     private String writer;
     private Long price;
+    private Long sharePrice;
+    private String comment;
+    private LocalDateTime startBorrowDay;
+    private LocalDateTime endBorrowDay;
     private UUID ownerId;
     private LocalDateTime publishDate;
     private String isbn;
-    private Long maxBorrowDay;
     private UUID categoryId;
 }

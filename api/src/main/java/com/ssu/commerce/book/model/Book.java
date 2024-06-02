@@ -34,31 +34,40 @@ public class Book {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "writer")
+    @Column(name = "writer", nullable = false)
     private String writer;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private Long price;
+
+    @Column(name = "share_price", nullable = false)
+    private Long sharePrice;
+
+    @Column(name = "comment", columnDefinition = "TEXT")
+    private String comment;
+
+    @Column(name = "start_borrow_day", nullable = false)
+    private LocalDateTime startBorrowDay;
+
+    @Column(name = "end_borrow_day", nullable = false)
+    private LocalDateTime endBorrowDay;
 
     @Column(name = "owner_id", columnDefinition = "BINARY(16)")
     private UUID ownerId;
 
-    @Column(name = "publish_date")
+    @Column(name = "publish_date", nullable = false)
     private LocalDateTime publishDate;
 
-    @Column(name = "isbn")
+    @Column(name = "isbn", nullable = false)
     private String isbn;
 
-    @Column(name = "max_borrow_day")
-    private Long maxBorrowDay;
-
-    @Column(name = "category_id", columnDefinition = "BINARY(16)")
+    @Column(name = "category_id", columnDefinition = "BINARY(16)", nullable = false)
     private UUID categoryId;
 
-    @Column(name = "book_state")
+    @Column(name = "book_state", nullable = false)
     @Enumerated(EnumType.STRING)
     private BookState bookState;
 
@@ -67,9 +76,13 @@ public class Book {
         content = paramDto.getContent();
         writer = paramDto.getWriter();
         price = paramDto.getPrice();
+        sharePrice = paramDto.getSharePrice();
+        comment = paramDto.getComment();
+        startBorrowDay = paramDto.getStartBorrowDay();
+        endBorrowDay = paramDto.getEndBorrowDay();
+        ownerId = paramDto.getOwnerId();
         publishDate = paramDto.getPublishDate();
         isbn = paramDto.getIsbn();
-        maxBorrowDay = paramDto.getMaxBorrowDay();
         categoryId = paramDto.getCategoryId();
         return this;
     }

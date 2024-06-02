@@ -68,6 +68,9 @@ dependencies {
 
     testAnnotationProcessor 'org.projectlombok:lombok'
     testAnnotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: "$mapstructVersion"
+
+    // tmp 버전 이슈 : 추후에 변경
+    api("com.ssu.commerce:ssu-commerce-config-client:2024.04.5")
 }
 
 tasks.named('test') {

@@ -24,15 +24,21 @@ public class RegisterBookRequestDto {
     private String writer;
 
     @NotNull
-    private Long price;
+    private Long price; // 책 가격
+
+    @NotNull
+    private Long sharePrice; // 책 가격
+
+    private String comment;
+
+    private LocalDateTime startBorrowDay; // 대여 시작 가능 일
+
+    private LocalDateTime endBorrowDay; // 대여 종료 가능 일
 
     private LocalDateTime publishDate;
 
     @NotEmpty
     private String isbn;
-
-    @NotNull
-    private Long maxBorrowDay;
 
     @NotNull
     private UUID categoryId;
@@ -41,4 +47,6 @@ public class RegisterBookRequestDto {
     // maxBorrowDay 를 없앤다. 대여자의 자유도를 위해 최대 대여기간을 정하지 말고, 1일 대여비를 정하고 대여자의 결정에 따라 대여기간을 정한다. comment 로 이를 대채한다.
     // 소유자는 몇일부터 몇일까지 이 책을 대여해 줄 것인지 정한다.
     // 가격은 책 가격, 1일 대여 가격이 필요하다.
+    
+    // 왜 owner_id 가 파라미터에 없는가
 }

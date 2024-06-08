@@ -48,22 +48,12 @@ jobs:
           git commit -m 'Update image tag to 2024.06.76'
           git push origin update-image-tag-2024.06.76
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.HELM_TOKEN }}
-          commit-message: Update image tag to 2024.06.76
-          branch: update-image-tag-2024.06.76
-          base: main
-          title: Update image tag to 2024.06.76
-          body: This PR updates the image tag to 2024.06.76.
-          repo: ssu-commerce/helm-charts
-#      - name: Push helm repo
-#        run: |
-#          git config --global user.email "johanjoo@naver.com"
-#          git config --global user.name "chohanjoo"
-#
-#          git add values.yaml;
-#          git commit --message "Update book-server image tag to ${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}";
-#          git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
-#          git push
+#      - name: Create Pull Request
+#        uses: peter-evans/create-pull-request@v5
+#        with:
+#          token: ${{ secrets.HELM_TOKEN }}
+#          commit-message: Update image tag to 2024.06.76
+#          branch: update-image-tag-2024.06.76
+#          base: main
+#          title: Update image tag to 2024.06.76
+#          body: This PR updates the image tag to 2024.06.76.

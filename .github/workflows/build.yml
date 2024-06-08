@@ -67,7 +67,7 @@ jobs:
         run: ./gradlew :api:jib
 
       - name: Checkout tools repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           repository: ssu-commerce/helm-charts
           path: chart/ssu-commerce

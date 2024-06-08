@@ -50,7 +50,6 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.HELM_TOKEN }}
           commit-message: Update image tag to 2024.06.76
           branch: update-image-tag-2024.06.76
           base: main

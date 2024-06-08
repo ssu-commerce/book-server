@@ -75,7 +75,7 @@ jobs:
       - name: Update Image Version in the related HelmChart values.yaml
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: 'chart/ssu-commerce/values.yaml'
+          valueFile: 'values.yaml'
           propertyPath: 'book.image.tag'
           value: "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"
           repository: ssu-commerce/helm-charts
@@ -84,7 +84,7 @@ jobs:
           createPR: true
           message: 'Update Image Version to "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"'
           token: ${{ secrets.TOKEN }}
-          workDir: infrastructure
+          workDir: chart/ssu-commerce
 #      - name: Push helm repo
 #        run: |
 #          git config --global user.email "johanjoo@naver.com"

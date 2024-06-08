@@ -20,7 +20,53 @@ jobs:
         with:
           java-version: 11
 
-  cd:
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      - name: Docker Login
+        run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u ${{ secrets.USERNAME }} --password-stdin
+
+      - name: Build with Gradle
+        env:
+          USERNAME: ${{secrets.USERNAME}}
+          TOKEN: ${{secrets.TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
+        run: ./gradlew clean test jacocoTestReport --stacktrace --profile
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: Set Current Time
+        uses: 1466587594/get-current-time@v1
+        id: current-time
+        with:
+          format: YYYY.MM
+          utcOffset: "+09:00"
+        if: always()
+
+      - name: Build with Gradle and Jib
+        env:
+          VERSION: "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"
+          USERNAME: ${{secrets.USERNAME}}
+          TOKEN: ${{secrets.TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
+        run: ./gradlew :api:jib
+
+  deploy:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +79,7 @@ jobs:
 
       - name: Update YAML file
         run: |
-          yq eval '.book.image.tag = "2024.06.76"' -i helm-charts/chart/ssu-commerce/values.yaml
+          yq eval '.book.image.tag = "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"' -i helm-charts/chart/ssu-commerce/values.yaml
 
       - name: Commit changes
         run: |
@@ -41,5 +87,5 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add chart/ssu-commerce/values.yaml
-          git commit -m 'Update image tag to 2024.06.76'
+          git commit -m 'Update image tag to ${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}'
           git push origin main

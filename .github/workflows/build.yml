@@ -77,9 +77,17 @@ jobs:
           token: ${{ secrets.HELM_TOKEN }}
           path: helm-charts
 
+      - name: Set Current Time
+        uses: 1466587594/get-current-time@v1
+        id: current-time
+        with:
+          format: YYYY.MM
+          utcOffset: "+09:00"
+        if: always()
+
       - name: Update YAML file
         run: |
-          yq eval '.book.image.tag = "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"' -i helm-charts/chart/ssu-commerce/values.yaml
+          yq eval '.book.image.tag = ${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}' -i helm-charts/chart/ssu-commerce/values.yaml
 
       - name: Commit changes
         run: |

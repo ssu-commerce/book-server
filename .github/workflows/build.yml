@@ -24,12 +24,17 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout tools repo
-        uses: actions/checkout@v3
+      - name: Checkout the source repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout the target repository
+        uses: actions/checkout@v2
         with:
           repository: ssu-commerce/helm-charts
+          token: ${{ secrets.HELM_TOKEN }}
           path: helm-charts
-          fetch-depth: 0
 
       - name: Update YAML file
         run: |

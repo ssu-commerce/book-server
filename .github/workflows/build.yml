@@ -31,19 +31,13 @@ jobs:
           path: chart/ssu-commerce
           fetch-depth: 0
 
-      - name: Update Image Version in the related HelmChart values.yaml
-        uses: fjogeleit/yaml-update-action@main
+      - name: Checkout tools repo
+        uses: sumup-bank/run-credo@v1
         with:
-          valueFile: 'chart/ssu-commerce/values.yaml'
-          propertyPath: 'book.image.tag'
-          value: "2024.06.69"
           repository: ssu-commerce/helm-charts
-          branch: deployment/2024.06.69
-          targetBranch: main
-          createPR: true
-          message: 'Update Image Version to 2024.06.69'
-          token: ${{ secrets.TOKEN }}
-          workDir: helm-charts
+          filepath: helm-charts/chart/ssu-commerce/values.yaml
+          yamlpath: .book.image.tag
+          newvalue: 2024.06.69
 #      - name: Push helm repo
 #        run: |
 #          git config --global user.email "johanjoo@naver.com"

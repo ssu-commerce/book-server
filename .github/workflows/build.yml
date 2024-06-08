@@ -40,7 +40,6 @@ jobs:
           cd helm-charts
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b main
           git add chart/ssu-commerce/values.yaml
           git commit -m 'Update image tag to 2024.06.76'
           git push origin update-image-tag-2024.06.76

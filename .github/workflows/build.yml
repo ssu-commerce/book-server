@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - main
+      - *
 
 jobs:
   build:
@@ -65,3 +65,32 @@ jobs:
            TOKEN: ${{secrets.TOKEN}}
            GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
         run: ./gradlew :api:jib
+
+      - name: Checkout tools repo
+        uses: actions/checkout@v4
+        with:
+          repository: ssu-commerce/helm-charts
+          path: chart/ssu-commerce
+
+      - name: Update Image Version in the related HelmChart values.yaml
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          valueFile: 'chart/ssu-commerce/values.yaml'
+          propertyPath: 'book.image.tag'
+          value: "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"
+          repository: ssu-commerce/helm-charts
+          branch: deployment/"${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"
+          targetBranch: main
+          createPR: true
+          message: 'Update Image Version to "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"'
+          token: ${{ secrets.TOKEN }}
+          workDir: infrastructure
+#      - name: Push helm repo
+#        run: |
+#          git config --global user.email "johanjoo@naver.com"
+#          git config --global user.name "chohanjoo"
+#
+#          git add values.yaml;
+#          git commit --message "Update book-server image tag to ${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}";
+#          git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+#          git push

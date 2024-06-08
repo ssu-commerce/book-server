@@ -28,16 +28,32 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ssu-commerce/helm-charts
-          path: chart/ssu-commerce
+          path: helm-charts
           fetch-depth: 0
 
-      - name: Checkout tools repo
-        uses: sumup-bank/run-credo@v1
+      - name: Update YAML file
+        run: |
+          yq eval '.book.image.tag = "2024.06.76"' -i helm-charts/chart/ssu-commerce/values.yaml
+
+      - name: Commit changes
+        run: |
+          cd helm-charts
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b update-image-tag-2024.06.76
+          git add chart/ssu-commerce/values.yaml
+          git commit -m 'Update image tag to 2024.06.76'
+          git push origin update-image-tag-2024.06.76
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
         with:
-          repository: ssu-commerce/helm-charts
-          filepath: helm-charts/chart/ssu-commerce/values.yaml
-          yamlpath: .book.image.tag
-          newvalue: 2024.06.69
+          token: ${{ secrets.TOKEN }}
+          commit-message: Update image tag to 2024.06.76
+          branch: update-image-tag-2024.06.76
+          base: main
+          title: Update image tag to 2024.06.76
+          body: This PR updates the image tag to 2024.06.76.
 #      - name: Push helm repo
 #        run: |
 #          git config --global user.email "johanjoo@naver.com"

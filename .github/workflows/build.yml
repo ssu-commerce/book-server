@@ -71,6 +71,7 @@ jobs:
         with:
           repository: ssu-commerce/helm-charts
           path: chart/ssu-commerce
+          fetch-depth: 0
 
       - name: Update Image Version in the related HelmChart values.yaml
         uses: fjogeleit/yaml-update-action@main

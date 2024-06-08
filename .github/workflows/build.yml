@@ -24,9 +24,6 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the source repository
-        uses: actions/checkout@v4
-
       - name: Checkout the target repository
         uses: actions/checkout@v4
         with:
@@ -41,19 +38,9 @@ jobs:
       - name: Commit changes
         run: |
           cd helm-charts
-          git config --local user.name "chohanjoo"
-          git config --local user.email "johanjoo@naver.com"
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b update-image-tag-2024.06.76
           git add chart/ssu-commerce/values.yaml
           git commit -m 'Update image tag to 2024.06.76'
           git push origin update-image-tag-2024.06.76
-
-#      - name: Create Pull Request
-#        uses: peter-evans/create-pull-request@v5
-#        with:
-#          token: ${{ secrets.HELM_TOKEN }}
-#          commit-message: Update image tag to 2024.06.76
-#          branch: update-image-tag-2024.06.76
-#          base: main
-#          title: Update image tag to 2024.06.76
-#          body: This PR updates the image tag to 2024.06.76.

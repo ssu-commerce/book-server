@@ -57,6 +57,7 @@ jobs:
           base: main
           title: Update image tag to 2024.06.76
           body: This PR updates the image tag to 2024.06.76.
+          repo: ssu-commerce/helm-charts
 #      - name: Push helm repo
 #        run: |
 #          git config --global user.email "johanjoo@naver.com"

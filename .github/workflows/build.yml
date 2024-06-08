@@ -20,52 +20,10 @@ jobs:
         with:
           java-version: 11
 
-      - name: Cache SonarQube packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: ${{ runner.os }}-gradle
-
-      - name: Docker Login
-        run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u ${{ secrets.USERNAME }} --password-stdin
-
-      - name: Build with Gradle
-        env:
-          USERNAME: ${{secrets.USERNAME}}
-          TOKEN: ${{secrets.TOKEN}}
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
-        run: ./gradlew clean test jacocoTestReport --stacktrace --profile
-
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
-      - name: Set Current Time
-        uses: 1466587594/get-current-time@v1
-        id: current-time
-        with:
-          format: YYYY.MM
-          utcOffset: "+09:00"
-        if: always()
-
-      - name: Build with Gradle and Jib
-        env:
-           VERSION: "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"
-           USERNAME: ${{secrets.USERNAME}}
-           TOKEN: ${{secrets.TOKEN}}
-           GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Needed to get PR information, if any
-        run: ./gradlew :api:jib
-
+  cd:
+    needs: [ci]
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout tools repo
         uses: actions/checkout@v3
         with:
@@ -73,20 +31,17 @@ jobs:
           path: chart/ssu-commerce
           fetch-depth: 0
 
-      - name: List files for debugging
-        run: ls -la /home/runner/work/book-server/book-server/helm-charts/chart/ssu-commerce
-
       - name: Update Image Version in the related HelmChart values.yaml
         uses: fjogeleit/yaml-update-action@main
         with:
           valueFile: 'chart/ssu-commerce/values.yaml'
           propertyPath: 'book.image.tag'
-          value: "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"
+          value: "2024.06.69"
           repository: ssu-commerce/helm-charts
-          branch: deployment/${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}
+          branch: deployment/2024.06.69
           targetBranch: main
           createPR: true
-          message: 'Update Image Version to "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"'
+          message: 'Update Image Version to 2024.06.69'
           token: ${{ secrets.TOKEN }}
           workDir: helm-charts
 #      - name: Push helm repo

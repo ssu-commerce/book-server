@@ -38,8 +38,8 @@ jobs:
       - name: Commit changes
         run: |
           cd helm-charts
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "chohanjoo"
+          git config --local user.email "johanjoo@naver.com"
           git checkout -b update-image-tag-2024.06.76
           git add chart/ssu-commerce/values.yaml
           git commit -m 'Update image tag to 2024.06.76'
@@ -48,7 +48,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.HELM_TOKEN }}
           commit-message: Update image tag to 2024.06.76
           branch: update-image-tag-2024.06.76
           base: main

@@ -73,6 +73,9 @@ jobs:
           path: chart/ssu-commerce
           fetch-depth: 0
 
+      - name: List files for debugging
+        run: ls -la /home/runner/work/book-server/book-server/helm-charts/chart/ssu-commerce
+
       - name: Update Image Version in the related HelmChart values.yaml
         uses: fjogeleit/yaml-update-action@main
         with:

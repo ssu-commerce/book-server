@@ -87,7 +87,7 @@ jobs:
 
       - name: Update YAML file
         run: |
-          yq eval '.book.image.tag = "${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}"' -i helm-charts/chart/ssu-commerce/values.yaml
+          yq eval '.book.image.tag = ${{ steps.current-time.outputs.formattedTime }}.${{github.run_number}}' -i helm-charts/chart/ssu-commerce/values.yaml
 
       - name: Commit changes
         run: |

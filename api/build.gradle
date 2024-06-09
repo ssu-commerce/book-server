@@ -40,7 +40,6 @@ dependencies {
     implementation group: 'org.mapstruct', name: 'mapstruct', version: "$mapstructVersion"
     implementation "org.testcontainers:testcontainers:1.17.6"
     // for grpc
-    implementation ("com.ssu.commerce.order:grpc:$grpcVersion")
     implementation 'link.jfire:simplerpc:1.0'
     implementation 'io.github.HuChen-dot:simplerpc-spring-boot-starter:1.6'
     implementation 'net.devh:grpc-server-spring-boot-starter:2.13.1.RELEASE'

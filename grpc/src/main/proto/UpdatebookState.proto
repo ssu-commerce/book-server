@@ -5,11 +5,9 @@ import "google/protobuf/empty.proto";
 option java_multiple_files = true;
 option java_package = "com.ssu.commerce.grpc";
 
-
 service UpdateBookState {
-  rpc UpdateBookState (UpdateBookStateRequest) returns (google.protobuf.Empty) {
-
-  }
+  rpc updateBookState (UpdateBookStateRequest) returns (google.protobuf.Empty);
+  rpc rentalBook (RentalBookRequest) returns (RentalBookResponse);
 }
 
 message UpdateBookStateRequest {
@@ -18,8 +16,17 @@ message UpdateBookStateRequest {
   repeated string id = 3;
 }
 
+message RentalBookRequest {
+  string token = 1;
+  repeated string id = 2;
+}
+
+message RentalBookResponse {
+  string message = 1;
+}
+
 enum BookState {
-    DISSHAREABLE = 0;
-    SHARABLE = 1;
-    SHARING = 2;
+  DISSHAREABLE = 0;
+  SHARABLE = 1;
+  SHARING = 2;
 }

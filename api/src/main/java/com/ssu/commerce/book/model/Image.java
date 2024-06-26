@@ -16,8 +16,8 @@ import java.util.UUID;
 @Table(name = "image")
 public class Image {
     @Id
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @Column(name = "image_id", columnDefinition = "BINARY(16)")
+    private UUID imageId;
 
     @Column(name = "book_id", columnDefinition = "BINARY(16)")
     private UUID bookId;

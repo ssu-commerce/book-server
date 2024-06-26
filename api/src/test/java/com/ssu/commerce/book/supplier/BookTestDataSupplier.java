@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -137,7 +138,7 @@ public interface BookTestDataSupplier {
 
     static Book getBookWithId() {
         return Book.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_BOOK_TITLE)
                 .content(TEST_VAL_BOOK_CONTENT)
                 .writer(TEST_VAL_BOOK_WRITER)
@@ -185,8 +186,8 @@ public interface BookTestDataSupplier {
 
     static Category getCategory() {
         return Category.builder()
-                .name(TEST_VAL_CATEGORY_NAME)
-                .description(TEST_VAL_CATEGORY_DESCRIPTION)
+                .name("adfasdf")
+                .description("asdfasdf")
                 .build();
     }
 
@@ -216,7 +217,7 @@ public interface BookTestDataSupplier {
 
     static ChangeBookParamDto getChangeBookParamDto() {
         return ChangeBookParamDto.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_CHANGE_BOOK_TITLE)
                 .content(TEST_VAL_CHANGE_BOOK_CONTENT)
                 .writer(TEST_VAL_CHANGE_BOOK_WRITER)
@@ -233,7 +234,7 @@ public interface BookTestDataSupplier {
 
     static ChangeBookParamDto getChangeBookParamDtoRandom(long n) {
         return ChangeBookParamDto.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_CHANGE_BOOK_TITLE)
                 .content(TEST_VAL_CHANGE_BOOK_CONTENT)
                 .writer(TEST_VAL_CHANGE_BOOK_WRITER)
@@ -250,7 +251,7 @@ public interface BookTestDataSupplier {
 
     static Book getChangedBook() {
         return Book.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_CHANGE_BOOK_TITLE)
                 .content(TEST_VAL_CHANGE_BOOK_CONTENT)
                 .writer(TEST_VAL_CHANGE_BOOK_WRITER)
@@ -317,7 +318,7 @@ public interface BookTestDataSupplier {
 
     static DeleteBookParamDto getDeleteBookParamDto(UUID bookId) {
         return DeleteBookParamDto.builder()
-                .id(bookId)
+                .bookId(bookId)
                 .build();
     }
 
@@ -333,10 +334,10 @@ public interface BookTestDataSupplier {
     static List<Book> getBookListForGrpc() {
         return List.of(
                 Book.builder()
-                        .id(TEST_VAL_BOOK_ID)
+                        .bookId(TEST_VAL_BOOK_ID)
                         .build(),
                 Book.builder()
-                        .id(TEST_VAL_ANOTHER_BOOK_ID)
+                        .bookId(TEST_VAL_ANOTHER_BOOK_ID)
                         .build()
         );
     }
@@ -344,10 +345,10 @@ public interface BookTestDataSupplier {
     static List<Book> getBookListForGrpcConflict() {
         return List.of(
                 Book.builder()
-                        .id(TEST_VAL_BOOK_ID)
+                        .bookId(TEST_VAL_BOOK_ID)
                         .build(),
                 Book.builder()
-                        .id(TEST_VAL_ANOTHER_BOOK_ID)
+                        .bookId(TEST_VAL_ANOTHER_BOOK_ID)
                         .bookState(BookState.DISSHAREABLE)
                         .build()
         );

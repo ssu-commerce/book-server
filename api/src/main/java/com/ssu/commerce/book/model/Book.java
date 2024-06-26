@@ -28,8 +28,8 @@ public class Book {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @Column(name = "book_id", columnDefinition = "CHAR(36)")
+    private UUID bookId;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -55,7 +55,7 @@ public class Book {
     @Column(name = "end_borrow_day", nullable = false)
     private LocalDateTime endBorrowDay;
 
-    @Column(name = "owner_id", columnDefinition = "BINARY(16)")
+    @Column(name = "owner_id", columnDefinition = "CHAR(36)")
     private UUID ownerId;
 
     @Column(name = "publish_date", nullable = false)
@@ -64,7 +64,7 @@ public class Book {
     @Column(name = "isbn", nullable = false)
     private String isbn;
 
-    @Column(name = "category_id", columnDefinition = "BINARY(16)", nullable = false)
+    @Column(name = "category_id", columnDefinition = "CHAR(36)", nullable = false)
     private UUID categoryId;
 
     @Column(name = "book_state", nullable = false)

@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookDetailDto {
-    private UUID id;
+    private UUID bookId;
     private String title;
     private String content;
     private String writer;

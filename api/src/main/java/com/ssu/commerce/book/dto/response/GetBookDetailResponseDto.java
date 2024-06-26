@@ -9,7 +9,7 @@ import java.util.UUID;
 @Data
 @Builder
 public class GetBookDetailResponseDto {
-    private UUID id;
+    private UUID bookId;
     private String title;
     private String content;
     private String writer;

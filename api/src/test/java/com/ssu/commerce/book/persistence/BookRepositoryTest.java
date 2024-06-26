@@ -37,7 +37,7 @@ class BookRepositoryTest implements BookTestDataSupplier {
         final Category category = categoryRepository.save(BookTestDataSupplier.getCategory());
 
         final Book book = BookTestDataSupplier.getBook();
-        book.setCategoryId(category.getId());
+        book.setCategoryId(category.getCategoryId());
 
         bookRepository.save(book);
     }

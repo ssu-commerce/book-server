@@ -12,7 +12,7 @@ import java.util.UUID;
 @Builder
 @EqualsAndHashCode
 public class BookDto {
-    private UUID id;
+    private UUID bookId;
     private String title;
     private String content;
     private String writer;

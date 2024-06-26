@@ -77,8 +77,8 @@ class ImageControllerTest implements ImageControllerTestDataSupplier {
                             .with(csrf()))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(2)))
-                    .andExpect(jsonPath("$[0].id", equalTo(String.valueOf(imageList.get(0).getId().toString()))))
-                    .andExpect(jsonPath("$[1].id", equalTo(String.valueOf(imageList.get(1).getId().toString()))));
+                    .andExpect(jsonPath("$[0].imageId", equalTo(String.valueOf(imageList.get(0).getImageId().toString()))))
+                    .andExpect(jsonPath("$[1].imageId", equalTo(String.valueOf(imageList.get(1).getImageId().toString()))));
 
             verify(imageService, times(1)).registerImage(any(), any());
         });

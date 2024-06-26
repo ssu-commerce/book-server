@@ -35,7 +35,7 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
     ) {
         final JPAQuery<Book> jpaQuery = jpaQueryFactory.select(book)
                 .from(book)
-                .innerJoin(category).on(book.categoryId.eq(category.id))
+                .innerJoin(category).on(book.categoryId.eq(category.categoryId))
                 .where(
                         likeTitle(paramDto.getTitle()),
                         eqCategoryId(paramDto.getCategoryId())
@@ -50,7 +50,7 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 
         final JPAQuery<Long> countQuery = jpaQueryFactory.select(book.count())
                 .from(book)
-                .innerJoin(category).on(book.categoryId.eq(category.id))
+                .innerJoin(category).on(book.categoryId.eq(category.categoryId))
                 .where(
                         likeTitle(paramDto.getTitle()),
                         eqCategoryId(paramDto.getCategoryId())

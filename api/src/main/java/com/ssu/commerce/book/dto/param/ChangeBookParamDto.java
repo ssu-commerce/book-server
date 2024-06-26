@@ -14,7 +14,7 @@ import java.util.UUID;
 public class ChangeBookParamDto extends AbstractLockableObject {
 
     @NotEmpty
-    private UUID id;
+    private UUID bookId;
 
     @NotEmpty
     private String title;

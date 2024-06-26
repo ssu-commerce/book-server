@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ChangeBookRequestDto {
     @NotEmpty
-    private UUID id;
+    private UUID bookId;
 
     @NotEmpty
     private String title;

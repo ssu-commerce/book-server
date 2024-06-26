@@ -40,7 +40,7 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
         com.ssu.commerce.grpc.BookState updateState = request.getBookState();
 
         List<RentalBookRequestDto> rentalBookRequestDto = request.getIdList()
-                .stream().map(id -> RentalBookRequestDto.builder().id(UUID.fromString(id)).build())
+                .stream().map(id -> RentalBookRequestDto.builder().bookId(UUID.fromString(id)).build())
                 .collect(Collectors.toList());
         updateBookState(rentalBookRequestDto, updateState, responseObserver);
 
@@ -51,7 +51,7 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
             com.ssu.commerce.grpc.BookState grpcUpdateState,
             StreamObserver<Empty> responseObserver
     ) {
-        List<UUID> bookIds = requestDto.stream().map(RentalBookRequestDto::getId).collect(Collectors.toList());
+        List<UUID> bookIds = requestDto.stream().map(RentalBookRequestDto::getBookId).collect(Collectors.toList());
         List<Book> booksToCheck = bookRepository.findAllById(bookIds);
 
         if (booksToCheck.isEmpty()) {

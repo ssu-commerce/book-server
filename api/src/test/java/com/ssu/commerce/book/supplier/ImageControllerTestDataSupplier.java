@@ -12,15 +12,15 @@ public interface ImageControllerTestDataSupplier {
 
     static List<RegisterImageResponseDto> getRegisterImageResponseDtoList() {
         return Arrays.asList(
-                RegisterImageResponseDto.builder().id(UUID.randomUUID()).build(),
-                RegisterImageResponseDto.builder().id(UUID.randomUUID()).build()
+                RegisterImageResponseDto.builder().imageId(UUID.randomUUID()).build(),
+                RegisterImageResponseDto.builder().imageId(UUID.randomUUID()).build()
         );
     }
 
     static List<Image> getImageList() {
         return Arrays.asList(
-                Image.builder().id(UUID.randomUUID()).bookId(UUID.randomUUID()).build(),
-                Image.builder().id(UUID.randomUUID()).bookId(UUID.randomUUID()).build()
+                Image.builder().imageId(UUID.randomUUID()).bookId(UUID.randomUUID()).build(),
+                Image.builder().imageId(UUID.randomUUID()).bookId(UUID.randomUUID()).build()
         );
     }
     static RegisterImageRequestDto getRegisterImageRequestDto() {

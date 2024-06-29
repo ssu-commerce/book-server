@@ -31,13 +31,13 @@ public class Book {
     @Column(name = "book_id", columnDefinition = "CHAR(36)")
     private UUID bookId;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, columnDefinition = "VARCHAR(100) CHARACTER SET UTF8")
     private String title;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, columnDefinition = "VARCHAR(200) CHARACTER SET UTF8")
     private String content;
 
-    @Column(name = "writer", nullable = false)
+    @Column(name = "writer", nullable = false, columnDefinition = "VARCHAR(50) CHARACTER SET UTF8")
     private String writer;
 
     @Column(name = "price", nullable = false)
@@ -46,7 +46,7 @@ public class Book {
     @Column(name = "share_price", nullable = false)
     private Long sharePrice;
 
-    @Column(name = "comment", columnDefinition = "TEXT")
+    @Column(name = "comment", columnDefinition = "TEXT CHARACTER SET UTF8")
     private String comment;
 
     @Column(name = "start_borrow_day", nullable = false)
@@ -61,7 +61,7 @@ public class Book {
     @Column(name = "publish_date", nullable = false)
     private LocalDateTime publishDate;
 
-    @Column(name = "isbn", nullable = false)
+    @Column(name = "isbn", nullable = false, columnDefinition = "VARCHAR(50) CHARACTER SET UTF8")
     private String isbn;
 
     @Column(name = "category_id", columnDefinition = "CHAR(36)", nullable = false)

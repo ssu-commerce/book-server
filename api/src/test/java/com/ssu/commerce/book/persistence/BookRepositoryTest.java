@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 
 @DataJpaTest
@@ -34,12 +34,8 @@ class BookRepositoryTest implements BookTestDataSupplier {
 
     @BeforeEach
     void setUp() {
-        final Category category = categoryRepository.save(BookTestDataSupplier.getCategory());
-
-        final Book book = BookTestDataSupplier.getBook();
-        book.setCategoryId(category.getCategoryId());
-
-        bookRepository.save(book);
+        categoryRepository.save(BookTestDataSupplier.getCategory());
+        bookRepository.save(BookTestDataSupplier.getBook());
     }
 
     @Test

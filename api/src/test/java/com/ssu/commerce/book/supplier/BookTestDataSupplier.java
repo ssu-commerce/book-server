@@ -38,7 +38,6 @@ public interface BookTestDataSupplier {
     String TEST_VAL_BOOK_ISBN = "9791198173898";
     LocalDateTime TEST_VAL_BOOK_START_BORROW_DAY = LocalDateTime.of(2024, 5, 13, 15, 30);
     LocalDateTime TEST_VAL_BOOK_END_BORROW_DAY =  LocalDateTime.of(2025, 5, 13, 15, 30);
-    //Long TEST_VAL_BOOK_CATEGORY_ID = "test";
 
     UUID TEST_VAL_BOOK_CATEGORY_ID = UUID.fromString("578caff7-1c44-4ede-92d2-b6e6cf60c0aa");
 
@@ -186,6 +185,7 @@ public interface BookTestDataSupplier {
 
     static Category getCategory() {
         return Category.builder()
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
                 .name("adfasdf")
                 .description("asdfasdf")
                 .build();

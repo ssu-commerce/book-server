@@ -21,7 +21,7 @@ public class Category {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "category_id")
+    @Column(name = "category_id", columnDefinition = "CHAR(36)")
     private UUID categoryId;
 
     @Column(name = "name", columnDefinition = "CHAR(50) CHARACTER SET UTF8")

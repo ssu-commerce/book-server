@@ -3,7 +3,6 @@ package com.ssu.commerce.book.persistence;
 import com.ssu.commerce.book.config.QuerydslConfig;
 import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
 import com.ssu.commerce.book.model.Book;
-import com.ssu.commerce.book.model.Category;
 import com.ssu.commerce.book.supplier.BookTestDataSupplier;
 import com.ssu.commerce.core.jpa.config.JpaConfig;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,13 +12,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -34,8 +31,12 @@ class BookRepositoryTest implements BookTestDataSupplier {
 
     @BeforeEach
     void setUp() {
-        categoryRepository.save(BookTestDataSupplier.getCategory());
-        bookRepository.save(BookTestDataSupplier.getBook());
+        final var category = categoryRepository.save(BookTestDataSupplier.getCategory());
+
+        final var book = BookTestDataSupplier.getBook();
+        book.setCategoryId(category.getCategoryId());
+
+        bookRepository.save(book);
     }
 
     @Test
@@ -44,7 +45,7 @@ class BookRepositoryTest implements BookTestDataSupplier {
                 SelectBookListParamDto.builder()
                         .title("비가 오면")
                         .build(),
-                Pageable.unpaged()
+                PageRequest.of(0, 1)
         );
 
         assertAll(

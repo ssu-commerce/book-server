@@ -7,16 +7,13 @@ import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
-import com.ssu.commerce.book.dto.param.query.UpdateBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.model.Category;
 import com.ssu.commerce.grpc.UpdateBookStateRequest;
-import org.hibernate.sql.Update;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -185,7 +182,6 @@ public interface BookTestDataSupplier {
 
     static Category getCategory() {
         return Category.builder()
-                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
                 .name("adfasdf")
                 .description("asdfasdf")
                 .build();

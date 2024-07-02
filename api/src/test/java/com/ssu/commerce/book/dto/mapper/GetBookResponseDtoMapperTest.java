@@ -24,7 +24,7 @@ class GetBookResponseDtoMapperTest {
     void map_GivenValidBookDto_ShouldBeReturnGetBookResponseDto() {
         BookDto.BookDtoBuilder builder = BookDto.builder();
 
-        builder.id(UUID.randomUUID());
+        builder.bookId(UUID.randomUUID());
         builder.title("Test Book");
         builder.content("This is a test book.");
         builder.comment("destroyed book");
@@ -43,7 +43,7 @@ class GetBookResponseDtoMapperTest {
         GetBookResponseDto getBookResponseDto = mapper.map(bookDto);
 
         assertNotNull(getBookResponseDto);
-        assertEquals(getBookResponseDto.getId(), bookDto.getId());
+        assertEquals(getBookResponseDto.getBookId(), bookDto.getBookId());
         assertEquals(getBookResponseDto.getTitle(), bookDto.getTitle());
         assertEquals(getBookResponseDto.getContent(), bookDto.getContent());
         assertEquals(getBookResponseDto.getComment(), bookDto.getComment());
@@ -63,7 +63,7 @@ class GetBookResponseDtoMapperTest {
         GetBookResponseDto dto = mapper.map(null);
 
         assertNotNull(dto);
-        assertNull(dto.getId());
+        assertNull(dto.getBookId());
         assertNull(dto.getTitle());
         assertNull(dto.getContent());
         assertNull(dto.getComment());

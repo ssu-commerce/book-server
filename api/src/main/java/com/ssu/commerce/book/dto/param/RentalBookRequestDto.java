@@ -11,5 +11,5 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 public class RentalBookRequestDto extends AbstractLockableObject {
-    private UUID id;
+    private UUID bookId;
 }

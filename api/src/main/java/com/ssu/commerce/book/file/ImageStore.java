@@ -35,7 +35,7 @@ public class ImageStore {
             multipartFile.transferTo(new File(getFullPath(imageId.toString())));
             storeFileList.add(
                     Image.builder()
-                            .id(imageId)
+                            .imageId(imageId)
                             .bookId(bookId)
                             .build()
             );

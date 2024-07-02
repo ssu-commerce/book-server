@@ -66,7 +66,7 @@ public class BookController {
         log.debug("[registerBook]requestDto={}", requestDto);
 
         return RegisterBookResponseDto.builder()
-                .id(
+                .bookId(
                         bookService.registerBook(
                                 RegisterBookParamDtoMapper.INSTANCE.map(requestDto)
                         )
@@ -81,10 +81,10 @@ public class BookController {
         log.debug("[changeBook]requestDto={}", requestDto);
 
         return ChangeBookResponseDto.builder()
-                .id(
+                .bookId(
                         bookService.changeBook(
                                 ChangeBookParamDtoMapper.INSTANCE.map(requestDto)
-                        ).getId()
+                        ).getBookId()
                 )
                 .build();
     }
@@ -96,10 +96,10 @@ public class BookController {
         log.debug("[deleteBook]deleteDto={}", id);
 
         return DeleteBookResponseDto.builder()
-                .id(
+                .bookId(
                         bookService.deleteBook(
                                 DeleteBookParamDto.builder()
-                                        .id(id)
+                                        .bookId(id)
                                         .build()
                         )
                 )

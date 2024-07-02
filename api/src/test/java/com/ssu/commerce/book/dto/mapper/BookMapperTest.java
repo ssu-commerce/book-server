@@ -65,7 +65,7 @@ class BookMapperTest {
         Book book = mapper.map(null);
 
         assertNotNull(book);
-        assertNull(book.getId());
+        assertNull(book.getBookId());
         assertNull(book.getTitle());
         assertNull(book.getContent());
         assertNull(book.getComment());

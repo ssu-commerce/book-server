@@ -23,17 +23,17 @@ class RegisterImageResponseDtoMapperTest {
         images =
                 Arrays.asList(
                         Image.builder()
-                                .id(UUID.randomUUID())
+                                .imageId(UUID.randomUUID())
                                 .bookId(UUID.randomUUID())
                                 .build(),
 
                         Image.builder()
-                                .id(UUID.randomUUID())
+                                .imageId(UUID.randomUUID())
                                 .bookId(UUID.randomUUID())
                                 .build(),
 
                         Image.builder()
-                                .id(UUID.randomUUID())
+                                .imageId(UUID.randomUUID())
                                 .bookId(UUID.randomUUID())
                                 .build()
                 );
@@ -43,14 +43,14 @@ class RegisterImageResponseDtoMapperTest {
     void map_GivenValidImage_ShouldBeReturnRegisterImageResponseDto() {
         Image.ImageBuilder builder = Image.builder();
         builder.bookId(UUID.randomUUID());
-        builder.id(UUID.randomUUID());
+        builder.imageId(UUID.randomUUID());
 
         Image image = builder.build();
 
         RegisterImageResponseDto registerImageResponseDto = mapper.map(image);
 
         assertNotNull(registerImageResponseDto);
-        assertEquals(registerImageResponseDto.getId(), image.getId());
+        assertEquals(registerImageResponseDto.getImageId(), image.getImageId());
     }
 
     @Test
@@ -58,7 +58,7 @@ class RegisterImageResponseDtoMapperTest {
         RegisterImageResponseDto dto = mapper.map(null);
 
         assertNotNull(dto);
-        assertNull(dto.getId());
+        assertNull(dto.getImageId());
     }
 
     @Test
@@ -74,7 +74,7 @@ class RegisterImageResponseDtoMapperTest {
         while(registerImageResponseIterator.hasNext() && imageIterator.hasNext()) {
             RegisterImageResponseDto dto = (RegisterImageResponseDto)registerImageResponseIterator.next();
             Image image = (Image)imageIterator.next();
-            assertEquals(dto.getId(), image.getId());
+            assertEquals(dto.getImageId(), image.getImageId());
         }
     }
 

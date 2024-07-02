@@ -14,5 +14,5 @@ import java.util.UUID;
 @AllArgsConstructor
 public class DeleteBookRequestDto {
     @NotEmpty
-    private UUID id;
+    private UUID bookId;
 }

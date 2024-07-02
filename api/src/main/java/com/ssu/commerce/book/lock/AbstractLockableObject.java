@@ -6,5 +6,5 @@ import java.util.UUID;
 
 @Getter
 public abstract class AbstractLockableObject {
-    private UUID id;
+    private UUID bookId;
 }

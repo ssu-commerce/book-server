@@ -27,7 +27,7 @@ class ChangeBookParamDtoMapperTest {
     @Test
     void map_GivenValidChangeBookRequestDto_ShouldReturnDtoWithSameValues() {
         ChangeBookRequestDto.ChangeBookRequestDtoBuilder requestDtoBuilder = ChangeBookRequestDto.builder();
-        requestDtoBuilder.id(UUID.randomUUID());
+        requestDtoBuilder.bookId(UUID.randomUUID());
         requestDtoBuilder.title("Test Book");
         requestDtoBuilder.content("This is a test book.");
         requestDtoBuilder.comment("Destroyed Book");
@@ -45,7 +45,7 @@ class ChangeBookParamDtoMapperTest {
         ChangeBookParamDto changeBookParamDto = mapper.map(requestDto);
 
         assertNotNull(changeBookParamDto);
-        assertEquals(changeBookParamDto.getId(), requestDto.getId());
+        assertEquals(changeBookParamDto.getBookId(), requestDto.getBookId());
         assertEquals(changeBookParamDto.getTitle(), requestDto.getTitle());
         assertEquals(changeBookParamDto.getContent(), requestDto.getContent());
         assertEquals(changeBookParamDto.getComment(), requestDto.getComment());
@@ -64,7 +64,7 @@ class ChangeBookParamDtoMapperTest {
         ChangeBookParamDto changeBookParamDto = mapper.map(null);
 
         assertNotNull(changeBookParamDto);
-        assertNull(changeBookParamDto.getId());
+        assertNull(changeBookParamDto.getBookId());
         assertNull(changeBookParamDto.getTitle());
         assertNull(changeBookParamDto.getContent());
         assertNull(changeBookParamDto.getComment());

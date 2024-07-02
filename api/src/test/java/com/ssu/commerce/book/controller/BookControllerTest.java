@@ -133,7 +133,7 @@ class BookControllerTest implements BookControllerTestDataSupplier {
                             .with(csrf())
                         .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id", equalTo(String.valueOf(uuid))));
+                    .andExpect(jsonPath("$.bookId", equalTo(String.valueOf(uuid))));
 
             verify(bookService, times(1)).registerBook(RegisterBookParamDtoMapper.INSTANCE.map(registerBookRequestDto));
         });
@@ -153,7 +153,7 @@ class BookControllerTest implements BookControllerTestDataSupplier {
                             .with(csrf())
                             .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id", equalTo(String.valueOf(changeBookResponseDto.getId()))));
+                    .andExpect(jsonPath("$.bookId", equalTo(String.valueOf(changeBookResponseDto.getBookId()))));
 
             verify(bookService, times(1)).changeBook(ChangeBookParamDtoMapper.INSTANCE.map(changeBookRequestDto));
         });
@@ -167,14 +167,14 @@ class BookControllerTest implements BookControllerTestDataSupplier {
 
         when(bookService.deleteBook(deleteBookParamDto)).thenReturn(bookId);
 
-        log.info("TEST : {}", deleteBookParamDto.getId());
+        log.info("TEST : {}", deleteBookParamDto.getBookId());
 
         assertDoesNotThrow(() -> {
             mockMvc.perform(delete("/v1/book/" + bookId)
                             .accept(MediaType.APPLICATION_JSON)
                             .with(csrf()))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id", equalTo(String.valueOf(bookId))));
+                    .andExpect(jsonPath("$.bookId", equalTo(String.valueOf(bookId))));
 
             verify(bookService, times(1)).deleteBook(deleteBookParamDto);
         });

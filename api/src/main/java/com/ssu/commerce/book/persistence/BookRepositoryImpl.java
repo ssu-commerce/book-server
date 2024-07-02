@@ -4,7 +4,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
-import com.ssu.commerce.book.dto.param.query.UpdateBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -35,28 +33,23 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
     ) {
         final JPAQuery<Book> jpaQuery = jpaQueryFactory.select(book)
                 .from(book)
-                .innerJoin(category).on(book.categoryId.eq(category.id))
+                .join(category).on(book.categoryId.eq(category.categoryId))
                 .where(
                         likeTitle(paramDto.getTitle()),
                         eqCategoryId(paramDto.getCategoryId())
-                );
-
-        if (pageable.isPaged()) {
-            jpaQuery.offset(pageable.getOffset())
-                    .limit(pageable.getPageSize());
-        }
-
-        final List<Book> result = jpaQuery.fetch();
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
 
         final JPAQuery<Long> countQuery = jpaQueryFactory.select(book.count())
                 .from(book)
-                .innerJoin(category).on(book.categoryId.eq(category.id))
+                .join(category).on(book.categoryId.eq(category.categoryId))
                 .where(
                         likeTitle(paramDto.getTitle()),
                         eqCategoryId(paramDto.getCategoryId())
                 );
 
-        return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
+        return PageableExecutionUtils.getPage(jpaQuery.fetch(), pageable, countQuery::fetchOne);
     }
 
     private BooleanExpression likeTitle(

@@ -23,7 +23,7 @@ class GetBookDetailResponseDtoMapperTest {
     @Test
     void map_GivenValidBookDetailDto_ShouldReturnDtoWithSameValues() {
         BookDetailDto.BookDetailDtoBuilder bookDetailDtoBuilder = BookDetailDto.builder();
-        bookDetailDtoBuilder.id(UUID.randomUUID());
+        bookDetailDtoBuilder.bookId(UUID.randomUUID());
         bookDetailDtoBuilder.title("Test Book");
         bookDetailDtoBuilder.content("This is a test book.");
         bookDetailDtoBuilder.comment("Destroyed Book");
@@ -42,7 +42,7 @@ class GetBookDetailResponseDtoMapperTest {
         GetBookDetailResponseDto getBookDetailResponseDto = mapper.map(bookDetailDto);
 
         assertNotNull(getBookDetailResponseDto);
-        assertEquals(getBookDetailResponseDto.getId(), bookDetailDto.getId());
+        assertEquals(getBookDetailResponseDto.getBookId(), bookDetailDto.getBookId());
         assertEquals(getBookDetailResponseDto.getTitle(), bookDetailDto.getTitle());
         assertEquals(getBookDetailResponseDto.getContent(), bookDetailDto.getContent());
         assertEquals(getBookDetailResponseDto.getComment(), bookDetailDto.getComment());
@@ -62,7 +62,7 @@ class GetBookDetailResponseDtoMapperTest {
         GetBookDetailResponseDto getBookDetailResponseDto = mapper.map(null);
 
         assertNotNull(getBookDetailResponseDto);
-        assertNull(getBookDetailResponseDto.getId());
+        assertNull(getBookDetailResponseDto.getBookId());
         assertNull(getBookDetailResponseDto.getTitle());
         assertNull(getBookDetailResponseDto.getContent());
         assertNull(getBookDetailResponseDto.getComment());

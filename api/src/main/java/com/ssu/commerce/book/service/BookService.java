@@ -71,7 +71,7 @@ public class BookService {
 
         return bookRepository.save(
                 BookMapper.INSTANCE.map(paramDto)
-        ).getId();
+        ).getBookId();
     }
 
     @DistributedLock
@@ -85,9 +85,9 @@ public class BookService {
                         "BOOK_002"
                 ));
 
-        Book findBook = bookRepository.findById(paramDto.getId())
+        Book findBook = bookRepository.findById(paramDto.getBookId())
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("book not found; bookId=%s", paramDto.getId()),
+                        String.format("book not found; bookId=%s", paramDto.getBookId()),
                         "BOOK_001"
                 ));
 
@@ -99,12 +99,12 @@ public class BookService {
     public UUID deleteBook(
             @NonNull @Valid final DeleteBookParamDto paramDto
     ) {
-        Book findBook = bookRepository.findById(paramDto.getId())
+        Book findBook = bookRepository.findById(paramDto.getBookId())
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("book not found; bookId=%s", paramDto.getId()),
+                        String.format("book not found; bookId=%s", paramDto.getBookId()),
                         "BOOK_001"
                 ));
         bookRepository.delete(findBook);
-        return findBook.getId();
+        return findBook.getBookId();
     }
 }

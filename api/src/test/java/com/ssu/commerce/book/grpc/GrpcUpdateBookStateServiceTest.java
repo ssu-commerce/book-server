@@ -41,8 +41,8 @@ public class GrpcUpdateBookStateServiceTest implements BookTestDataSupplier {
         grpcUpdateBookStateService.updateBookState(updateBookStateRequest, response);
 
         verify(bookRepository).findAllById(List.of(TEST_VAL_BOOK_ID, TEST_VAL_ANOTHER_BOOK_ID));
-        verify(bookRepository).save(Book.builder().id(TEST_VAL_BOOK_ID).bookState(BookState.SHARING).build());
-        verify(bookRepository).save(Book.builder().id(TEST_VAL_ANOTHER_BOOK_ID).bookState(BookState.SHARING).build());
+        verify(bookRepository).save(Book.builder().bookId(TEST_VAL_BOOK_ID).bookState(BookState.SHARING).build());
+        verify(bookRepository).save(Book.builder().bookId(TEST_VAL_ANOTHER_BOOK_ID).bookState(BookState.SHARING).build());
     }
 
     @Test

@@ -7,11 +7,9 @@ import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
-import com.ssu.commerce.book.dto.param.query.UpdateBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.model.Category;
 import com.ssu.commerce.grpc.UpdateBookStateRequest;
-import org.hibernate.sql.Update;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +35,6 @@ public interface BookTestDataSupplier {
     String TEST_VAL_BOOK_ISBN = "9791198173898";
     LocalDateTime TEST_VAL_BOOK_START_BORROW_DAY = LocalDateTime.of(2024, 5, 13, 15, 30);
     LocalDateTime TEST_VAL_BOOK_END_BORROW_DAY =  LocalDateTime.of(2025, 5, 13, 15, 30);
-    //Long TEST_VAL_BOOK_CATEGORY_ID = "test";
 
     UUID TEST_VAL_BOOK_CATEGORY_ID = UUID.fromString("578caff7-1c44-4ede-92d2-b6e6cf60c0aa");
 
@@ -137,7 +134,7 @@ public interface BookTestDataSupplier {
 
     static Book getBookWithId() {
         return Book.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_BOOK_TITLE)
                 .content(TEST_VAL_BOOK_CONTENT)
                 .writer(TEST_VAL_BOOK_WRITER)
@@ -185,8 +182,8 @@ public interface BookTestDataSupplier {
 
     static Category getCategory() {
         return Category.builder()
-                .name(TEST_VAL_CATEGORY_NAME)
-                .description(TEST_VAL_CATEGORY_DESCRIPTION)
+                .name("adfasdf")
+                .description("asdfasdf")
                 .build();
     }
 
@@ -216,7 +213,7 @@ public interface BookTestDataSupplier {
 
     static ChangeBookParamDto getChangeBookParamDto() {
         return ChangeBookParamDto.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_CHANGE_BOOK_TITLE)
                 .content(TEST_VAL_CHANGE_BOOK_CONTENT)
                 .writer(TEST_VAL_CHANGE_BOOK_WRITER)
@@ -233,7 +230,7 @@ public interface BookTestDataSupplier {
 
     static ChangeBookParamDto getChangeBookParamDtoRandom(long n) {
         return ChangeBookParamDto.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_CHANGE_BOOK_TITLE)
                 .content(TEST_VAL_CHANGE_BOOK_CONTENT)
                 .writer(TEST_VAL_CHANGE_BOOK_WRITER)
@@ -250,7 +247,7 @@ public interface BookTestDataSupplier {
 
     static Book getChangedBook() {
         return Book.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_CHANGE_BOOK_TITLE)
                 .content(TEST_VAL_CHANGE_BOOK_CONTENT)
                 .writer(TEST_VAL_CHANGE_BOOK_WRITER)
@@ -317,7 +314,7 @@ public interface BookTestDataSupplier {
 
     static DeleteBookParamDto getDeleteBookParamDto(UUID bookId) {
         return DeleteBookParamDto.builder()
-                .id(bookId)
+                .bookId(bookId)
                 .build();
     }
 
@@ -333,10 +330,10 @@ public interface BookTestDataSupplier {
     static List<Book> getBookListForGrpc() {
         return List.of(
                 Book.builder()
-                        .id(TEST_VAL_BOOK_ID)
+                        .bookId(TEST_VAL_BOOK_ID)
                         .build(),
                 Book.builder()
-                        .id(TEST_VAL_ANOTHER_BOOK_ID)
+                        .bookId(TEST_VAL_ANOTHER_BOOK_ID)
                         .build()
         );
     }
@@ -344,10 +341,10 @@ public interface BookTestDataSupplier {
     static List<Book> getBookListForGrpcConflict() {
         return List.of(
                 Book.builder()
-                        .id(TEST_VAL_BOOK_ID)
+                        .bookId(TEST_VAL_BOOK_ID)
                         .build(),
                 Book.builder()
-                        .id(TEST_VAL_ANOTHER_BOOK_ID)
+                        .bookId(TEST_VAL_ANOTHER_BOOK_ID)
                         .bookState(BookState.DISSHAREABLE)
                         .build()
         );

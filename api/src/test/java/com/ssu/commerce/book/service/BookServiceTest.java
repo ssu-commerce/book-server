@@ -147,7 +147,7 @@ class BookServiceTest implements BookTestDataSupplier {
         when(categoryRepository.findById(categoryId)).thenReturn(category);
         when(bookRepository.findById(bookId)).thenReturn(Optional.ofNullable(book));
 
-        UUID changeId = bookService.changeBook(changeBookParamDto).getId();
+        UUID changeId = bookService.changeBook(changeBookParamDto).getBookId();
         assertEquals(changeId, bookId);
         assertEquals(changedBook, book);
 

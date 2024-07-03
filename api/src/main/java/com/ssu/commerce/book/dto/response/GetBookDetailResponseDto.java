@@ -1,15 +1,18 @@
 package com.ssu.commerce.book.dto.response;
 
+
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Builder
 public class GetBookDetailResponseDto {
-    private UUID id;
+    private UUID bookId;
     private String title;
     private String content;
     private String writer;

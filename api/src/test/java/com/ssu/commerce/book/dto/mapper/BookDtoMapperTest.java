@@ -31,7 +31,7 @@ class BookDtoMapperTest {
         Book.BookBuilder builder = Book.builder();
         Book book;
 
-        builder.id(UUID.randomUUID());
+        builder.bookId(UUID.randomUUID());
         builder.title("Test Book");
         builder.content("This is a test book.");
         builder.content("Desytroyed Book");
@@ -50,7 +50,7 @@ class BookDtoMapperTest {
         BookDto dto = mapper.map(book);
 
         assertNotNull(dto);
-        assertEquals(book.getId(), dto.getId());
+        assertEquals(book.getBookId(), dto.getBookId());
         assertEquals(book.getTitle(), dto.getTitle());
         assertEquals(book.getContent(), dto.getContent());
         assertEquals(book.getComment(), dto.getComment());
@@ -70,7 +70,7 @@ class BookDtoMapperTest {
         BookDto dto = mapper.map(null);
 
         assertNotNull(dto);
-        assertNull(dto.getId());
+        assertNull(dto.getBookId());
         assertNull(dto.getTitle());
         assertNull(dto.getContent());
         assertNull(dto.getComment());

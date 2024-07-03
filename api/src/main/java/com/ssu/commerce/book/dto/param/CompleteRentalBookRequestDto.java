@@ -9,5 +9,5 @@ import java.util.UUID;
 @Getter
 @Builder
 public class CompleteRentalBookRequestDto extends AbstractLockableObject {
-    private UUID id;
+    private UUID bookId;
 }

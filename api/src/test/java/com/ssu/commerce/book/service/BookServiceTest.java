@@ -118,10 +118,9 @@ class BookServiceTest implements BookTestDataSupplier {
 
     @Test
     void registerBookError() {
-        UUID categoryId = TEST_VAL_BOOK_CATEGORY_ID;
         RegisterBookParamDto registerBookParamDto = BookTestDataSupplier.getRegisterBookParamDto();
 
-        String expectedErrorMessage = "category not found; categoryId=" + categoryId;
+        String expectedErrorMessage = "category not found; categoryId=" + TEST_VAL_BOOK_CATEGORY_ID;
         Book book = BookTestDataSupplier.getBookWithId();
 
 
@@ -147,7 +146,7 @@ class BookServiceTest implements BookTestDataSupplier {
         when(categoryRepository.findById(categoryId)).thenReturn(category);
         when(bookRepository.findById(bookId)).thenReturn(Optional.ofNullable(book));
 
-        UUID changeId = bookService.changeBook(changeBookParamDto).getId();
+        UUID changeId = bookService.changeBook(changeBookParamDto).getBookId();
         assertEquals(changeId, bookId);
         assertEquals(changedBook, book);
 
@@ -157,8 +156,7 @@ class BookServiceTest implements BookTestDataSupplier {
 
     @Test
     void changeBookCategoryError() {
-        UUID categoryId = TEST_VAL_BOOK_CATEGORY_ID;
-        String expectedErrorMessage = "category not found; categoryId=" + categoryId;
+        String expectedErrorMessage = "category not found; categoryId=" + TEST_VAL_BOOK_CATEGORY_ID;
         ChangeBookParamDto changeBookParamDto = BookTestDataSupplier.getChangeBookParamDto();
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> {
@@ -170,13 +168,11 @@ class BookServiceTest implements BookTestDataSupplier {
 
     @Test
     void changeBook_BookError() {
-        UUID bookId = TEST_VAL_BOOK_ID;
-        String expectedErrorMessage = "book not found; bookId=" + bookId;
+        String expectedErrorMessage = "book not found; bookId=" + TEST_VAL_BOOK_ID;
         ChangeBookParamDto changeBookParamDto = BookTestDataSupplier.getChangeBookParamDto();
-        UUID categoryId = TEST_VAL_BOOK_CATEGORY_ID;
         Optional<Category> category = Optional.ofNullable(BookTestDataSupplier.getCategory());
 
-        when(categoryRepository.findById(categoryId)).thenReturn(category);
+        when(categoryRepository.findById(TEST_VAL_BOOK_CATEGORY_ID)).thenReturn(category);
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> {
             bookService.changeBook(changeBookParamDto);
@@ -202,6 +198,8 @@ class BookServiceTest implements BookTestDataSupplier {
         UUID bookId = TEST_VAL_BOOK_ID;
         String expectedErrorMessage = "book not found; bookId=" + bookId;
         DeleteBookParamDto deleteBookParamDto = BookTestDataSupplier.getDeleteBookParamDto(bookId);
+
+        when(bookRepository.findById(bookId)).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> {
             bookService.deleteBook(deleteBookParamDto);

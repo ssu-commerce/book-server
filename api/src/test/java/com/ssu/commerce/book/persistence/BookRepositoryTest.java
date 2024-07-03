@@ -13,13 +13,14 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.CollectionUtils;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
-
-
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -35,11 +36,7 @@ class BookRepositoryTest implements BookTestDataSupplier {
     @BeforeEach
     void setUp() {
         final Category category = categoryRepository.save(BookTestDataSupplier.getCategory());
-
-        final Book book = BookTestDataSupplier.getBook();
-        book.setCategoryId(category.getId());
-
-        bookRepository.save(book);
+        bookRepository.save(BookTestDataSupplier.getBookWithCategoryId(category.getCategoryId()));
     }
 
     @Test
@@ -48,7 +45,7 @@ class BookRepositoryTest implements BookTestDataSupplier {
                 SelectBookListParamDto.builder()
                         .title("비가 오면")
                         .build(),
-                Pageable.unpaged()
+                PageRequest.of(0, 1)
         );
 
         assertAll(

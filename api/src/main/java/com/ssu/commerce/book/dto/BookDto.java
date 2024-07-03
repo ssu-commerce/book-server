@@ -1,18 +1,17 @@
 package com.ssu.commerce.book.dto;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.UUID;
 
-@Data
+@Getter
 @Builder
 @EqualsAndHashCode
 public class BookDto {
-    private UUID id;
+    private UUID bookId;
     private String title;
     private String content;
     private String writer;

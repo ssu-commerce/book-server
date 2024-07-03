@@ -2,17 +2,19 @@ package com.ssu.commerce.book.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeleteBookRequestDto {
     @NotEmpty
-    private UUID id;
+    private UUID bookId;
 }

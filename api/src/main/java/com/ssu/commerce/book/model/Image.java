@@ -2,13 +2,15 @@ package com.ssu.commerce.book.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.UUID;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Entity
 @Builder
 @AllArgsConstructor
@@ -16,9 +18,9 @@ import java.util.UUID;
 @Table(name = "image")
 public class Image {
     @Id
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @Column(name = "image_id", columnDefinition = "CHAR(36)")
+    private UUID imageId;
 
-    @Column(name = "book_id", columnDefinition = "BINARY(16)")
+    @Column(name = "book_id", columnDefinition = "CHAR(36)")
     private UUID bookId;
 }

@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
 public interface BookMapper {
     BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
 
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "bookId", ignore = true)
     @Mapping(target = "ownerId", ignore = true)
     @Mapping(target = "bookState", constant = "DISSHAREABLE")
     Book map(final RegisterBookParamDto paramDto);

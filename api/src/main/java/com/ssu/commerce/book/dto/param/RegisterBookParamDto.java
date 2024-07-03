@@ -1,14 +1,16 @@
 package com.ssu.commerce.book.dto.param;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Builder
 public class RegisterBookParamDto {
     @NotEmpty

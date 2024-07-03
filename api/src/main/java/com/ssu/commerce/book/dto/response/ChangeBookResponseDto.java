@@ -2,15 +2,17 @@ package com.ssu.commerce.book.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChangeBookResponseDto {
-    private UUID id;
+    private UUID bookId;
 }

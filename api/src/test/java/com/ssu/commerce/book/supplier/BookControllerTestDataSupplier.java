@@ -46,7 +46,7 @@ public interface BookControllerTestDataSupplier {
 
     static Book getBook() {
         return Book.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_BOOK_TITLE)
                 .content(TEST_VAL_BOOK_CONTENT)
                 .writer(TEST_VAL_BOOK_WRITER)
@@ -64,7 +64,7 @@ public interface BookControllerTestDataSupplier {
 
     static Book getAnotherBook() {
         return Book.builder()
-                .id(TEST_VAL_ANOTHER_BOOK_DTO_ID)
+                .bookId(TEST_VAL_ANOTHER_BOOK_DTO_ID)
                 .title(TEST_VAL_BOOK_TITLE)
                 .content(TEST_VAL_BOOK_CONTENT)
                 .writer(TEST_VAL_BOOK_WRITER)
@@ -82,7 +82,7 @@ public interface BookControllerTestDataSupplier {
 
     static BookDetailDto getBookDetailDto() {
         return BookDetailDto.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_BOOK_TITLE)
                 .content(TEST_VAL_BOOK_CONTENT)
                 .writer(TEST_VAL_BOOK_WRITER)
@@ -116,20 +116,20 @@ public interface BookControllerTestDataSupplier {
 
     static ChangeBookResponseDto getChangeBookResponseDto() {
         return ChangeBookResponseDto.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .build();
     }
 
     static DeleteBookParamDto getDeleteBookParamDto(UUID bookId) {
         return DeleteBookParamDto.builder()
-                .id(bookId)
+                .bookId(bookId)
                 .build();
     }
 
     static List<GetBookResponseDto> getGetBookResponseDto() {
         return Arrays.asList(
                 GetBookResponseDto.builder()
-                        .id(TEST_VAL_BOOK_ID)
+                        .bookId(TEST_VAL_BOOK_ID)
                         .title(TEST_VAL_BOOK_TITLE)
                         .content(TEST_VAL_BOOK_CONTENT)
                         .writer(TEST_VAL_BOOK_WRITER)
@@ -144,7 +144,7 @@ public interface BookControllerTestDataSupplier {
                         .comment(TEST_VAL_BOOK_COMMENT)
                         .build(),
                 GetBookResponseDto.builder()
-                        .id(TEST_VAL_ANOTHER_BOOK_DTO_ID)
+                        .bookId(TEST_VAL_ANOTHER_BOOK_DTO_ID)
                         .title(TEST_VAL_BOOK_TITLE)
                         .content(TEST_VAL_BOOK_CONTENT)
                         .writer(TEST_VAL_BOOK_WRITER)
@@ -176,7 +176,7 @@ public interface BookControllerTestDataSupplier {
 
     static ChangeBookRequestDto getChangeBookRequestDto() {
         return ChangeBookRequestDto.builder()
-                .id(TEST_VAL_BOOK_ID)
+                .bookId(TEST_VAL_BOOK_ID)
                 .title(TEST_VAL_BOOK_TITLE)
                 .content(TEST_VAL_BOOK_CONTENT)
                 .writer(TEST_VAL_BOOK_WRITER)

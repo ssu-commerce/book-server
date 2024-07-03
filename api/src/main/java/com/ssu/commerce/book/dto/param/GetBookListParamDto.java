@@ -1,12 +1,14 @@
 package com.ssu.commerce.book.dto.param;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Builder
 public class GetBookListParamDto {
     private String title;

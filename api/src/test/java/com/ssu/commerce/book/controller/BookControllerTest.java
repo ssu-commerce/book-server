@@ -167,8 +167,6 @@ class BookControllerTest implements BookControllerTestDataSupplier {
 
         when(bookService.deleteBook(deleteBookParamDto)).thenReturn(bookId);
 
-        log.info("TEST : {}", deleteBookParamDto.getBookId());
-
         assertDoesNotThrow(() -> {
             mockMvc.perform(delete("/v1/book/" + bookId)
                             .accept(MediaType.APPLICATION_JSON)

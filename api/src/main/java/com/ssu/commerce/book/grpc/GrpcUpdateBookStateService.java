@@ -71,7 +71,7 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
         }
 
         booksToCheck.forEach(book -> {
-            book.setBookState(updateState);  // 가정: setBookState 메소드는 책의 상태를 업데이트
+            book.updateBookState(updateState);  // 가정: setBookState 메소드는 책의 상태를 업데이트
             bookRepository.save(book);  // 변경된 상태를 저장
         });
 

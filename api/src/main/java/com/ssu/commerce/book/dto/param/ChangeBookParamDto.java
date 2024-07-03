@@ -2,14 +2,16 @@ package com.ssu.commerce.book.dto.param;
 
 import com.ssu.commerce.book.lock.AbstractLockableObject;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+@Getter
+@EqualsAndHashCode(callSuper = false)
 @Builder
 public class ChangeBookParamDto extends AbstractLockableObject {
 

@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class BookStateConflictException extends SsuCommerceException {
     public BookStateConflictException(@Nullable String errorCode, @NotNull String message) {
         super(HttpStatus.CONFLICT.value(), errorCode, message);

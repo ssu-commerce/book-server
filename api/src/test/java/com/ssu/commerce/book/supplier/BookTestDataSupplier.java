@@ -78,6 +78,23 @@ public interface BookTestDataSupplier {
                 .build();
     }
 
+    static Book getBookWithCategoryId(UUID categoryId) {
+        return Book.builder()
+                .title(TEST_VAL_BOOK_TITLE)
+                .content(TEST_VAL_BOOK_CONTENT)
+                .writer(TEST_VAL_BOOK_WRITER)
+                .price(TEST_VAL_BOOK_PRICE)
+                .sharePrice(TEST_VAL_SHARED_BOOK_PRICE)
+                .publishDate(TEST_VAL_BOOK_PUBLISH_DATE)
+                .isbn(TEST_VAL_BOOK_ISBN)
+                .startBorrowDay(TEST_VAL_BOOK_START_BORROW_DAY)
+                .endBorrowDay(TEST_VAL_BOOK_END_BORROW_DAY)
+                .categoryId(categoryId)
+                .bookState(TEST_VAL_BOOK_STATE)
+                .comment(TEST_VAL_BOOK_COMMENT)
+                .build();
+    }
+
     static Book getBookWithState() {
         return Book.builder()
                 .title(TEST_VAL_BOOK_TITLE)
@@ -182,6 +199,7 @@ public interface BookTestDataSupplier {
 
     static Category getCategory() {
         return Category.builder()
+                .categoryId(TEST_VAL_BOOK_CATEGORY_ID)
                 .name("adfasdf")
                 .description("asdfasdf")
                 .build();

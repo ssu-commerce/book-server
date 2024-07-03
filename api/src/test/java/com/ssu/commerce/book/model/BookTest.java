@@ -38,7 +38,7 @@ class BookTest implements BookTestDataSupplier {
     @Test
     void testRentalImpossible() {
         final Book book = BookTestDataSupplier.getBook();
-        book.setBookState(BookState.SHARING);
+        book.updateBookState(BookState.SHARING);
 
         assertFalse(book.rental());
         assertEquals(

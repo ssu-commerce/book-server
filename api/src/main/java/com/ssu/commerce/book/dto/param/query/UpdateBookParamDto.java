@@ -1,12 +1,14 @@
 package com.ssu.commerce.book.dto.param.query;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Builder
 public class UpdateBookParamDto {
     private UUID bookId;

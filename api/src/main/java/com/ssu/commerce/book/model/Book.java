@@ -2,14 +2,25 @@ package com.ssu.commerce.book.model;
 
 import com.ssu.commerce.book.constant.code.BookState;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Entity
 @Builder
 @AllArgsConstructor
@@ -38,7 +49,7 @@ public class Book {
     @Column(name = "share_price", nullable = false)
     private Long sharePrice;
 
-    @Column(name = "comment", columnDefinition = "TEXT CHARACTER SET UTF8")
+    @Column(name = "comment", columnDefinition = "VARCHAR(500) CHARACTER SET UTF8")
     private String comment;
 
     @Column(name = "start_borrow_day", nullable = false)

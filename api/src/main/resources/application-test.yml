@@ -14,7 +14,6 @@ spring:
     url: jdbc:tc:mysql:///
     username:
     password:
-    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
     hikari:
       maximum-pool-size: 5
   redis:

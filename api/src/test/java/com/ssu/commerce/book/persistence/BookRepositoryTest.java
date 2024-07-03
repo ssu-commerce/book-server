@@ -3,6 +3,7 @@ package com.ssu.commerce.book.persistence;
 import com.ssu.commerce.book.config.QuerydslConfig;
 import com.ssu.commerce.book.dto.param.query.SelectBookListParamDto;
 import com.ssu.commerce.book.model.Book;
+import com.ssu.commerce.book.model.Category;
 import com.ssu.commerce.book.supplier.BookTestDataSupplier;
 import com.ssu.commerce.core.jpa.config.JpaConfig;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.CollectionUtils;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,12 +35,8 @@ class BookRepositoryTest implements BookTestDataSupplier {
 
     @BeforeEach
     void setUp() {
-        final var category = categoryRepository.save(BookTestDataSupplier.getCategory());
-
-        final var book = BookTestDataSupplier.getBook();
-        book.setCategoryId(category.getCategoryId());
-
-        bookRepository.save(book);
+        final Category category = categoryRepository.save(BookTestDataSupplier.getCategory());
+        bookRepository.save(BookTestDataSupplier.getBookWithCategoryId(category.getCategoryId()));
     }
 
     @Test

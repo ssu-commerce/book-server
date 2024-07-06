@@ -32,52 +32,33 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
     @Override
     public void rentalBook(RentalBookRequest request, StreamObserver<RentalBookResponse> responseObserver) {
         List<RentalBookRequestDto> rentalBookRequestDto = request.getIdList()
-                .stream().map(id -> RentalBookRequestDto.builder().id(UUID.fromString(id)).build())
+                .stream().map(id -> RentalBookRequestDto.builder().bookId(UUID.fromString(id)).build())
                 .collect(Collectors.toList());
 
         try {
-            if (processRentalBook(rentalBookRequestDto)) {
+            if (processUpdateBookState(rentalBookRequestDto, BookState.SHARING)) {
                 RentalBookResponse response = RentalBookResponse.newBuilder()
                         .setMessage("Books rented successfully.")
                         .build();
                 responseObserver.onNext(response);
             }
+            responseObserver.onCompleted();
+        } catch (NotFoundException e) {
+            RentalBookResponse response = RentalBookResponse.newBuilder()
+                    .setMessage("Books not found.")
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
         } catch (BookStateConflictException e) {
             RentalBookResponse response = RentalBookResponse.newBuilder()
                     .setMessage("Books could not be rented due to state conflicts.")
                     .build();
             responseObserver.onNext(response);
+            responseObserver.onCompleted();
         }
     }
 
-    private boolean processRentalBook(
-            @DistributedLock List<RentalBookRequestDto> requestDto
-    ) {
-        List<UUID> bookIds = requestDto.stream().map(RentalBookRequestDto::getId).collect(Collectors.toList());
-        List<Book> booksToCheck = bookRepository.findAllById(bookIds);
-
-        if (booksToCheck.isEmpty()) {
-            throw new NotFoundException(
-                    String.format("book not found; book list size=%d", bookIds.size()),
-                    "BOOK_003"
-            );
-        }
-
-        boolean allUpdatePossible = booksToCheck.stream()
-                .allMatch(book -> checkUpdateBookState(book, BookState.SHARING));
-
-        if (!allUpdatePossible) {
-            throw new BookStateConflictException("BOOK_004", "One or more books cannot be updated due to state conflicts.");
-        }
-
-        booksToCheck.forEach(book -> {
-            book.setBookState(BookState.SHARING);  // 가정: setBookState 메소드는 책의 상태를 업데이트
-            bookRepository.save(book);  // 변경된 상태를 저장
-        });
-
-        return true;
-    }
-
+    @Override
     @Transactional
     public void updateBookState(
             UpdateBookStateRequest request,
@@ -93,14 +74,15 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
                 .stream().map(id -> RentalBookRequestDto.builder().bookId(UUID.fromString(id)).build())
                 .collect(Collectors.toList());
 
-        updateBookState(rentalBookRequestDto, updateState, responseObserver);
+        com.ssu.commerce.book.constant.code.BookState state = GrpcBookStateMapper.INSTANCE.map(updateState);
 
+        processUpdateBookState(rentalBookRequestDto, state);
+        responseObserver.onCompleted();
     }
 
-    private void updateBookState(
+    private boolean processUpdateBookState(
             @DistributedLock List<RentalBookRequestDto> requestDto,
-            com.ssu.commerce.grpc.BookState grpcUpdateState,
-            StreamObserver<Empty> responseObserver
+            com.ssu.commerce.book.constant.code.BookState updateState
     ) {
         List<UUID> bookIds = requestDto.stream().map(RentalBookRequestDto::getBookId).collect(Collectors.toList());
         List<Book> booksToCheck = bookRepository.findAllById(bookIds);
@@ -111,8 +93,6 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
                     "BOOK_003"
             );
         }
-
-        com.ssu.commerce.book.constant.code.BookState updateState = GrpcBookStateMapper.INSTANCE.map(grpcUpdateState);
 
         boolean allUpdatePossible = booksToCheck.stream()
                 .allMatch(book -> checkUpdateBookState(book, updateState));
@@ -126,7 +106,7 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
             bookRepository.save(book);  // 변경된 상태를 저장
         });
 
-        responseObserver.onCompleted();
+        return true;
     }
 
     private boolean checkUpdateBookState(Book book, BookState bookState) {

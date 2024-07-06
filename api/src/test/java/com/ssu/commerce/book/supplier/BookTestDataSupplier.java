@@ -9,6 +9,7 @@ import com.ssu.commerce.book.dto.param.GetBookListParamDto;
 import com.ssu.commerce.book.dto.param.RegisterBookParamDto;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.model.Category;
+import com.ssu.commerce.grpc.RentalBookRequest;
 import com.ssu.commerce.grpc.UpdateBookStateRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -340,6 +341,14 @@ public interface BookTestDataSupplier {
         return UpdateBookStateRequest.newBuilder()
                 .setToken(TEST_VAL_ACCESS_TOKE)
                 .setBookState(com.ssu.commerce.grpc.BookState.SHARING)
+                .addId(TEST_VAL_BOOK_ID.toString())
+                .addId(TEST_VAL_ANOTHER_BOOK_ID.toString())
+                .build();
+    }
+
+    static RentalBookRequest getRentalBookRequest() {
+        return RentalBookRequest.newBuilder()
+                .setToken(TEST_VAL_ACCESS_TOKE)
                 .addId(TEST_VAL_BOOK_ID.toString())
                 .addId(TEST_VAL_ANOTHER_BOOK_ID.toString())
                 .build();

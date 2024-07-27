@@ -7,6 +7,8 @@ import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.book.supplier.BookTestDataSupplier;
 import com.ssu.commerce.core.error.NotFoundException;
+import com.ssu.commerce.grpc.RentalBookRequest;
+import com.ssu.commerce.grpc.RentalBookResponse;
 import com.ssu.commerce.grpc.UpdateBookStateRequest;
 import io.grpc.stub.StreamObserver;
 import org.junit.jupiter.api.Test;
@@ -29,6 +31,9 @@ public class GrpcUpdateBookStateServiceTest implements BookTestDataSupplier {
 
     @Mock
     private StreamObserver<Empty> response;
+
+    @Mock
+    private StreamObserver<RentalBookResponse> rentalResponseObserver;
 
     @InjectMocks
     private GrpcUpdateBookStateService grpcUpdateBookStateService;
@@ -72,5 +77,62 @@ public class GrpcUpdateBookStateServiceTest implements BookTestDataSupplier {
         });
 
         assertEquals(expectedException, exception);
+    }
+
+    @Test
+    void rentalBookTest_success() {
+        when(bookRepository.findAllById(List.of(TEST_VAL_BOOK_ID, TEST_VAL_ANOTHER_BOOK_ID)))
+                .thenReturn(BookTestDataSupplier.getBookListForGrpc());
+        RentalBookRequest rentalBookRequest = BookTestDataSupplier.getRentalBookRequest();
+
+        grpcUpdateBookStateService.rentalBook(rentalBookRequest, rentalResponseObserver);
+
+        verify(bookRepository).findAllById(List.of(TEST_VAL_BOOK_ID, TEST_VAL_ANOTHER_BOOK_ID));
+        verify(bookRepository).save(Book.builder().bookId(TEST_VAL_BOOK_ID).bookState(BookState.SHARING).build());
+        verify(bookRepository).save(Book.builder().bookId(TEST_VAL_ANOTHER_BOOK_ID).bookState(BookState.SHARING).build());
+    }
+
+    @Test
+    void rentalBookTest_fail_not_found() {
+        RentalBookRequest rentalBookRequest = BookTestDataSupplier.getRentalBookRequest();
+        String expectedMessage = new NotFoundException(
+                String.format("book not found; book list size=%d", 2),
+                "BOOK_003"
+        ).getMessage();
+
+        when(bookRepository.findAllById(List.of(TEST_VAL_BOOK_ID, TEST_VAL_ANOTHER_BOOK_ID))).thenReturn(List.of());
+
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> grpcUpdateBookStateService.rentalBook(rentalBookRequest, rentalResponseObserver));
+
+        RentalBookResponse expectedResponse = RentalBookResponse.newBuilder()
+                .setMessage("Books not found.")
+                .build();
+
+        verify(rentalResponseObserver).onNext(expectedResponse);
+        verify(rentalResponseObserver).onCompleted();
+
+        assertEquals(expectedMessage, exception.getMessage());
+    }
+
+    @Test
+    void rentalBookTest_fail_conflict() {
+        when(bookRepository.findAllById(List.of(TEST_VAL_BOOK_ID, TEST_VAL_ANOTHER_BOOK_ID)))
+                .thenReturn(BookTestDataSupplier.getBookListForGrpcConflict());
+
+        RentalBookRequest rentalBookRequest = BookTestDataSupplier.getRentalBookRequest();
+
+        BookStateConflictException expectedException = new BookStateConflictException("BOOK_004", "One or more books cannot be updated due to state conflicts.");
+        BookStateConflictException exception = assertThrows(BookStateConflictException.class, () -> {
+            grpcUpdateBookStateService.rentalBook(rentalBookRequest, rentalResponseObserver);
+        });
+
+        RentalBookResponse expectedResponse = RentalBookResponse.newBuilder()
+                .setMessage("Books could not be rented due to state conflicts.")
+                .build();
+
+        verify(rentalResponseObserver).onNext(expectedResponse);
+        verify(rentalResponseObserver).onCompleted();
+
+        assertEquals(expectedException.getMessage(), exception.getMessage());
     }
 }

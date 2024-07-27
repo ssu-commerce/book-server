@@ -9,6 +9,8 @@ import com.ssu.commerce.book.exception.BookStateConflictException;
 import com.ssu.commerce.book.model.Book;
 import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.core.error.NotFoundException;
+import com.ssu.commerce.grpc.RentalBookRequest;
+import com.ssu.commerce.grpc.RentalBookResponse;
 import com.ssu.commerce.grpc.UpdateBookStateGrpc;
 import com.ssu.commerce.grpc.UpdateBookStateRequest;
 import io.grpc.stub.StreamObserver;
@@ -28,6 +30,37 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
     private final BookRepository bookRepository;
 
     @Override
+    public void rentalBook(RentalBookRequest request, StreamObserver<RentalBookResponse> responseObserver) {
+        List<RentalBookRequestDto> rentalBookRequestDto = request.getIdList()
+                .stream().map(id -> RentalBookRequestDto.builder().bookId(UUID.fromString(id)).build())
+                .collect(Collectors.toList());
+
+        try {
+            if (processUpdateBookState(rentalBookRequestDto, BookState.SHARING)) {
+                RentalBookResponse response = RentalBookResponse.newBuilder()
+                        .setMessage("Books rented successfully.")
+                        .build();
+                responseObserver.onNext(response);
+            }
+            responseObserver.onCompleted();
+        } catch (NotFoundException e) {
+            RentalBookResponse response = RentalBookResponse.newBuilder()
+                    .setMessage("Books not found.")
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+            throw e;
+        } catch (BookStateConflictException e) {
+            RentalBookResponse response = RentalBookResponse.newBuilder()
+                    .setMessage("Books could not be rented due to state conflicts.")
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+            throw e;
+        }
+    }
+
+    @Override
     @Transactional
     public void updateBookState(
             UpdateBookStateRequest request,
@@ -42,14 +75,16 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
         List<RentalBookRequestDto> rentalBookRequestDto = request.getIdList()
                 .stream().map(id -> RentalBookRequestDto.builder().bookId(UUID.fromString(id)).build())
                 .collect(Collectors.toList());
-        updateBookState(rentalBookRequestDto, updateState, responseObserver);
 
+        com.ssu.commerce.book.constant.code.BookState state = GrpcBookStateMapper.INSTANCE.map(updateState);
+
+        processUpdateBookState(rentalBookRequestDto, state);
+        responseObserver.onCompleted();
     }
 
-    private void updateBookState(
+    private boolean processUpdateBookState(
             @DistributedLock List<RentalBookRequestDto> requestDto,
-            com.ssu.commerce.grpc.BookState grpcUpdateState,
-            StreamObserver<Empty> responseObserver
+            com.ssu.commerce.book.constant.code.BookState updateState
     ) {
         List<UUID> bookIds = requestDto.stream().map(RentalBookRequestDto::getBookId).collect(Collectors.toList());
         List<Book> booksToCheck = bookRepository.findAllById(bookIds);
@@ -60,8 +95,6 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
                     "BOOK_003"
             );
         }
-
-        com.ssu.commerce.book.constant.code.BookState updateState = GrpcBookStateMapper.INSTANCE.map(grpcUpdateState);
 
         boolean allUpdatePossible = booksToCheck.stream()
                 .allMatch(book -> checkUpdateBookState(book, updateState));
@@ -75,7 +108,7 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
             bookRepository.save(book);  // 변경된 상태를 저장
         });
 
-        responseObserver.onCompleted();
+        return true;
     }
 
     private boolean checkUpdateBookState(Book book, BookState bookState) {

@@ -102,7 +102,7 @@ public class GrpcUpdateBookStateServiceTest implements BookTestDataSupplier {
 
         when(bookRepository.findAllById(List.of(TEST_VAL_BOOK_ID, TEST_VAL_ANOTHER_BOOK_ID))).thenReturn(List.of());
 
-        grpcUpdateBookStateService.rentalBook(rentalBookRequest, rentalResponseObserver);
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> grpcUpdateBookStateService.rentalBook(rentalBookRequest, rentalResponseObserver));
 
         RentalBookResponse expectedResponse = RentalBookResponse.newBuilder()
                 .setMessage("Books not found.")
@@ -110,6 +110,8 @@ public class GrpcUpdateBookStateServiceTest implements BookTestDataSupplier {
 
         verify(rentalResponseObserver).onNext(expectedResponse);
         verify(rentalResponseObserver).onCompleted();
+
+        assertEquals(expectedMessage, exception.getMessage());
     }
 
     @Test
@@ -119,7 +121,10 @@ public class GrpcUpdateBookStateServiceTest implements BookTestDataSupplier {
 
         RentalBookRequest rentalBookRequest = BookTestDataSupplier.getRentalBookRequest();
 
-        grpcUpdateBookStateService.rentalBook(rentalBookRequest, rentalResponseObserver);
+        BookStateConflictException expectedException = new BookStateConflictException("BOOK_004", "One or more books cannot be updated due to state conflicts.");
+        BookStateConflictException exception = assertThrows(BookStateConflictException.class, () -> {
+            grpcUpdateBookStateService.rentalBook(rentalBookRequest, rentalResponseObserver);
+        });
 
         RentalBookResponse expectedResponse = RentalBookResponse.newBuilder()
                 .setMessage("Books could not be rented due to state conflicts.")
@@ -127,5 +132,7 @@ public class GrpcUpdateBookStateServiceTest implements BookTestDataSupplier {
 
         verify(rentalResponseObserver).onNext(expectedResponse);
         verify(rentalResponseObserver).onCompleted();
+
+        assertEquals(expectedException.getMessage(), exception.getMessage());
     }
 }

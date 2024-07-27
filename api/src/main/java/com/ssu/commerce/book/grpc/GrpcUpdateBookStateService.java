@@ -49,12 +49,14 @@ public class GrpcUpdateBookStateService extends UpdateBookStateGrpc.UpdateBookSt
                     .build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            throw e;
         } catch (BookStateConflictException e) {
             RentalBookResponse response = RentalBookResponse.newBuilder()
                     .setMessage("Books could not be rented due to state conflicts.")
                     .build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            throw e;
         }
     }
 

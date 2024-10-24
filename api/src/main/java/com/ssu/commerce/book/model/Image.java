@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @Table(name = "image")
 public class Image {
     @Id
+    @Type(type = "uuid-char")
     @Column(name = "image_id", columnDefinition = "CHAR(36)")
     private UUID imageId;
 

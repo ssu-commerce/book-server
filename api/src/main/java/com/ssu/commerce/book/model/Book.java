@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +30,7 @@ import java.util.UUID;
 public class Book {
 
     @Id
+    @Type(type = "uuid-char")
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "book_id", columnDefinition = "CHAR(36)")
@@ -58,6 +60,7 @@ public class Book {
     @Column(name = "end_borrow_day", nullable = false)
     private LocalDateTime endBorrowDay;
 
+    @Type(type = "uuid-char")
     @Column(name = "owner_id", columnDefinition = "CHAR(36)")
     private UUID ownerId;
 
@@ -67,6 +70,7 @@ public class Book {
     @Column(name = "isbn", nullable = false, columnDefinition = "VARCHAR(50) CHARACTER SET UTF8")
     private String isbn;
 
+    @Type(type = "uuid-char")
     @Column(name = "category_id", columnDefinition = "CHAR(36)", nullable = false)
     private UUID categoryId;
 

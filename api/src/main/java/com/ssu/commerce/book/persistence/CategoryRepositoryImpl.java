@@ -13,6 +13,8 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotNull;
+
 import static com.ssu.commerce.book.model.QCategory.category;
 
 @Validated
@@ -22,7 +24,10 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<Category> selectCategoryPage(final SelectCategoryListParamDto paramDto, final Pageable pageable) {
+    public Page<Category> selectCategoryPage(
+            @NotNull final SelectCategoryListParamDto paramDto,
+            @NotNull final Pageable pageable
+    ) {
         final JPAQuery<Category> jpaQuery = jpaQueryFactory.select(category)
                 .from(category)
                 .where(

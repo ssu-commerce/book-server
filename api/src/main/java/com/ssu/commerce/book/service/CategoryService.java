@@ -25,12 +25,10 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public Page<CategoryDto> getCategoryList(@NotNull final GetCategoryListParamDto paramDto) {
-        final Page<Category> categoryPage = categoryRepository.selectCategoryPage(
+        return categoryRepository.selectCategoryPage(
                 new SelectCategoryListParamDto(paramDto),
                 paramDto.getPageable()
-        );
-
-        return categoryPage.map(CategoryDto::new);
+        ).map(CategoryDto::new);
     }
 
     @Transactional

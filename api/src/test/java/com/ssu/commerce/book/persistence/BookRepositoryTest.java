@@ -17,9 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.CollectionUtils;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest

@@ -3,6 +3,7 @@ package com.ssu.commerce.book.service;
 import com.ssu.commerce.book.model.Category;
 import com.ssu.commerce.book.persistence.CategoryRepository;
 import com.ssu.commerce.book.supplier.CategoryTestDataSupplier;
+import com.ssu.commerce.core.error.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,6 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -76,5 +79,24 @@ class CategoryServiceTest implements CategoryTestDataSupplier {
                 .isEqualTo(TEST_VAL_BOOK_CATEGORY_ID);
 
         verify(categoryRepository).deleteById(TEST_VAL_BOOK_CATEGORY_ID);
+    }
+
+    @Test
+    void getCategoryException() {
+        when(categoryRepository.findById(TEST_VAL_BOOK_CATEGORY_ID))
+                .thenReturn(Optional.empty());
+
+        final NotFoundException notFoundException = assertThrows(
+                NotFoundException.class,
+                () -> categoryService.deleteCategory(TEST_VAL_BOOK_CATEGORY_ID)
+        );
+
+        assertAll(
+                "메소드 호출 결과를 검증합니다.",
+                () -> assertThat(notFoundException.getMessage())
+                        .isEqualTo("category not found; categoryId=578caff7-1c44-4ede-92d2-b6e6cf60c0aa"),
+                () -> assertThat(notFoundException.getErrorCode())
+                        .isEqualTo("BOOK_002")
+        );
     }
 }

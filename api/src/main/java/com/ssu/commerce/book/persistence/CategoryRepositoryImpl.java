@@ -45,7 +45,7 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
         return PageableExecutionUtils.getPage(jpaQuery.fetch(), pageable, countQuery::fetchOne);
     }
 
-    private BooleanExpression likeName(
+    BooleanExpression likeName(
             final String name
     ) {
         return StringUtils.isNotEmpty(name)

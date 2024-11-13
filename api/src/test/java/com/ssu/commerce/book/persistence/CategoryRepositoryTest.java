@@ -24,9 +24,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class CategoryRepositoryTest implements CategoryTestDataSupplier {
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryRepositoryImpl categoryRepositoryImpl;
 
     @Test
-    void testSelectCategoryPage() {
+    void selectCategoryPage() {
         final Category category = categoryRepository.save(
                 Category.builder()
                         .name(TEST_VAL_CATEGORY_NAME)
@@ -55,5 +57,10 @@ class CategoryRepositoryTest implements CategoryTestDataSupplier {
                                 )
                         )
         );
+    }
+
+    @Test
+    void likeNmaIsNull() {
+        assertThat(categoryRepositoryImpl.likeName(null)).isNull();
     }
 }

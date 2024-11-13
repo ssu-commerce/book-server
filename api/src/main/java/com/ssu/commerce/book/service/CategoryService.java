@@ -40,27 +40,26 @@ public class CategoryService {
     @Transactional
     public Category changeCategory(@NotNull @Valid ChangeCategoryParamDto paramDto) {
         final UUID categoryId = paramDto.getCategoryId();
-        final Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("category not found; categoryId=%s", categoryId),
-                        "BOOK_002"
-                ));
+        final Category category = getCategory(categoryId);
 
         return category.update(paramDto);
     }
 
     @Transactional
     public UUID deleteCategory(@NotNull final UUID id) {
-        final Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("category not found; categoryId=%s", id),
-                        "BOOK_002"
-                ));
-
+        final Category category = getCategory(id);
 
         // TODO CREATE -> DELETE
         categoryRepository.deleteById(id);
 
         return category.getCategoryId();
+    }
+
+    Category getCategory(@NotNull final UUID id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("category not found; categoryId=%s", id),
+                        "BOOK_002"
+                ));
     }
 }

@@ -4,7 +4,6 @@ import com.ssu.commerce.book.dto.BookDetailDto;
 import com.ssu.commerce.book.dto.BookDto;
 import com.ssu.commerce.book.dto.mapper.BookMapper;
 import com.ssu.commerce.book.dto.mapper.SelectBookListParamDtoMapper;
-import com.ssu.commerce.book.dto.mapper.UpdateBookParamDtoMapper;
 import com.ssu.commerce.book.dto.param.ChangeBookParamDto;
 import com.ssu.commerce.book.dto.param.DeleteBookParamDto;
 import com.ssu.commerce.book.dto.param.GetBookListParamDto;
@@ -15,16 +14,20 @@ import com.ssu.commerce.book.persistence.BookRepository;
 import com.ssu.commerce.book.persistence.CategoryRepository;
 import com.ssu.commerce.book.supplier.BookTestDataSupplier;
 import com.ssu.commerce.core.error.NotFoundException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.ssu.commerce.book.supplier.CategoryTestDataSupplier.TEST_VAL_BOOK_CATEGORY_ID;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

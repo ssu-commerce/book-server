@@ -1,5 +1,7 @@
 package com.ssu.commerce.book.model;
 
+import com.ssu.commerce.book.dto.param.ChangeCategoryParamDto;
+import com.ssu.commerce.book.dto.param.CreateCategoryParamDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -19,8 +21,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "category")
 public class Category {
-    // category_id, name, description
-
     @Id
     @Type(type = "uuid-char")
     @GeneratedValue(generator = "uuid2")
@@ -33,4 +33,16 @@ public class Category {
 
     @Column(name = "description", columnDefinition = "CHAR(100) CHARACTER SET UTF8")
     private String description;
+
+    public Category(CreateCategoryParamDto paramDto) {
+        name = paramDto.getName();
+        description = paramDto.getDescription();
+    }
+
+    public Category update(ChangeCategoryParamDto category) {
+        name = category.getName();
+        description = category.getDescription();
+
+        return this;
+    }
 }

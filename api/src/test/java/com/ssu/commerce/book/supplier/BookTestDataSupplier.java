@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static com.ssu.commerce.book.supplier.CategoryTestDataSupplier.TEST_VAL_BOOK_CATEGORY_ID;
+
 public interface BookTestDataSupplier {
     UUID TEST_VAL_BOOK_ID = UUID.fromString("60180817-de61-4bac-a777-16219ffb92c0");
     UUID TEST_VAL_ANOTHER_BOOK_ID = UUID.fromString("4de76436-a242-4664-9334-7bef0b6428bf");
@@ -36,12 +38,6 @@ public interface BookTestDataSupplier {
     String TEST_VAL_BOOK_ISBN = "9791198173898";
     LocalDateTime TEST_VAL_BOOK_START_BORROW_DAY = LocalDateTime.of(2024, 5, 13, 15, 30);
     LocalDateTime TEST_VAL_BOOK_END_BORROW_DAY =  LocalDateTime.of(2025, 5, 13, 15, 30);
-
-    UUID TEST_VAL_BOOK_CATEGORY_ID = UUID.fromString("578caff7-1c44-4ede-92d2-b6e6cf60c0aa");
-
-    String TEST_VAL_CATEGORY_NAME = "한국소설일반";
-    String TEST_VAL_CATEGORY_DESCRIPTION = "소설";
-
 
     String TEST_VAL_CHANGE_BOOK_WRITER = "비가";
     Long TEST_VAL_CHANGE_BOOK_PRICE = 200000L;
